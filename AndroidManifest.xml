@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.com.android.networkspeedindicator"
+    package="tw.fatminmin.xposed.networkspeedindicator"
     android:versionCode="3"
     android:versionName="1.2" >
 
@@ -23,7 +23,7 @@
             android:value="Display traffic stats on statusbar" />
 
         <activity
-            android:name="pl.com.android.networkspeedindicator.SettingsActivity"
+            android:name="tw.fatminmin.xposed.networkspeedindicator.SettingsActivity"
             android:label="@string/title_activity_settings" 
             android:exported="true">
             <intent-filter>

@@ -1,4 +1,4 @@
-package pl.com.android.networkspeedindicator;
+package tw.fatminmin.xposed.networkspeedindicator;
 
 import android.content.res.XResources;
 import android.view.Gravity;

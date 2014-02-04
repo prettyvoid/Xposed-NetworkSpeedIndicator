@@ -1,4 +1,4 @@
-package pl.com.android.networkspeedindicator;
+package tw.fatminmin.xposed.networkspeedindicator;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.util.HashSet;
+
+import tw.fatminmin.xposed.networkspeedindicator.R;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 

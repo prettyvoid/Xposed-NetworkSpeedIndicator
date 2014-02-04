@@ -1,4 +1,4 @@
-package pl.com.android.networkspeedindicator;
+package tw.fatminmin.xposed.networkspeedindicator;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
