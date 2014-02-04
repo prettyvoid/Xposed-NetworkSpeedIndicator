@@ -7,6 +7,7 @@
     <string name="pref_force_unit">Force unit</string>
     <string name="pref_hide_inactive">Hide when not downloading</string>
     <string name="pref_hide_networktzpe">Hide network types</string>
+    <string name="pref_font_size">Change font size</string>
     
     <string-array name="unit_entries">
         <item>Auto</item>
@@ -27,5 +28,15 @@
     <string-array name="networktype_values">
         <item>WIFI</item>
         <item>MOBILE</item>
-    </string-array>    
+    </string-array>
+    <string-array name="fontsize_entries">
+        <item>Normal</item>
+        <item>Small</item>
+        <item>Tiny</item>
+    </string-array>
+    <string-array name="fontsize_values">
+        <item>14</item>
+        <item>10</item>
+        <item>7</item>
+    </string-array>
 </resources>

@@ -23,6 +23,14 @@
             android:entries="@array/networktype_entries"
             android:entryValues="@array/networktype_values"
             android:key="hide_network_type" />
+        
+        <ListPreference
+            android:defaultValue="10"
+            android:entries="@array/fontsize_entries"
+            android:entryValues="@array/fontsize_values"
+            android:key="font_size"
+            android:title="@string/pref_font_size"
+            />
     </PreferenceCategory>
 
 </PreferenceScreen>
