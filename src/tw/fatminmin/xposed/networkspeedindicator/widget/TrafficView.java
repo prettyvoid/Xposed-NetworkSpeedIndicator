@@ -1,10 +1,11 @@
-package tw.fatminmin.xposed.networkspeedindicator;
+package tw.fatminmin.xposed.networkspeedindicator.widget;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import tw.fatminmin.xposed.networkspeedindicator.Common;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,9 +27,11 @@ import de.robv.android.xposed.XSharedPreferences;
 @SuppressLint("HandlerLeak")
 public class TrafficView extends TextView {
 
+    public PositionCallback mPositionCallback = null;
+    
 	private static final String TAG = TrafficView.class.getSimpleName();
-	private final DecimalFormat decimalFormat = new DecimalFormat("##0.0");
-
+	private DecimalFormat uploadDecimalFormat, downloadDecimalFormat;
+	
 	private boolean mAttached;
 	// TrafficStats mTrafficStats;
 
@@ -39,13 +42,18 @@ public class TrafficView extends TextView {
 	boolean networkState;
 
 	XSharedPreferences mPref;
+	int prefPosition;
 	int prefForceUnit;
 	int prefFontSize;
+	int prefSuffix;
 	boolean prefShowUploadSpeed;
 	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
 	boolean prefHideInactive;
 	Set<String> prefHideNetworkState = new HashSet<String>();
+	
+	String uploadSuffix = "";
+	String downloadSuffix = "";
 
 	public TrafficView(Context context) {
 		this(context, null);
@@ -61,7 +69,22 @@ public class TrafficView extends TextView {
 		updateViewVisibility();
 		loadPreferences();
 	}
+	
+	public void refreshPosition() {
+	    switch(prefPosition) {
+        case 0:
+            mPositionCallback.setLeft();
+            break;
+        case 1:
+            mPositionCallback.setRight();
+            break;
+        case 2:
+            mPositionCallback.setAbsoluteLeft();
+            break;
+        }
+	}
 
+	
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 
 		@Override
@@ -93,7 +116,13 @@ public class TrafficView extends TextView {
 				if(intent.hasExtra(Common.KEY_FONT_SIZE)) {
 				    prefFontSize = intent.getIntExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 				}
-
+				if(intent.hasExtra(Common.KEY_POSITION)) {
+				    prefPosition = intent.getIntExtra(Common.KEY_POSITION, Common.DEF_POSITION);
+				    refreshPosition();
+				}
+				if(intent.hasExtra(Common.KEY_SUFFIX)) {
+				    prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+				}
 				updateViewVisibility();
 			}
 		}
@@ -114,11 +143,12 @@ public class TrafficView extends TextView {
 			totalTxBytes = TrafficStats.getTotalTxBytes();
 			totalRxBytes = TrafficStats.getTotalRxBytes();
 			lastUpdateTime = SystemClock.elapsedRealtime();
-
+			
 			setText(createText());
 			setTextSize(TypedValue.COMPLEX_UNIT_SP, prefFontSize);
 			
 			update();
+			
 			super.handleMessage(msg);
 		}
 	};
@@ -174,43 +204,52 @@ public class TrafficView extends TextView {
 		switch (prefForceUnit) {
 		default:
 		case 0:
-			if (((float) downloadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
-				downloadValue = ((float) downloadSpeed) / 1048576f;
-				downloadUnit = "MB/s";
-			} else if (((float) downloadSpeed) / 1024f >= 1) {
-				downloadValue = ((float) downloadSpeed) / 1024f;
-				downloadUnit = "KB/s";
-			} else {
-				downloadValue = downloadSpeed;
-				downloadUnit = "B/s";
-			}
-			
-			if (((float) uploadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
-			    uploadValue = ((float) uploadSpeed) / 1048576f;
-			    uploadUnit = "MB/s";
+		    
+		    if (((float) uploadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
+                uploadValue = ((float) uploadSpeed) / 1048576f;
+                uploadUnit = "MB";
+                uploadDecimalFormat = new DecimalFormat("##0.0");
             } else if (((float) uploadSpeed) / 1024f >= 1) {
                 uploadValue = ((float) uploadSpeed) / 1024f;
-                uploadUnit = "KB/s";
+                uploadUnit = "KB";
+                uploadDecimalFormat = new DecimalFormat("##0");
             } else {
                 uploadValue = uploadSpeed;
-                uploadUnit = "B/s";
+                uploadUnit = "B";
+                uploadDecimalFormat = new DecimalFormat("##0");
             }
-			
+		    
+			if (((float) downloadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
+				downloadValue = ((float) downloadSpeed) / 1048576f;
+				downloadUnit = "MB";
+				downloadDecimalFormat = new DecimalFormat("##0.0");
+			} else if (((float) downloadSpeed) / 1024f >= 1) {
+				downloadValue = ((float) downloadSpeed) / 1024f;
+				downloadUnit = "KB";
+				downloadDecimalFormat = new DecimalFormat("##0");
+			} else {
+				downloadValue = downloadSpeed;
+				downloadUnit = "B";
+				downloadDecimalFormat = new DecimalFormat("##0");
+			}
 			break;
 		case 1:
 			downloadValue = downloadSpeed;
 			uploadValue = uploadSpeed;
-			uploadUnit = downloadUnit = "B/s";
+			uploadUnit = downloadUnit = "B";
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0");
 			break;
 		case 2:
 			downloadValue = ((float) downloadSpeed) / 1024f;
 			uploadValue = ((float) uploadSpeed) / 1024f;
-			uploadUnit = downloadUnit = "KB/s";
+			uploadUnit = downloadUnit = "KB";
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0");
 			break;
 		case 3:
 			downloadValue = ((float) downloadSpeed) / 1048576f;
 			uploadValue = ((float) uploadSpeed) / 1048576f;
-			uploadUnit = downloadUnit = "MB/s";
+			uploadUnit = downloadUnit = "MB";
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0.0");
 			break;
 		}
 		
@@ -221,22 +260,31 @@ public class TrafficView extends TextView {
             strUploadValue = "";
         }
         else {
-            strUploadValue = "U:" + decimalFormat.format(uploadValue);
+            strUploadValue = uploadDecimalFormat.format(uploadValue);
         }
 		if (prefHideInactive && downloadSpeed <= 0) {
 		    strDownloadValue = "";
         }
 		else {
-		    strDownloadValue = "D:" + decimalFormat.format(downloadValue);
+		    strDownloadValue = downloadDecimalFormat.format(downloadValue);
 		}
 		
+		switch(prefSuffix) {
+		case 0:
+		    uploadSuffix = downloadSuffix = " ";
+		    break;
+		case 1:
+		    uploadSuffix = " ↑ ";
+		    downloadSuffix = " ↓ ";
+		    break;
+		}
 		
 		if (!prefHideUnit) {
 		    if(strUploadValue.length() > 0) {
-		        strUploadValue += uploadUnit;
+		        strUploadValue += " " + uploadUnit + uploadSuffix;
 		    }
 		    if(strDownloadValue.length() > 0) {
-		        strDownloadValue += downloadUnit;
+		        strDownloadValue += " " + downloadUnit + downloadSuffix;
 		    }
 		}
 		
@@ -249,7 +297,7 @@ public class TrafficView extends TextView {
 		
 		String ret = "";
 		if(strUploadValue.length() > 0 && strDownloadValue.length() > 0) {
-		    ret = strUploadValue + " " + strDownloadValue; 
+		    ret = strUploadValue + "\n" + strDownloadValue; 
 		}
 		else {
 		    ret = strUploadValue + strDownloadValue;
@@ -278,6 +326,7 @@ public class TrafficView extends TextView {
 		} else {
 			setVisibility(View.GONE);
 		}
+		
 	}
 
 	private void loadPreferences() {
@@ -287,6 +336,8 @@ public class TrafficView extends TextView {
 		prefShowDownloadSpeed = mPref.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
-		prefFontSize = mPref.getInt(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+		prefFontSize = Common.getPrefInt(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
+		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 	}
 }

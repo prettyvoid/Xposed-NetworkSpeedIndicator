@@ -88,6 +88,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		            Common.getPrefInt(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
 		    
 		}
+		else if(key.equals(Common.KEY_POSITION)) {
+		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+		    intent.putExtra(Common.KEY_POSITION, 
+		            Common.getPrefInt(prefs, Common.KEY_POSITION, Common.DEF_POSITION));
+		}
+		else if(key.equals(Common.KEY_SUFFIX)) {
+            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+            intent.putExtra(Common.KEY_SUFFIX, 
+                    Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX));
+        }
 
 		if (intent.getAction() != null) {
 			sendBroadcast(intent);

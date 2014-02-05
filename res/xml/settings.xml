@@ -37,6 +37,21 @@
             android:key="font_size"
             android:title="@string/pref_font_size"
             />
+        
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/position_entries"
+            android:entryValues="@array/position_values"
+            android:key="position"
+            android:title="@string/pref_position"
+            />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/suffix_entries"
+            android:entryValues="@array/suffix_values"
+            android:key="suffix"
+            android:title="@string/pref_suffix"
+            />
     </PreferenceCategory>
 
 </PreferenceScreen>
