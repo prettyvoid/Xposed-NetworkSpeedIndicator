@@ -41,6 +41,8 @@ public class TrafficView extends TextView {
 	XSharedPreferences mPref;
 	int prefForceUnit;
 	int prefFontSize;
+	boolean prefShowUploadSpeed;
+	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
 	boolean prefHideInactive;
 	Set<String> prefHideNetworkState = new HashSet<String>();
@@ -73,6 +75,12 @@ public class TrafficView extends TextView {
 				Log.i(TAG, "SettingsChanged");
 				if (intent.hasExtra(Common.KEY_FORCE_UNIT)) {
 					prefForceUnit = intent.getIntExtra(Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+				}
+				if(intent.hasExtra(Common.KEY_SHOW_UPLOAD_SPEED)) {
+				    prefShowUploadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED);
+				}
+				if(intent.hasExtra(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
+				    prefShowDownloadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 				}
 				if (intent.hasExtra(Common.KEY_HIDE_UNIT)) {
 				    prefHideUnit = intent.getBooleanExtra(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
@@ -215,26 +223,34 @@ public class TrafficView extends TextView {
 		
 		String strUploadValue, strDownloadValue;
 		
+		if (prefHideInactive && uploadValue <= 0) {
+            strUploadValue = "";
+        }
+        else {
+            strUploadValue = "U:" + decimalFormat.format(uploadValue);
+        }
 		if (prefHideInactive && downloadSpeed <= 0) {
 		    strDownloadValue = "";
         }
 		else {
-		    strDownloadValue = decimalFormat.format(downloadValue);
+		    strDownloadValue = "D:" + decimalFormat.format(downloadValue);
 		}
-		if (prefHideInactive && uploadValue <= 0) {
-		    strUploadValue = "";
-        }
-		else {
-		    strUploadValue = decimalFormat.format(uploadValue);
-		}
+		
 		
 		if (!prefHideUnit) {
 		    if(strUploadValue.length() > 0) {
-		        strUploadValue = "U:" + strUploadValue + uploadUnit;
+		        strUploadValue += uploadUnit;
 		    }
 		    if(strDownloadValue.length() > 0) {
-		        strDownloadValue = "D:" + strDownloadValue + downloadUnit;
+		        strDownloadValue += downloadUnit;
 		    }
+		}
+		
+		if(!prefShowUploadSpeed) {
+		    strUploadValue = "";
+		}
+		if(!prefShowDownloadSpeed) {
+		    strDownloadValue = "";
 		}
 		
 		String ret = "";
@@ -273,6 +289,8 @@ public class TrafficView extends TextView {
 	private void loadPreferences() {
 		mPref = new XSharedPreferences(Common.PKG_NAME);
 		prefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+		prefShowUploadSpeed = mPref.getBoolean(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED);
+		prefShowDownloadSpeed = mPref.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
 		prefHideNetworkState = mPref.getStringSet(Common.KEY_HIDE_NETWORK_TYPE, Common.DEF_HIDE_NETWORK_STATE);

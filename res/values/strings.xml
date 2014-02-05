@@ -3,9 +3,11 @@
 
     <string name="app_name">Network speed indicator</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="pref_show_upload_speed">Show upload speed</string>
+    <string name="pref_show_download_speed">Show download speed</string>
     <string name="pref_hide_unit">Hide unit</string>
     <string name="pref_force_unit">Force unit</string>
-    <string name="pref_hide_inactive">Hide when not downloading</string>
+    <string name="pref_hide_inactive">Hide when speed is zero</string>
     <string name="pref_hide_networktzpe">Hide network types</string>
     <string name="pref_font_size">Change font size</string>
     
