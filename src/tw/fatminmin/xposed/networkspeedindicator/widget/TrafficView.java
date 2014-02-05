@@ -121,7 +121,7 @@ public class TrafficView extends TextView {
 				    refreshPosition();
 				}
 				if(intent.hasExtra(Common.KEY_SUFFIX)) {
-				    prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 				}
 				updateViewVisibility();
 			}
@@ -208,48 +208,48 @@ public class TrafficView extends TextView {
 		    if (((float) uploadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
                 uploadValue = ((float) uploadSpeed) / 1048576f;
                 uploadUnit = "MB";
-                uploadDecimalFormat = new DecimalFormat("##0.0");
+                uploadDecimalFormat = new DecimalFormat(" ##0.0");
             } else if (((float) uploadSpeed) / 1024f >= 1) {
                 uploadValue = ((float) uploadSpeed) / 1024f;
                 uploadUnit = "KB";
-                uploadDecimalFormat = new DecimalFormat("##0");
+                uploadDecimalFormat = new DecimalFormat(" ##0");
             } else {
                 uploadValue = uploadSpeed;
                 uploadUnit = "B";
-                uploadDecimalFormat = new DecimalFormat("##0");
+                uploadDecimalFormat = new DecimalFormat(" ##0");
             }
 		    
 			if (((float) downloadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
 				downloadValue = ((float) downloadSpeed) / 1048576f;
 				downloadUnit = "MB";
-				downloadDecimalFormat = new DecimalFormat("##0.0");
+				downloadDecimalFormat = new DecimalFormat(" ##0.0");
 			} else if (((float) downloadSpeed) / 1024f >= 1) {
 				downloadValue = ((float) downloadSpeed) / 1024f;
 				downloadUnit = "KB";
-				downloadDecimalFormat = new DecimalFormat("##0");
+				downloadDecimalFormat = new DecimalFormat(" ##0");
 			} else {
 				downloadValue = downloadSpeed;
 				downloadUnit = "B";
-				downloadDecimalFormat = new DecimalFormat("##0");
+				downloadDecimalFormat = new DecimalFormat(" ##0");
 			}
 			break;
 		case 1:
 			downloadValue = downloadSpeed;
 			uploadValue = uploadSpeed;
 			uploadUnit = downloadUnit = "B";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0");
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0");
 			break;
 		case 2:
 			downloadValue = ((float) downloadSpeed) / 1024f;
 			uploadValue = ((float) uploadSpeed) / 1024f;
 			uploadUnit = downloadUnit = "KB";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0");
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0");
 			break;
 		case 3:
 			downloadValue = ((float) downloadSpeed) / 1048576f;
 			uploadValue = ((float) uploadSpeed) / 1048576f;
 			uploadUnit = downloadUnit = "MB";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat("##0.0");
+			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0.0");
 			break;
 		}
 		
@@ -274,8 +274,8 @@ public class TrafficView extends TextView {
 		    uploadSuffix = downloadSuffix = " ";
 		    break;
 		case 1:
-		    uploadSuffix = " ↑ ";
-		    downloadSuffix = " ↓ ";
+		    uploadSuffix = " \u25B3 ";
+		    downloadSuffix = " \u25BD ";
 		    break;
 		}
 		

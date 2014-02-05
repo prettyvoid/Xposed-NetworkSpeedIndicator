@@ -28,7 +28,7 @@ public class Common {
 	public static final HashSet<String> DEF_HIDE_NETWORK_STATE = new HashSet<String>();
 	public static final int DEF_FONT_SIZE = 10;
 	public static final int DEF_POSITION = 0;
-	public static final int DEF_SUFFIX = 0;
+	public static final int DEF_SUFFIX = 1;
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {

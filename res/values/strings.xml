@@ -58,7 +58,7 @@
     
     <string-array name="suffix_entries">
         <item>None</item>
-        <item>Arrow</item>
+        <item>Triangle</item>
     </string-array>
     <string-array name="suffix_values">
         <item>0</item>

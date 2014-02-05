@@ -46,7 +46,7 @@
             android:title="@string/pref_position"
             />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1"
             android:entries="@array/suffix_entries"
             android:entryValues="@array/suffix_values"
             android:key="suffix"
