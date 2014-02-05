@@ -1,17 +1,12 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
-import android.os.Bundle;
-
-import android.preference.PreferenceActivity;
-import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-
-import java.util.HashSet;
-
-import tw.fatminmin.xposed.networkspeedindicator.R;
+import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.util.Log;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
@@ -26,7 +21,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		addPreferencesFromResource(R.xml.settings);
 		mPrefs = getPreferenceScreen().getSharedPreferences();
 		
-	
 	}
 
 	@Override
@@ -43,6 +37,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		super.onPause();
 	}
 
+	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		Intent intent = new Intent();
@@ -72,7 +67,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_FORCE_UNIT,
 					Common.getPrefInt(prefs, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT));
-			
 		}
 		else if (key.equals(Common.KEY_HIDE_UNIT)) {
 		    
@@ -85,14 +79,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_HIDE_INACTIVE,
 					prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE));
-			
-		}
-		else if (key.equals(Common.KEY_HIDE_NETWORK_TYPE)) {
-			
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			HashSet<String> value = (HashSet<String>) prefs.getStringSet(Common.KEY_HIDE_NETWORK_TYPE,
-					Common.DEF_HIDE_NETWORK_STATE);
-			intent.putExtra(Common.KEY_HIDE_NETWORK_TYPE, value);
 			
 		}
 		else if(key.equals(Common.KEY_FONT_SIZE)) {

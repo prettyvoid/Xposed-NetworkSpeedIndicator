@@ -64,7 +64,6 @@ public class TrafficView extends TextView {
 
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -90,11 +89,6 @@ public class TrafficView extends TextView {
 				}
 				if (intent.hasExtra(Common.KEY_HIDE_INACTIVE)) {
 					prefHideInactive = intent.getBooleanExtra(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
-				}
-				if (intent.hasExtra(Common.KEY_HIDE_NETWORK_TYPE)) {
-					Object extra = intent.getSerializableExtra(Common.KEY_HIDE_NETWORK_TYPE);
-					if (extra != null)
-						prefHideNetworkState = (Set<String>) extra;
 				}
 				if(intent.hasExtra(Common.KEY_FONT_SIZE)) {
 				    prefFontSize = intent.getIntExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
@@ -293,7 +287,6 @@ public class TrafficView extends TextView {
 		prefShowDownloadSpeed = mPref.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
-		prefHideNetworkState = mPref.getStringSet(Common.KEY_HIDE_NETWORK_TYPE, Common.DEF_HIDE_NETWORK_STATE);
 		prefFontSize = mPref.getInt(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 	}
 }
