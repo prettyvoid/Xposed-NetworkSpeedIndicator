@@ -24,7 +24,7 @@
     <string-array name="networktype_entries">
         <item>Wi-Fi a mobilné dáta</item>
         <item>Len Wi-Fi</item>
-        <item>Len Mobilné dáta</item>
+        <item>Len mobilné dáta</item>
     </string-array>
     
     <string-array name="position_entries">
