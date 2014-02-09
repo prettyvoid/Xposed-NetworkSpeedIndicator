@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Style" >
+    <PreferenceCategory 
+        android:title="Style"
+        android:key="settings" >
         
         <CheckBoxPreference 
             android:defaultValue="true"
@@ -12,6 +14,35 @@
             android:defaultValue="true"
             android:key="show_download_speed"
             android:title="@string/pref_show_download_speed" />
+        
+        <ListPreference
+            android:defaultValue="0"
+            android:key="display"
+            android:title="@string/pref_display"
+            android:entries="@array/display_entries"
+            android:entryValues="@array/display_values" />
+        
+        <ListPreference 
+            android:defaultValue="both"
+            android:key="network_type"
+            android:title="@string/pref_networktype"
+            android:entries="@array/networktype_entries"
+            android:entryValues="@array/networktype_values" />
+        
+        <EditTextPreference
+            android:defaultValue="10"
+            android:key="font_size"
+            android:title="@string/pref_font_size"
+            android:inputType="number"
+            />
+        
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/position_entries"
+            android:entryValues="@array/position_values"
+            android:key="position"
+            android:title="@string/pref_position"
+            />
         
         <CheckBoxPreference
             android:defaultValue="0"
@@ -30,21 +61,6 @@
             android:key="force_unit"
             android:title="@string/pref_force_unit" />
         
-        <ListPreference
-            android:defaultValue="10"
-            android:entries="@array/fontsize_entries"
-            android:entryValues="@array/fontsize_values"
-            android:key="font_size"
-            android:title="@string/pref_font_size"
-            />
-        
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/position_entries"
-            android:entryValues="@array/position_values"
-            android:key="position"
-            android:title="@string/pref_position"
-            />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/suffix_entries"

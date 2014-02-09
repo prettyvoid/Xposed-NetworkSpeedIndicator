@@ -1,9 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
 import java.text.DecimalFormat;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import tw.fatminmin.xposed.networkspeedindicator.Common;
 import android.annotation.SuppressLint;
@@ -46,11 +44,12 @@ public class TrafficView extends TextView {
 	int prefForceUnit;
 	int prefFontSize;
 	int prefSuffix;
+	int prefDisplay;
 	boolean prefShowUploadSpeed;
 	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
 	boolean prefHideInactive;
-	Set<String> prefHideNetworkState = new HashSet<String>();
+	String prefNetworkType;
 	
 	String uploadSuffix = "";
 	String downloadSuffix = "";
@@ -123,6 +122,12 @@ public class TrafficView extends TextView {
 				if(intent.hasExtra(Common.KEY_SUFFIX)) {
 				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 				}
+				if(intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
+				    prefNetworkType = intent.getStringExtra(Common.KEY_NETWORK_TYPE);
+				}
+				if(intent.hasExtra(Common.KEY_DISPLAY)) {
+                    prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+                }
 				updateViewVisibility();
 			}
 		}
@@ -274,18 +279,26 @@ public class TrafficView extends TextView {
 		    uploadSuffix = downloadSuffix = " ";
 		    break;
 		case 1:
+		    uploadSuffix = " \u25B2 ";
+		    downloadSuffix = " \u25BC ";
+		    break;
+		case 2:
 		    uploadSuffix = " \u25B3 ";
 		    downloadSuffix = " \u25BD ";
 		    break;
 		}
 		
-		if (!prefHideUnit) {
-		    if(strUploadValue.length() > 0) {
-		        strUploadValue += " " + uploadUnit + uploadSuffix;
+		if(strUploadValue.length() > 0) {
+		    if(!prefHideUnit) {
+		        strUploadValue += " " + uploadUnit;
 		    }
-		    if(strDownloadValue.length() > 0) {
-		        strDownloadValue += " " + downloadUnit + downloadSuffix;
+		    strUploadValue += uploadSuffix;
+		}
+		if(strDownloadValue.length() > 0) {
+		    if(!prefHideUnit) {
+		        strDownloadValue += " " + downloadUnit;
 		    }
+		    strDownloadValue += downloadSuffix;
 		}
 		
 		if(!prefShowUploadSpeed) {
@@ -295,9 +308,17 @@ public class TrafficView extends TextView {
 		    strDownloadValue = "";
 		}
 		
+		String delimeter = "";
+		if(prefDisplay == 0) {
+		    delimeter = "\n";
+		}
+		else {
+		    delimeter = " ";
+		}
+		
 		String ret = "";
 		if(strUploadValue.length() > 0 && strDownloadValue.length() > 0) {
-		    ret = strUploadValue + "\n" + strDownloadValue; 
+		    ret = strUploadValue + delimeter + strDownloadValue; 
 		}
 		else {
 		    ret = strUploadValue + strDownloadValue;
@@ -316,9 +337,18 @@ public class TrafficView extends TextView {
 			mTrafficHandler.sendEmptyMessage(0);
 		}
 	};
-
+	
+	private boolean isCorrectNetworkType() {
+	    if(prefNetworkType.equals("both")) {
+	        return true;
+	    }
+	    else {
+	        return prefNetworkType.contains(networkType);
+	    }
+	}
+	
 	private void updateViewVisibility() {
-		if (networkState && !prefHideNetworkState.contains(networkType)) {
+		if (networkState && isCorrectNetworkType()) {
 			if (mAttached) {
 				updateTraffic();
 			}
@@ -339,5 +369,7 @@ public class TrafficView extends TextView {
 		prefFontSize = Common.getPrefInt(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
+		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 	}
 }

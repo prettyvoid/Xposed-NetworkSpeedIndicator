@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.util.Log;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -26,23 +30,46 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	@Override
 	public void onResume() {
 		super.onResume();
-
+		
+		@SuppressWarnings("deprecation")
+        PreferenceCategory settings = (PreferenceCategory) findPreference("settings");
+		for(int i = 0; i < settings.getPreferenceCount(); i++) {
+		    setSummary(settings.getPreference(i));
+		}
+		
 		mPrefs.registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
 	public void onPause() {
 		mPrefs.unregisterOnSharedPreferenceChangeListener(this);
-
 		super.onPause();
 	}
 
 	
-	@Override
+    boolean setSummary(Preference preference) {
+	    if (preference instanceof ListPreference) {
+            ListPreference listPref = (ListPreference) preference;
+            preference.setSummary(listPref.getEntry());
+            return true;
+        }
+        else if(preference instanceof EditTextPreference) {
+            EditTextPreference editPref = (EditTextPreference) preference;
+            editPref.setSummary(editPref.getText());
+            return true;
+        }
+        else {
+            return false;
+        }
+	}
+	
+	@SuppressWarnings("deprecation")
+    @Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		Intent intent = new Intent();
 		Log.i(TAG, "onSharedPreferenceChanged "+key);
 		
+		setSummary(findPreference(key));
 		
 		if(key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
 		    
@@ -87,6 +114,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		    intent.putExtra(Common.KEY_FONT_SIZE,
 		            Common.getPrefInt(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
 		    
+		    findPreference(Common.KEY_FONT_SIZE).setSummary(prefs.getString(Common.KEY_FONT_SIZE, "10"));
+		    
 		}
 		else if(key.equals(Common.KEY_POSITION)) {
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
@@ -98,7 +127,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             intent.putExtra(Common.KEY_SUFFIX, 
                     Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX));
         }
-
+		else if(key.equals(Common.KEY_NETWORK_TYPE)) {
+		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+		    intent.putExtra(Common.KEY_NETWORK_TYPE, prefs.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE));
+		}
+		else if(key.equals(Common.KEY_DISPLAY)) {
+            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+            intent.putExtra(Common.KEY_DISPLAY, 
+                    Common.getPrefInt(prefs, Common.KEY_DISPLAY, Common.DEF_DISPLAY));
+        }
+		
 		if (intent.getAction() != null) {
 			sendBroadcast(intent);
 			Log.i(TAG, "sendBroadcast");
