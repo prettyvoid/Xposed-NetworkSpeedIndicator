@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ukazovateľ rýchlosti siete</string>
+    <string name="title_activity_settings">Nastavenia</string>
+    <string name="pref_show_upload_speed">Zobraziť rýchlosť nahrávania</string>
+    <string name="pref_show_download_speed">Zobraziť rýchlosť sťahovania</string>
+    <string name="pref_hide_unit">Skryť jednotku</string>
+    <string name="pref_force_unit">Vynútiť jednotku</string>
+    <string name="pref_hide_inactive">Skryť pri nulovej rýchlosti</string>
+    <string name="pref_hide_networktzpe">Skryť typy sietí</string>
+    <string name="pref_font_size">Zmeniť veľkosť písma</string>
+    <string name="pref_position">Pozícia</string>
+    <string name="pref_suffix">Prípona</string>
+    
+    <string-array name="unit_entries">
+        <item>Automaticky</item>
+        <item>B/s</item>
+        <item>KB/s</item>
+        <item>MB/s</item>
+    </string-array>
+    
+    <string-array name="networktype_entries">
+        <item>Wi-Fi</item>
+        <item>Mobilné dáta</item>
+    </string-array>
+    
+    <string-array name="fontsize_entries">
+        <item>Normálne</item>
+        <item>Malé</item>
+        <item>Maličké</item>
+    </string-array>
+    
+    <string-array name="position_entries">
+        <item>Vľavo</item>
+        <item>Vpravo</item>
+        <item>Panel oznámení</item>
+    </string-array>
+    
+    <string-array name="suffix_entries">
+        <item>Žiadna</item>
+        <item>Trojuholník</item>
+    </string-array>
+</resources>
