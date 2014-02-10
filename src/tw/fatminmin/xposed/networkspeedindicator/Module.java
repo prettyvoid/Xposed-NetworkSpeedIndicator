@@ -6,69 +6,23 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import tw.fatminmin.xposed.networkspeedindicator.widget.LegacyPositionCallbackImpl;
+import tw.fatminmin.xposed.networkspeedindicator.widget.GingerBreadPositionCallbackImpl;
+import tw.fatminmin.xposed.networkspeedindicator.widget.JellyBeanPositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.PositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.TrafficView;
-import android.content.Context;
 import android.content.res.XResources;
+import android.graphics.Color;
 import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Module implements IXposedHookInitPackageResources, 
-                                IXposedHookLoadPackage {
+public class Module implements IXposedHookInitPackageResources {
     
     TrafficView trafficView;
-    
-    @Override
-    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-        if (!lpparam.packageName.equals("com.android.systemui"))
-            return;
-        XposedHelpers.findAndHookMethod(
-                "com.android.systemui.statusbar.phone.PhoneStatusBar",
-                lpparam.classLoader, "makeStatusBarView", new XC_MethodHook() {
-                    
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        try {
-                            Context mContext = (Context)XposedHelpers.getObjectField(param.thisObject, "mContext");
-                            if(trafficView == null) {
-                                trafficView = new TrafficView(mContext);
-                            }
-                            
-                            boolean legacy = false;
-                            try {
-                                XposedHelpers.getObjectField(param.thisObject, "mSystemIconArea");
-                            }
-                            catch(NoSuchFieldError e) {
-                                legacy = true;
-                            }
-                            
-                            if(legacy) {
-                                trafficView.mPositionCallback = new LegacyPositionCallbackImpl();
-                            }
-                            else {
-                                trafficView.mPositionCallback = new PositionCallbackImpl();
-                            }
-                            
-                            trafficView.mPositionCallback.setup(param, trafficView);
-                            trafficView.refreshPosition();
-                        }
-                        catch(Exception e) {
-                        }
-                    }
-                    
-                });
-    }
-    
-    
     
 	public static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
 
@@ -102,9 +56,35 @@ public class Module implements IXposedHookInitPackageResources,
 				if(trafficView == null) {
 				    trafficView = new TrafficView(root.getContext());
 				}
-				trafficView.setLayoutParams(clock.getLayoutParams());
-				trafficView.setTextColor(clock.getCurrentTextColor());
+				if(clock != null) {
+				    trafficView.setLayoutParams(clock.getLayoutParams());
+				    trafficView.setTextColor(clock.getCurrentTextColor());
+				}
+				else {
+				    // gingerbread
+				    trafficView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+				    trafficView.setTextColor(Color.parseColor("#33b5e5"));
+				}
 				trafficView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+				
+				
+                if(liparam.res.getIdentifier("status_bar_contents", "id",PKG_NAME_SYSTEM_UI) != 0) { 
+                    // kitkat
+                    trafficView.mPositionCallback = new PositionCallbackImpl();
+                }
+                else if(liparam.res.getIdentifier("notification_icon_area", "id",PKG_NAME_SYSTEM_UI) != 0) { 
+                    // jellybean
+                    trafficView.mPositionCallback = new JellyBeanPositionCallbackImpl();
+                }
+                else if(liparam.res.getIdentifier("notificationIcons", "id",PKG_NAME_SYSTEM_UI) != 0) {
+                    // gingerbread
+                    trafficView.mPositionCallback = new GingerBreadPositionCallbackImpl();
+                }
+                
+                
+                trafficView.mPositionCallback.setup(liparam, trafficView);
+                trafficView.refreshPosition();
+				
 			}
 		});
 	}

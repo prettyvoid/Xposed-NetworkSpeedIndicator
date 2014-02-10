@@ -56,6 +56,7 @@ public class TrafficView extends TextView {
 
 	public TrafficView(Context context) {
 		this(context, null);
+		mAttached = false;
 	}
 
 	public TrafficView(Context context, AttributeSet attrs) {
@@ -64,9 +65,9 @@ public class TrafficView extends TextView {
 
 	public TrafficView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		loadPreferences();
 		updateConnectionInfo();
 		updateViewVisibility();
-		loadPreferences();
 	}
 	
 	public void refreshPosition() {
@@ -339,7 +340,7 @@ public class TrafficView extends TextView {
 	};
 	
 	private boolean isCorrectNetworkType() {
-	    if(prefNetworkType.equals("both")) {
+	    if(prefNetworkType == null || prefNetworkType.equals("both")) {
 	        return true;
 	    }
 	    else {
