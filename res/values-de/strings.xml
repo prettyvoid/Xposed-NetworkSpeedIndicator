@@ -5,14 +5,14 @@
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_show_upload_speed">Zeige Upload Geschwindigkeit</string>
     <string name="pref_show_download_speed">Zeige Download Geschwindigkeit</string>
-    <string name="pref_hide_unit">Hide unit</string>
-    <string name="pref_force_unit">Force unit</string>
-    <string name="pref_hide_inactive">Hide when speed is zero</string>
-    <string name="pref_networktype">Network Types</string>
+    <string name="pref_hide_unit">Einheit verstecken</string>
+    <string name="pref_force_unit">Einheit erzwingen</string>
+    <string name="pref_hide_inactive">Ausblended wenn Geschwindigkeit null ist</string>
+    <string name="pref_networktype">Netzwerk Typen</string>
     <string name="pref_font_size">Schriftgröße ändern</string>
     <string name="pref_position">Position</string>
     <string name="pref_suffix">Suffix</string>
-    <string name="pref_display">Display</string>
+    <string name="pref_display">Anzeige</string>
     
     <string-array name="empty_array" />
     <string-array name="unit_entries">
