@@ -8,10 +8,11 @@
     <string name="pref_hide_unit">Skryť jednotku</string>
     <string name="pref_force_unit">Vynútiť jednotku</string>
     <string name="pref_hide_inactive">Skryť pri nulovej rýchlosti</string>
-    <string name="pref_hide_networktzpe">Skryť typy sietí</string>
+    <string name="pref_hide_networktzpe">Typy sietí</string>
     <string name="pref_font_size">Zmeniť veľkosť písma</string>
     <string name="pref_position">Pozícia</string>
     <string name="pref_suffix">Prípona</string>
+    <string name="pref_display">Zobrazenie</string>
     
     <string-array name="unit_entries">
         <item>Automaticky</item>
@@ -21,14 +22,9 @@
     </string-array>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi</item>
-        <item>Mobilné dáta</item>
-    </string-array>
-    
-    <string-array name="fontsize_entries">
-        <item>Normálne</item>
-        <item>Malé</item>
-        <item>Maličké</item>
+        <item>Wi-Fi a mobilné dáta</item>
+        <item>Len Wi-Fi</item>
+        <item>Len mobilné dáta</item>
     </string-array>
     
     <string-array name="position_entries">
@@ -39,6 +35,12 @@
     
     <string-array name="suffix_entries">
         <item>Žiadna</item>
-        <item>Trojuholník</item>
+        <item>Pevný trojuholník</item>
+        <item>Dutý trojuholník</item>
+    </string-array>
+    
+    <string-array name="display_entries">
+         <item>Dva riadky</item>
+         <item>Jeden riadok</item>
     </string-array>
 </resources>
