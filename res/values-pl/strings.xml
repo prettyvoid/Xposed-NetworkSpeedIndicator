@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Network speed indicator</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="pref_show_upload_speed">Pokaż prędkość wysyłania</string>
+    <string name="pref_show_download_speed">Pokaż prędkość pobierania</string>
+    <string name="pref_hide_unit">Ukryj jednostkę</string>
+    <string name="pref_force_unit">Wymuś jednostkę</string>
+    <string name="pref_hide_inactive">Ukryj gdy brak aktywności</string>
+    <string name="pref_networktype">Rodzaje połączeń</string>
+    <string name="pref_font_size">Zmień wielkość czcionki</string>
+    <string name="pref_position">Pozycja</string>
+    <string name="pref_suffix">Wskaźnik</string>
+    <string name="pref_display">Wyświetlanie</string>
+    
+    <string-array name="empty_array" />
+    <string-array name="unit_entries">
+        <item>Auto</item>
+        <item>B/s</item>
+        <item>KB/s</item>
+        <item>MB/s</item>
+    </string-array>
+    <string-array name="networktype_entries">
+        <item>Wi-Fi i dane mobilne</item>
+        <item>Tylko Wi-Fi</item>
+        <item>Tylko dane mobilne</item>
+    </string-array>
+    
+    <string-array name="position_entries">
+        <item>Lewo</item>
+        <item>Prawo</item>
+        <item>Pasek powiadomień</item>
+    </string-array>
+    
+    <string-array name="suffix_entries">
+        <item>Brak</item>
+        <item>Trójkąt z wypełnieniem</item>
+        <item>Trójkąt bez wypełnienia</item>
+    </string-array>
+    
+    <string-array name="display_entries">
+        <item>Dwie linie</item>
+        <item>Jedna linia</item>
+    </string-array>
+</resources>

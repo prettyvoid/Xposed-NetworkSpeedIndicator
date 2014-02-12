@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Indicador de velocidad de la red</string>
+    <string name="title_activity_settings">Configuración</string>
+    <string name="pref_show_upload_speed">Mostrar velocidad de subida</string>
+    <string name="pref_show_download_speed">Mostrar velocidad de descarga</string>
+    <string name="pref_hide_unit">Ocultar unidad</string>
+    <string name="pref_force_unit">Forzar unidad</string>
+    <string name="pref_hide_inactive">Ocultar cuando la velocidad es cero</string>
+    <string name="pref_networktype">Tipos de redes</string>
+    <string name="pref_font_size">Cambiar tamaño de la fuente</string>
+    <string name="pref_position">Posición</string>
+    <string name="pref_suffix">Sufijo</string>
+    <string name="pref_display">Mostrar</string>
+	
+	<string-array name="empty_array" />
+    <string-array name="unit_entries">
+        <item>Automático</item>
+        <item>B/s</item>
+        <item>KB/s</item>
+        <item>MB/s</item>
+    </string-array>
+    <string-array name="networktype_entries">
+        <item>Wi-Fi y Móvil</item>
+        <item>Sólo Wi-Fi</item>
+        <item>Sólo Móvil</item>
+    </string-array>
+    
+    <string-array name="position_entries">
+        <item>Izquierda</item>
+        <item>Derecha</item>
+        <item>Barra de notificaciones</item>
+    </string-array>
+    
+    <string-array name="suffix_entries">
+        <item>Ninguno</item>
+        <item>Triángulo sólido</item>
+        <item>Triángulo hueco</item>
+    </string-array>
+    
+    <string-array name="display_entries">
+        <item>2 líneas</item>
+        <item>1 línea</item>
+    </string-array>
+</resources>

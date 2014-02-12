@@ -21,21 +21,10 @@
         <item>KB/s</item>
         <item>MB/s</item>
     </string-array>
-    <string-array name="unit_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
     <string-array name="networktype_entries">
         <item>WLAN und Mobil</item>
         <item>Nur WLAN</item>
         <item>Nur Mobil</item>
-    </string-array>
-    <string-array name="networktype_values">
-        <item>beide</item>
-        <item>WLAN</item>
-        <item>MOBIL</item>
     </string-array>
     
     <string-array name="position_entries">
@@ -43,29 +32,15 @@
         <item>Rechts</item>
         <item>Benachrichtigungsleiste</item>
     </string-array>
-    <string-array name="position_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     
     <string-array name="suffix_entries">
         <item>Kein</item>
         <item>Gefühltes Dreieck</item>
         <item>Hohles Dreieck</item>
     </string-array>
-    <string-array name="suffix_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     
     <string-array name="display_entries">
         <item>Zwei Zeilen</item>
         <item>Eine Zeile</item>
-    </string-array>
-    <string-array name="display_values">
-        <item>0</item>
-        <item>1</item>
     </string-array>
 </resources>
