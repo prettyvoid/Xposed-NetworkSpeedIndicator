@@ -5,6 +5,12 @@
         android:title="Style"
         android:key="settings" >
         
+        <EditTextPreference 
+            android:defaultValue="1000"
+            android:key="update_interval"
+            android:title="@string/pref_update_interval"
+            android:inputType="number" />
+        
         <CheckBoxPreference 
             android:defaultValue="true"
             android:key="show_upload_speed"

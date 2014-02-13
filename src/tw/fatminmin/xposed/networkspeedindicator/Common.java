@@ -18,6 +18,7 @@ public class Common {
 	public static final String KEY_POSITION = "position";
 	public static final String KEY_SUFFIX = "suffix";
 	public static final String KEY_DISPLAY = "display";
+	public static final String KEY_UPDATE_INTERVAL = "update_interval";
 	
 	public static final String DEF_NETWORK_TYPE = "both";
 	public static final boolean DEF_SHOW_UPLOAD_SPEED = true;
@@ -29,6 +30,7 @@ public class Common {
 	public static final int DEF_POSITION = 0;
 	public static final int DEF_SUFFIX = 1;
 	public static final int DEF_DISPLAY = 0;
+	public static final int DEF_UPDATE_INTERVALE = 1000;
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {

@@ -136,6 +136,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             intent.putExtra(Common.KEY_DISPLAY, 
                     Common.getPrefInt(prefs, Common.KEY_DISPLAY, Common.DEF_DISPLAY));
         }
+		else if(key.equals(Common.KEY_UPDATE_INTERVAL)) {
+            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+            intent.putExtra(Common.KEY_UPDATE_INTERVAL, 
+                    Common.getPrefInt(prefs, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE));
+        }
 		
 		if (intent.getAction() != null) {
 			sendBroadcast(intent);

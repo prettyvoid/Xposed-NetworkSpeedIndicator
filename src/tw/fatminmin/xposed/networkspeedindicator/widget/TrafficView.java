@@ -45,6 +45,7 @@ public class TrafficView extends TextView {
 	int prefFontSize;
 	int prefSuffix;
 	int prefDisplay;
+	int prefUpdateInterval;
 	boolean prefShowUploadSpeed;
 	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
@@ -128,6 +129,10 @@ public class TrafficView extends TextView {
 				}
 				if(intent.hasExtra(Common.KEY_DISPLAY)) {
                     prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+                }
+				
+				if(intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
+                    prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
                 }
 				updateViewVisibility();
 			}
@@ -329,7 +334,7 @@ public class TrafficView extends TextView {
 
 	public void update() {
 		mTrafficHandler.removeCallbacks(mRunnable);
-		mTrafficHandler.postDelayed(mRunnable, 1000);
+		mTrafficHandler.postDelayed(mRunnable, prefUpdateInterval);
 	}
 
 	Runnable mRunnable = new Runnable() {
@@ -372,5 +377,6 @@ public class TrafficView extends TextView {
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
 	}
 }
