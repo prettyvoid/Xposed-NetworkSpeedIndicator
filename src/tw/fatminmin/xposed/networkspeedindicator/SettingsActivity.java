@@ -9,7 +9,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.util.Log;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -32,10 +32,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		super.onResume();
 		
 		@SuppressWarnings("deprecation")
-        PreferenceCategory settings = (PreferenceCategory) findPreference("settings");
+		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
 		for(int i = 0; i < settings.getPreferenceCount(); i++) {
 		    setSummary(settings.getPreference(i));
 		}
+		colorEnable();
 		
 		mPrefs.registerOnSharedPreferenceChangeListener(this);
 	}
@@ -141,13 +142,31 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             intent.putExtra(Common.KEY_UPDATE_INTERVAL, 
                     Common.getPrefInt(prefs, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE));
         }
-		
+		else if(key.equals(Common.KEY_COLOR_MODE)) {
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_COLOR_MODE, 
+                    Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE));
+			colorEnable();
+		}
+		else if(key.equals(Common.KEY_COLOR)) {
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_COLOR, prefs.getInt(Common.KEY_COLOR, Common.DEF_COLOR));
+		}
+			
 		if (intent.getAction() != null) {
 			sendBroadcast(intent);
 			Log.i(TAG, "sendBroadcast");
 		}
 	}
 	
-	
+	@SuppressWarnings("deprecation")
+	void colorEnable() {
+		if(Common.getPrefInt(mPrefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE) == 1) {
+			findPreference(Common.KEY_COLOR).setEnabled(true);
+		}
+		else {
+			findPreference(Common.KEY_COLOR).setEnabled(false);
+		}
+	}
 	
 }

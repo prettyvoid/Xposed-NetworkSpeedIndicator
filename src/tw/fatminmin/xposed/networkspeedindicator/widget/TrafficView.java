@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -26,6 +27,7 @@ import de.robv.android.xposed.XSharedPreferences;
 public class TrafficView extends TextView {
 
     public PositionCallback mPositionCallback = null;
+    public TextView clock = null;
     
 	private static final String TAG = TrafficView.class.getSimpleName();
 	private DecimalFormat uploadDecimalFormat, downloadDecimalFormat;
@@ -46,6 +48,8 @@ public class TrafficView extends TextView {
 	int prefSuffix;
 	int prefDisplay;
 	int prefUpdateInterval;
+	int prefColorMode;
+	int prefColor;
 	boolean prefShowUploadSpeed;
 	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
@@ -84,7 +88,24 @@ public class TrafficView extends TextView {
             break;
         }
 	}
-
+	
+	@SuppressLint("NewApi")
+	public void refreshColor() {
+		switch(prefColorMode) {
+		case 0:
+			if(clock != null) {
+				setTextColor(clock.getCurrentTextColor());
+			}
+			else {
+				// gingerbread;
+				setTextColor(Color.parseColor("#33b5e5"));
+			}
+			break;
+		case 1:
+			setTextColor(prefColor);
+			break;
+		}
+	}
 	
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 
@@ -134,6 +155,12 @@ public class TrafficView extends TextView {
 				if(intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
                     prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
                 }
+				if(intent.hasExtra(Common.KEY_COLOR_MODE)) {
+					prefColorMode = intent.getIntExtra(Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
+				}
+				if(intent.hasExtra(Common.KEY_COLOR)) {
+					prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
+				}
 				updateViewVisibility();
 			}
 		}
@@ -157,6 +184,7 @@ public class TrafficView extends TextView {
 			
 			setText(createText());
 			setTextSize(TypedValue.COMPLEX_UNIT_SP, prefFontSize);
+			refreshColor();
 			
 			update();
 			
@@ -378,5 +406,7 @@ public class TrafficView extends TextView {
 		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
+		prefColorMode = Common.getPrefInt(mPref, Common.KEY_COLOR_MODE	, Common.DEF_COLOR_MODE);
+		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
 	}
 }

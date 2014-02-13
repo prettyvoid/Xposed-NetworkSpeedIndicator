@@ -82,4 +82,10 @@ public class PositionCallbackImpl implements PositionCallback {
             ((ViewGroup) view.getParent()).removeView(view);
         }
     }
+	
+	@Override
+	public ViewGroup getClockParent() {
+		return mStatusBarContents;
+
+	}
 }

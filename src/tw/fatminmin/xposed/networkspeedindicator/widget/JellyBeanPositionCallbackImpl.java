@@ -60,4 +60,8 @@ public class JellyBeanPositionCallbackImpl implements PositionCallback {
 		if(view.getParent()!=null)
 			((ViewGroup)view.getParent()).removeView(view);
 	}
+	@Override
+	public ViewGroup getClockParent() {
+		return mIcons;
+	}
 }

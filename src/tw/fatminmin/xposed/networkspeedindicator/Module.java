@@ -1,5 +1,6 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import tw.fatminmin.xposed.networkspeedindicator.widget.GingerBreadPositionCallb
 import tw.fatminmin.xposed.networkspeedindicator.widget.JellyBeanPositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.PositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.TrafficView;
+import android.annotation.SuppressLint;
 import android.content.res.XResources;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -29,25 +31,41 @@ public class Module implements IXposedHookLoadPackage,
         IXposedHookInitPackageResources {
 
     
+	public TextView getClock() {
+		if(trafficView.mPositionCallback==null) 
+			return null;
+
+		if(trafficView.mPositionCallback.getClockParent().findViewById(clock.getId()) != null) {
+			return clock;
+		}
+
+		return null;
+	}
+	
     
-    @Override
+	@Override
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         if(!lpparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
             return;
         }
         try {
-            Class<?> c = XposedHelpers.findClass("com.android.systemui.statusbar.phone.PhoneStatusBar", lpparam.classLoader);
-            XposedBridge.hookAllMethods(c, "refreshAllStatusBarIcons", new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param)
-                        throws Throwable {
-                    
-                    if(clock != null && trafficView != null) {
-                        trafficView.setTextColor(clock.getCurrentTextColor());
-                    }
-                    XposedBridge.log("hahahah");
-                }
-            });
+        	// we hook this method to follow alpha changes in kitkat
+    		Method setAlpha = XposedHelpers.findMethodBestMatch(XposedHelpers.findClass("com.android.systemui.statusbar.policy.Clock", lpparam.classLoader), "setAlpha", Float.class);
+    		XposedBridge.hookMethod(setAlpha, new XC_MethodHook() {
+				@SuppressLint("NewApi")
+				@Override
+    			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+    				
+					if(param.thisObject != getClock())
+						return;
+					
+    				if(trafficView != null && clock != null) {
+    					if(android.os.Build.VERSION.SDK_INT >= 11) {
+    						trafficView.setAlpha(clock.getAlpha());
+    					}
+    				}
+    			}
+    		});
         }
         catch(Exception e){
             
@@ -88,16 +106,14 @@ public class Module implements IXposedHookLoadPackage,
                             throws Throwable {
                         FrameLayout root = (FrameLayout) liparam.view;
 
-                        clock = (TextView) root
-                                .findViewById(liparam.res.getIdentifier(
-                                        "clock", "id", PKG_NAME_SYSTEM_UI));
+                        clock = (TextView) root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
                         if (trafficView == null) {
                             trafficView = new TrafficView(root.getContext());
+                            trafficView.clock = clock;
                         }
                         if (clock != null) {
                             trafficView.setLayoutParams(clock.getLayoutParams());
-                            trafficView.setTextColor(clock
-                                    .getCurrentTextColor());
+                            trafficView.setTextColor(clock.getCurrentTextColor());
                         } else {
                             // gingerbread
                             trafficView.setLayoutParams(new LayoutParams(
@@ -106,28 +122,21 @@ public class Module implements IXposedHookLoadPackage,
                             trafficView.setTextColor(Color
                                     .parseColor("#33b5e5"));
                         }
-                        trafficView.setGravity(Gravity.RIGHT
-                                | Gravity.CENTER_VERTICAL);
+                        trafficView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 
-                        if (liparam.res.getIdentifier("status_bar_contents",
-                                "id", PKG_NAME_SYSTEM_UI) != 0) {
+                        if (liparam.res.getIdentifier("status_bar_contents", "id", PKG_NAME_SYSTEM_UI) != 0) {
                             // kitkat
                             trafficView.mPositionCallback = new PositionCallbackImpl();
-                        } else if (liparam.res.getIdentifier(
-                                "notification_icon_area", "id",
-                                PKG_NAME_SYSTEM_UI) != 0) {
+                        } else if (liparam.res.getIdentifier("notification_icon_area", "id",PKG_NAME_SYSTEM_UI) != 0) {
                             // jellybean
                             trafficView.mPositionCallback = new JellyBeanPositionCallbackImpl();
-                        } else if (liparam.res.getIdentifier(
-                                "notificationIcons", "id", PKG_NAME_SYSTEM_UI) != 0) {
+                        } else if (liparam.res.getIdentifier("notificationIcons", "id", PKG_NAME_SYSTEM_UI) != 0) {
                             // gingerbread
                             trafficView.mPositionCallback = new GingerBreadPositionCallbackImpl();
                         }
 
-                        trafficView.mPositionCallback.setup(liparam,
-                                trafficView);
+                        trafficView.mPositionCallback.setup(liparam, trafficView);
                         trafficView.refreshPosition();
-
                     }
                 });
     }

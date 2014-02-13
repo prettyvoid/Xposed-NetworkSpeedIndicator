@@ -59,4 +59,8 @@ public static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
         if(view.getParent()!=null)
             ((ViewGroup)view.getParent()).removeView(view);
     }
+    @Override
+	public ViewGroup getClockParent() {
+		return mIcons;
+	}
 }

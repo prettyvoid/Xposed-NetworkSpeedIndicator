@@ -19,6 +19,8 @@ public class Common {
 	public static final String KEY_SUFFIX = "suffix";
 	public static final String KEY_DISPLAY = "display";
 	public static final String KEY_UPDATE_INTERVAL = "update_interval";
+	public static final String KEY_COLOR_MODE = "color_mode";
+	public static final String KEY_COLOR = "color";
 	
 	public static final String DEF_NETWORK_TYPE = "both";
 	public static final boolean DEF_SHOW_UPLOAD_SPEED = true;
@@ -31,6 +33,8 @@ public class Common {
 	public static final int DEF_SUFFIX = 1;
 	public static final int DEF_DISPLAY = 0;
 	public static final int DEF_UPDATE_INTERVALE = 1000;
+	public static final int DEF_COLOR_MODE = 0;
+	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {
