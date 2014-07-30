@@ -15,6 +15,8 @@
     <string name="pref_display">Display</string>
     <string name="pref_update_interval">Update Interval</string>
     <string name="pref_color_mode">Color Mode</string>
+    <string name="color1_title">Color</string>
+    <string name="color1_summary">Color</string>
     
     <string-array name="empty_array" />
     <string-array name="unit_entries">
