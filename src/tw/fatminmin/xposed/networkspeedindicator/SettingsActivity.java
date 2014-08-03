@@ -102,6 +102,18 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.putExtra(Common.KEY_HIDE_UNIT, prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT));
 			
 		}
+		else if (key.equals(Common.KEY_NO_SPACE)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_NO_SPACE, prefs.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE));
+			
+		}
+		else if (key.equals(Common.KEY_HIDE_B)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_HIDE_B, prefs.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B));
+			
+		}
 		else if (key.equals(Common.KEY_HIDE_INACTIVE)) {
 			
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
@@ -161,11 +173,15 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	
 	@SuppressWarnings("deprecation")
 	void colorEnable() {
+		try {
 		if(Common.getPrefInt(mPrefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE) == 1) {
 			findPreference(Common.KEY_COLOR).setEnabled(true);
 		}
 		else {
 			findPreference(Common.KEY_COLOR).setEnabled(false);
+		}
+		} catch (NullPointerException npe) {
+			//gobble it up
 		}
 	}
 	

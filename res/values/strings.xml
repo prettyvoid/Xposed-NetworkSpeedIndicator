@@ -6,6 +6,8 @@
     <string name="pref_show_upload_speed">Show upload speed</string>
     <string name="pref_show_download_speed">Show download speed</string>
     <string name="pref_hide_unit">Hide unit</string>
+    <string name="pref_no_space">No space before unit</string>
+    <string name="pref_hide_b">Hide B in unit</string>
     <string name="pref_force_unit">Force unit</string>
     <string name="pref_hide_inactive">Hide when speed is zero</string>
     <string name="pref_networktype">Network Types</string>
@@ -15,8 +17,8 @@
     <string name="pref_display">Display</string>
     <string name="pref_update_interval">Update Interval</string>
     <string name="pref_color_mode">Color Mode</string>
-    <string name="color1_title">Color</string>
-    <string name="color1_summary">Color</string>
+    <!--  <string name="color1_title">Color</string>
+    <string name="color1_summary">Color</string> -->
     
     <string-array name="empty_array" />
     <string-array name="unit_entries">

@@ -11,6 +11,8 @@ public class Common {
 	public static final String KEY_SHOW_UPLOAD_SPEED = "show_upload_speed";
 	public static final String KEY_SHOW_DOWNLOAD_SPEED = "show_download_speed";
 	public static final String KEY_HIDE_UNIT = "hide_unit";
+	public static final String KEY_NO_SPACE = "no_space";
+	public static final String KEY_HIDE_B = "hide_b";
 	public static final String KEY_HIDE_INACTIVE = "hide_inactive";
 	public static final String KEY_FORCE_UNIT = "force_unit";
 	public static final String KEY_NETWORK_TYPE = "network_type";
@@ -26,6 +28,8 @@ public class Common {
 	public static final boolean DEF_SHOW_UPLOAD_SPEED = true;
 	public static final boolean DEF_SHOW_DOWNLOAD_SPEED = true;
 	public static final boolean DEF_HIDE_UNIT = false;
+	public static final boolean DEF_NO_SPACE = false;
+	public static final boolean DEF_HIDE_B = false;
 	public static final boolean DEF_HIDE_INACTIVE = false;
 	public static final int DEF_FORCE_UNIT = 0;
 	public static final int DEF_FONT_SIZE = 10;

@@ -55,6 +55,16 @@
 	
 	<CheckBoxPreference
 	    android:defaultValue="0"
+	    android:key="no_space"
+	    android:title="@string/pref_no_space" />
+	
+	<CheckBoxPreference
+	    android:defaultValue="0"
+	    android:key="hide_b"
+	    android:title="@string/pref_hide_b" />
+	
+	<CheckBoxPreference
+	    android:defaultValue="0"
 	    android:key="hide_inactive"
 	    android:title="@string/pref_hide_inactive" />
 	
@@ -77,12 +87,12 @@
 	    android:entryValues="@array/color_mode_values"
 	    android:key="color_mode"
 	    android:title="@string/pref_color_mode" />
-    <net.margaritov.preference.colorpicker.ColorPickerPreference
+    <!-- <net.margaritov.preference.colorpicker.ColorPickerPreference
 		android:key="color"
 		android:title="@string/color1_title"
 		android:summary="@string/color1_summary"
 		android:defaultValue="@android:color/white"    
 		alphaSlider="true"                              
-	/>
+	/> -->
 
 </PreferenceScreen>
