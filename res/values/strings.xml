@@ -10,6 +10,7 @@
     <string name="pref_hide_b">Hide B in unit</string>
     <string name="pref_force_unit">Force unit</string>
     <string name="pref_hide_inactive">Hide when speed is zero</string>
+    <string name="pref_show_suffix">Always show suffix</string>
     <string name="pref_networktype">Network Types</string>
     <string name="pref_font_size">Change font size</string>
     <string name="pref_position">Position</string>

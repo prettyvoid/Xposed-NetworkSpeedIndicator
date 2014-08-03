@@ -31,6 +31,8 @@ public class TrafficView extends TextView {
     
 	private static final String TAG = TrafficView.class.getSimpleName();
 	private DecimalFormat uploadDecimalFormat, downloadDecimalFormat;
+	private static final DecimalFormat formatWithDecimal    = new DecimalFormat(" ##0.0");
+	private static final DecimalFormat formatWithoutDecimal = new DecimalFormat(" ##0");
 	
 	private boolean mAttached;
 	// TrafficStats mTrafficStats;
@@ -56,6 +58,7 @@ public class TrafficView extends TextView {
 	boolean prefNoSpace;
 	boolean prefHideB;
 	boolean prefHideInactive;
+	boolean prefShowSuffix;
 	String prefNetworkType;
 	
 	String uploadSuffix = "";
@@ -140,8 +143,8 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_HIDE_INACTIVE)) {
 					prefHideInactive = intent.getBooleanExtra(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
 				}
-				if (intent.hasExtra(Common.KEY_HIDE_INACTIVE)) {
-					prefHideInactive = intent.getBooleanExtra(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+				if (intent.hasExtra(Common.KEY_SHOW_SUFFIX)) {
+				    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 				}
 				if(intent.hasExtra(Common.KEY_FONT_SIZE)) {
 				    prefFontSize = intent.getIntExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
@@ -161,7 +164,7 @@ public class TrafficView extends TextView {
                 }
 				
 				if(intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
-                    prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
+                    prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
                 }
 				if(intent.hasExtra(Common.KEY_COLOR_MODE)) {
 					prefColorMode = intent.getIntExtra(Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
@@ -255,48 +258,48 @@ public class TrafficView extends TextView {
 		    if (((float) uploadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
                 uploadValue = ((float) uploadSpeed) / 1048576f;
                 uploadUnit = "M";
-                uploadDecimalFormat = new DecimalFormat(" ##0.0");
+                uploadDecimalFormat = formatWithDecimal;
             } else if (((float) uploadSpeed) / 1024f >= 1) {
                 uploadValue = ((float) uploadSpeed) / 1024f;
                 uploadUnit = "K";
-                uploadDecimalFormat = new DecimalFormat(" ##0");
+                uploadDecimalFormat = formatWithoutDecimal;
             } else {
                 uploadValue = uploadSpeed;
                 uploadUnit = "";
-                uploadDecimalFormat = new DecimalFormat(" ##0");
+                uploadDecimalFormat = formatWithoutDecimal;
             }
 		    
 			if (((float) downloadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
 				downloadValue = ((float) downloadSpeed) / 1048576f;
 				downloadUnit = "M";
-				downloadDecimalFormat = new DecimalFormat(" ##0.0");
+				downloadDecimalFormat = formatWithDecimal;
 			} else if (((float) downloadSpeed) / 1024f >= 1) {
 				downloadValue = ((float) downloadSpeed) / 1024f;
 				downloadUnit = "K";
-				downloadDecimalFormat = new DecimalFormat(" ##0");
+				downloadDecimalFormat = formatWithoutDecimal;
 			} else {
 				downloadValue = downloadSpeed;
 				downloadUnit = "";
-				downloadDecimalFormat = new DecimalFormat(" ##0");
+				downloadDecimalFormat = formatWithoutDecimal;
 			}
 			break;
 		case 1:
 			downloadValue = downloadSpeed;
 			uploadValue = uploadSpeed;
 			uploadUnit = downloadUnit = "";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0");
+			uploadDecimalFormat = downloadDecimalFormat = formatWithoutDecimal;
 			break;
 		case 2:
 			downloadValue = ((float) downloadSpeed) / 1024f;
 			uploadValue = ((float) uploadSpeed) / 1024f;
 			uploadUnit = downloadUnit = "K";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0");
+			uploadDecimalFormat = downloadDecimalFormat = formatWithoutDecimal;
 			break;
 		case 3:
 			downloadValue = ((float) downloadSpeed) / 1048576f;
 			uploadValue = ((float) uploadSpeed) / 1048576f;
 			uploadUnit = downloadUnit = "M";
-			uploadDecimalFormat = downloadDecimalFormat = new DecimalFormat(" ##0.0");
+			uploadDecimalFormat = downloadDecimalFormat = formatWithDecimal;
 			break;
 		}
 		
@@ -336,11 +339,18 @@ public class TrafficView extends TextView {
 		    }
 		    strUploadValue += uploadSuffix;
 		}
+		else if (prefShowSuffix) {
+			strUploadValue += uploadSuffix;
+		}
+		
 		if(strDownloadValue.length() > 0) {
 		    if(!prefHideUnit) {
 		        strDownloadValue += formatUnit(downloadUnit);
 		    }
 		    strDownloadValue += downloadSuffix;
+		}
+		else if (prefShowSuffix) {
+			strDownloadValue += downloadSuffix;
 		}
 		
 		boolean showInExactPosition = (prefShowUploadSpeed && prefShowDownloadSpeed);
@@ -373,8 +383,8 @@ public class TrafficView extends TextView {
 	
 	private String formatUnit(String unit) {
 		if (!prefHideB) {
-	    	unit += "B";
-	    }
+			unit += "B";
+		}
 		if ((!prefNoSpace) && (unit.length() > 0)) {
 			unit = " " + unit;
 		}
@@ -423,12 +433,13 @@ public class TrafficView extends TextView {
 		prefNoSpace = mPref.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE);
 		prefHideB = mPref.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
 		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+		prefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 		prefFontSize = Common.getPrefInt(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
-		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
+		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
 		prefColorMode = Common.getPrefInt(mPref, Common.KEY_COLOR_MODE	, Common.DEF_COLOR_MODE);
 		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
 	}
