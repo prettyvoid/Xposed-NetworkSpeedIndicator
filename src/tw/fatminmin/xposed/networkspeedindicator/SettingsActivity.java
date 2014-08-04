@@ -200,12 +200,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	
 	@SuppressWarnings("deprecation")
 	void refreshSetEnabled(SharedPreferences prefs) {
-		try {
-			int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
-			findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
-		} catch (NullPointerException npe) {
-			//gobble it up
-		}
+		int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
+		findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
 		
     	//enable only when hide unit is disabled
     	boolean prefHideUnit = prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
