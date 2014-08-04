@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tw.fatminmin.xposed.networkspeedindicator"
     android:versionCode="12"
-    android:versionName="0.7.3.2" >
+    android:versionName="0.9" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -20,7 +20,7 @@
             android:value="2.4*" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Display traffic stats on statusbar" />
+            android:value="@string/app_description" />
 
         <activity
             android:name="tw.fatminmin.xposed.networkspeedindicator.SettingsActivity"

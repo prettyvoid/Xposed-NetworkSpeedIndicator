@@ -1,5 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
+import java.util.HashSet;
+
 import android.content.SharedPreferences;
 
 public class Common {
@@ -24,6 +26,7 @@ public class Common {
 	public static final String KEY_UPDATE_INTERVAL = "update_interval";
 	public static final String KEY_COLOR_MODE = "color_mode";
 	public static final String KEY_COLOR = "color";
+	public static final String KEY_FONT_STYLE = "font_style";
 	
 	public static final String DEF_NETWORK_TYPE = "both";
 	public static final boolean DEF_SHOW_UPLOAD_SPEED = true;
@@ -41,6 +44,7 @@ public class Common {
 	public static final int DEF_UPDATE_INTERVAL = 1000;
 	public static final int DEF_COLOR_MODE = 0;
 	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
+	public static final HashSet<String> DEF_FONT_STYLE = new HashSet<String>();
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {

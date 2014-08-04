@@ -1,5 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
+import java.util.HashSet;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.util.Log;
+
+import com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
@@ -33,9 +37,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		
 		@SuppressWarnings("deprecation")
 		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
-		for(int i = 0; i < settings.getPreferenceCount(); i++) {
-		    setSummary(settings.getPreference(i));
-		}
+		setAllSummary(settings);
 		refreshSetEnabled(mPrefs);
 		
 		mPrefs.registerOnSharedPreferenceChangeListener(this);
@@ -47,6 +49,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		super.onPause();
 	}
 
+	void setAllSummary(PreferenceGroup group) {
+		for(int i = 0; i < group.getPreferenceCount(); i++) {
+			if(group.getPreference(i) instanceof PreferenceGroup) {
+				setAllSummary((PreferenceGroup) group.getPreference(i));
+			}
+			else {
+				setSummary(group.getPreference(i));
+			}
+		}
+	}
 	
     void setSummary(Preference preference) {
 	    if (preference instanceof ListPreference) {
@@ -57,10 +69,22 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             EditTextPreference editPref = (EditTextPreference) preference;
             preference.setSummary(editPref.getText());
         }
+        else if(preference instanceof MultiSelectListPreferenceCompat) {
+        	MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) preference;
+        	
+        	String summary = "";
+        	for(String str : mulPref.getValues()) {
+        		if(summary.length() > 0) {
+        			summary += ", ";
+        		}
+        		summary += str;
+        	}
+        	mulPref.setSummary(summary);
+        }
 	}
 	
-	@SuppressWarnings("deprecation")
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		Intent intent = new Intent();
 		Log.i(TAG, "onSharedPreferenceChanged "+key);
@@ -160,7 +184,14 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_COLOR, prefs.getInt(Common.KEY_COLOR, Common.DEF_COLOR));
 		}
+		else if(key.equals(Common.KEY_FONT_STYLE)) {
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			
+			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
+			HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
+			intent.putExtra(Common.KEY_FONT_STYLE, value);
+		}
+		
 		if (intent.getAction() != null) {
 			sendBroadcast(intent);
 			Log.i(TAG, "sendBroadcast");
