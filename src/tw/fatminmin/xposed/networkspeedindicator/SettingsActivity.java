@@ -38,7 +38,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		@SuppressWarnings("deprecation")
 		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
 		setAllSummary(settings);
-		colorEnable();
+		refreshSetEnabled(mPrefs);
 		
 		mPrefs.registerOnSharedPreferenceChangeListener(this);
 	}
@@ -60,16 +60,14 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
 	
-    boolean setSummary(Preference preference) {
+    void setSummary(Preference preference) {
 	    if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
             preference.setSummary(listPref.getEntry());
-            return true;
         }
         else if(preference instanceof EditTextPreference) {
             EditTextPreference editPref = (EditTextPreference) preference;
-            editPref.setSummary(editPref.getText());
-            return true;
+            preference.setSummary(editPref.getText());
         }
         else if(preference instanceof MultiSelectListPreferenceCompat) {
         	MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) preference;
@@ -82,10 +80,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         		summary += str;
         	}
         	mulPref.setSummary(summary);
-        	return true;
-        }
-        else {
-            return false;
         }
 	}
 	
@@ -96,6 +90,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		Log.i(TAG, "onSharedPreferenceChanged "+key);
 		
 		setSummary(findPreference(key));
+		refreshSetEnabled(prefs);
 		
 		if(key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
 		    
@@ -111,10 +106,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
                     prefs.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED));
 		    
 		}
-		else if(key.equals(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
-		    
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		}
 		else if (key.equals(Common.KEY_FORCE_UNIT)) {
 		    
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
@@ -127,11 +118,28 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.putExtra(Common.KEY_HIDE_UNIT, prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT));
 			
 		}
+		else if (key.equals(Common.KEY_NO_SPACE)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_NO_SPACE, prefs.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE));
+			
+		}
+		else if (key.equals(Common.KEY_HIDE_B)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_HIDE_B, prefs.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B));
+			
+		}
 		else if (key.equals(Common.KEY_HIDE_INACTIVE)) {
 			
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_HIDE_INACTIVE,
 					prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE));
+		}
+		else if (key.equals(Common.KEY_SHOW_SUFFIX)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_SHOW_SUFFIX, prefs.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX));
 			
 		}
 		else if(key.equals(Common.KEY_FONT_SIZE)) {
@@ -140,7 +148,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		    intent.putExtra(Common.KEY_FONT_SIZE,
 		            Common.getPrefInt(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
 		    
-		    findPreference(Common.KEY_FONT_SIZE).setSummary(prefs.getString(Common.KEY_FONT_SIZE, "10"));
+		    findPreference(Common.KEY_FONT_SIZE).setSummary(prefs.getString(Common.KEY_FONT_SIZE, String.valueOf(Common.DEF_FONT_SIZE)));
 		    
 		}
 		else if(key.equals(Common.KEY_POSITION)) {
@@ -165,13 +173,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		else if(key.equals(Common.KEY_UPDATE_INTERVAL)) {
             intent.setAction(Common.ACTION_SETTINGS_CHANGED);
             intent.putExtra(Common.KEY_UPDATE_INTERVAL, 
-                    Common.getPrefInt(prefs, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE));
+                    Common.getPrefInt(prefs, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL));
         }
 		else if(key.equals(Common.KEY_COLOR_MODE)) {
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_COLOR_MODE, 
                     Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE));
-			colorEnable();
 		}
 		else if(key.equals(Common.KEY_COLOR)) {
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
@@ -192,13 +199,18 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 	
 	@SuppressWarnings("deprecation")
-	void colorEnable() {
-		if(Common.getPrefInt(mPrefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE) == 1) {
-			findPreference(Common.KEY_COLOR).setEnabled(true);
-		}
-		else {
-			findPreference(Common.KEY_COLOR).setEnabled(false);
-		}
+	void refreshSetEnabled(SharedPreferences prefs) {
+		int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
+		findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
+		
+    	//enable only when hide unit is disabled
+    	boolean prefHideUnit = prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
+    	findPreference(Common.KEY_NO_SPACE).setEnabled(!prefHideUnit);
+    	findPreference(Common.KEY_HIDE_B).setEnabled(!prefHideUnit);
+    	
+    	boolean prefHideInactive = prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+    	int prefSuffix = Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideInactive && prefSuffix != 0);
 	}
 	
 }
