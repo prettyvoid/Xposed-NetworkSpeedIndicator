@@ -2,102 +2,113 @@
 <PreferenceScreen 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="settings" >
-        
-	<EditTextPreference 
-	    android:defaultValue="1000"
-	    android:key="update_interval"
-	    android:title="@string/pref_update_interval"
-	    android:inputType="number" />
+    
+    <PreferenceCategory 
+	    android:title="Indicator Settings">
+	    <EditTextPreference 
+		    android:defaultValue="1000"
+		    android:key="update_interval"
+		    android:title="@string/pref_update_interval"
+		    android:inputType="number" />
+	    <ListPreference 
+		    android:defaultValue="both"
+		    android:key="network_type"
+		    android:title="@string/pref_networktype"
+		    android:entries="@array/networktype_entries"
+		    android:entryValues="@array/networktype_values" />
+	    <ListPreference
+		    android:defaultValue="0"
+		    android:entries="@array/position_entries"
+		    android:entryValues="@array/position_values"
+		    android:key="position"
+		    android:title="@string/pref_position"
+		    />
+	    <CheckBoxPreference 
+		    android:defaultValue="true"
+		    android:key="show_upload_speed"
+		    android:title="@string/pref_show_upload_speed" />
+		
+		<CheckBoxPreference 
+		    android:defaultValue="true"
+		    android:key="show_download_speed"
+		    android:title="@string/pref_show_download_speed" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="hide_unit"
+		    android:title="@string/pref_hide_unit" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="no_space"
+		    android:title="@string/pref_no_space" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="hide_b"
+		    android:title="@string/pref_hide_b" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="hide_inactive"
+		    android:title="@string/pref_hide_inactive" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="show_suffix"
+		    android:title="@string/pref_show_suffix" />
+		
+		<ListPreference
+		    android:defaultValue="0"
+		    android:entries="@array/unit_entries"
+		    android:entryValues="@array/unit_values"
+		    android:key="force_unit"
+		    android:title="@string/pref_force_unit" />
+    </PreferenceCategory>
 	
-	<CheckBoxPreference 
-	    android:defaultValue="true"
-	    android:key="show_upload_speed"
-	    android:title="@string/pref_show_upload_speed" />
+	<PreferenceCategory 
+	    android:title="Text Apperance">
+	    
+	    <EditTextPreference
+		    android:defaultValue="10"
+		    android:key="font_size"
+		    android:title="@string/pref_font_size"
+		    android:inputType="number"
+		    />
+	    
+	    <com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat
+	        android:defaultValue="@array/empty_array"
+	        android:key="font_style"
+	        android:title="@string/pref_font_style"
+	        android:entries="@array/font_style_entries"
+		    android:entryValues="@array/font_style_values" />
+	    
+	    <ListPreference
+	        android:defaultValue="0"
+		    android:key="display"
+		    android:title="@string/pref_display"
+		    android:entries="@array/display_entries"
+		    android:entryValues="@array/display_values" />
+	    
+	    <ListPreference
+		    android:defaultValue="1"
+		    android:entries="@array/suffix_entries"
+		    android:entryValues="@array/suffix_values"
+		    android:key="suffix"
+		    android:title="@string/pref_suffix" />
+		<ListPreference
+		    android:defaultValue="0"
+		    android:entries="@array/color_mode_entries"
+		    android:entryValues="@array/color_mode_values"
+		    android:key="color_mode"
+		    android:title="@string/pref_color_mode" />
+	    <net.margaritov.preference.colorpicker.ColorPickerPreference
+			android:key="color"
+			android:title="@string/pref_color"
+			android:defaultValue="@android:color/white"    
+			alphaSlider="true"                              
+		/>
+	</PreferenceCategory>
 	
-	<CheckBoxPreference 
-	    android:defaultValue="true"
-	    android:key="show_download_speed"
-	    android:title="@string/pref_show_download_speed" />
-	
-	<ListPreference
-	    android:defaultValue="0"
-	    android:key="display"
-	    android:title="@string/pref_display"
-	    android:entries="@array/display_entries"
-	    android:entryValues="@array/display_values" />
-	
-	<ListPreference 
-	    android:defaultValue="both"
-	    android:key="network_type"
-	    android:title="@string/pref_networktype"
-	    android:entries="@array/networktype_entries"
-	    android:entryValues="@array/networktype_values" />
-	
-	<EditTextPreference
-	    android:defaultValue="10"
-	    android:key="font_size"
-	    android:title="@string/pref_font_size"
-	    android:inputType="number"
-	    />
-	
-	<ListPreference
-	    android:defaultValue="0"
-	    android:entries="@array/position_entries"
-	    android:entryValues="@array/position_values"
-	    android:key="position"
-	    android:title="@string/pref_position"
-	    />
-	
-	<CheckBoxPreference
-	    android:defaultValue="0"
-	    android:key="hide_unit"
-	    android:title="@string/pref_hide_unit" />
-	
-	<CheckBoxPreference
-	    android:defaultValue="0"
-	    android:key="no_space"
-	    android:title="@string/pref_no_space" />
-	
-	<CheckBoxPreference
-	    android:defaultValue="0"
-	    android:key="hide_b"
-	    android:title="@string/pref_hide_b" />
-	
-	<CheckBoxPreference
-	    android:defaultValue="0"
-	    android:key="hide_inactive"
-	    android:title="@string/pref_hide_inactive" />
-	
-	<CheckBoxPreference
-	    android:defaultValue="0"
-	    android:key="show_suffix"
-	    android:title="@string/pref_show_suffix" />
-	
-	<ListPreference
-	    android:defaultValue="0"
-	    android:entries="@array/unit_entries"
-	    android:entryValues="@array/unit_values"
-	    android:key="force_unit"
-	    android:title="@string/pref_force_unit" />
-	
-	<ListPreference
-	    android:defaultValue="1"
-	    android:entries="@array/suffix_entries"
-	    android:entryValues="@array/suffix_values"
-	    android:key="suffix"
-	    android:title="@string/pref_suffix" />
-	<ListPreference
-	    android:defaultValue="0"
-	    android:entries="@array/color_mode_entries"
-	    android:entryValues="@array/color_mode_values"
-	    android:key="color_mode"
-	    android:title="@string/pref_color_mode" />
-    <!-- <net.margaritov.preference.colorpicker.ColorPickerPreference
-		android:key="color"
-		android:title="@string/color1_title"
-		android:summary="@string/color1_summary"
-		android:defaultValue="@android:color/white"    
-		alphaSlider="true"                              
-	/> -->
 
 </PreferenceScreen>

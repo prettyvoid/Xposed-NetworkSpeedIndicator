@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Индикатор скорости сети</string>
+    <string name="dialog_color_picker">Выбор Цвета</string>
+    <string name="press_color_to_apply">Нажмите на цвет, чтобы применить</string>
+    <string name="pref_category">Категория</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="pref_show_upload_speed">Скорость отдачи</string>
+    <string name="pref_show_download_speed">Скорость приема</string>
+    <string name="pref_hide_unit">Скрыть Ед. Измерения</string>
+    <string name="pref_force_unit">Выбрать Ед. Измерения</string>
+    <string name="pref_hide_inactive">Скрыть если = Нулю</string>
+    <string name="pref_networktype">Типы Сетей</string>
+    <string name="pref_font_size">Размер шрифта</string>
+    <string name="pref_position">Позиция</string>
+    <string name="pref_suffix">Суффикс</string>
+    <string name="pref_display">Отображение</string>
+    <string name="pref_update_interval">Интервал Обновления</string>
+    <string name="pref_color_mode">Режим цвета</string>
+    <string name="pref_color">Цвет</string>
+    <string name="pref_font_style">Стиль шрифта</string>
+</resources>
