@@ -32,8 +32,9 @@ public class Module implements IXposedHookLoadPackage,
 
     
 	public TextView getClock() {
-		if(trafficView.mPositionCallback==null) 
+		if(trafficView == null || trafficView.mPositionCallback == null) { 
 			return null;
+		}
 
 		if(trafficView.mPositionCallback.getClockParent().findViewById(clock.getId()) != null) {
 			return clock;
@@ -50,7 +51,9 @@ public class Module implements IXposedHookLoadPackage,
         }
         try {
         	// we hook this method to follow alpha changes in kitkat
-    		Method setAlpha = XposedHelpers.findMethodBestMatch(XposedHelpers.findClass("com.android.systemui.statusbar.policy.Clock", lpparam.classLoader), "setAlpha", Float.class);
+        	Class<?> cClock = XposedHelpers.findClass("com.android.systemui.statusbar.policy.Clock", lpparam.classLoader);
+        	
+    		Method setAlpha = XposedHelpers.findMethodBestMatch(cClock, "setAlpha", Float.class);
     		XposedBridge.hookMethod(setAlpha, new XC_MethodHook() {
 				@SuppressLint("NewApi")
 				@Override
@@ -63,6 +66,18 @@ public class Module implements IXposedHookLoadPackage,
     					if(android.os.Build.VERSION.SDK_INT >= 11) {
     						trafficView.setAlpha(clock.getAlpha());
     					}
+    				}
+    			}
+    		});
+    		XposedBridge.hookAllMethods(cClock, "setTextColor", new XC_MethodHook() {
+				@Override
+    			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+    				
+					if(param.thisObject != getClock())
+						return;
+					
+    				if(trafficView != null && clock != null) {
+    					trafficView.setTextColor(clock.getCurrentTextColor());
     				}
     			}
     		});

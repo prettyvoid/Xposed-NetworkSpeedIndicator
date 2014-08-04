@@ -1,7 +1,9 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import tw.fatminmin.xposed.networkspeedindicator.Common;
 import android.annotation.SuppressLint;
@@ -10,12 +12,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -55,6 +60,7 @@ public class TrafficView extends TextView {
 	boolean prefHideUnit;
 	boolean prefHideInactive;
 	String prefNetworkType;
+	Set<String> prefFontStyle = new HashSet<String>();
 	
 	String uploadSuffix = "";
 	String downloadSuffix = "";
@@ -109,6 +115,7 @@ public class TrafficView extends TextView {
 	
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -161,6 +168,9 @@ public class TrafficView extends TextView {
 				if(intent.hasExtra(Common.KEY_COLOR)) {
 					prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
 				}
+				if(intent.hasExtra(Common.KEY_FONT_STYLE)) {
+					prefFontStyle = (Set<String>) intent.getSerializableExtra(Common.KEY_FONT_STYLE);
+				}
 				updateViewVisibility();
 			}
 		}
@@ -182,7 +192,15 @@ public class TrafficView extends TextView {
 			totalRxBytes = TrafficStats.getTotalRxBytes();
 			lastUpdateTime = SystemClock.elapsedRealtime();
 			
-			setText(createText());
+			SpannableString spanString = new SpannableString(createText());
+			if(prefFontStyle.contains("Bold")) {
+				spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
+			}
+			if(prefFontStyle.contains("Italic")) {
+				spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+			}
+			
+			setText(spanString);
 			setTextSize(TypedValue.COMPLEX_UNIT_SP, prefFontSize);
 			refreshColor();
 			
@@ -408,5 +426,6 @@ public class TrafficView extends TextView {
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVALE);
 		prefColorMode = Common.getPrefInt(mPref, Common.KEY_COLOR_MODE	, Common.DEF_COLOR_MODE);
 		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
+		prefFontStyle = mPref.getStringSet(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
 	}
 }
