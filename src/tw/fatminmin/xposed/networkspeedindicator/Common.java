@@ -45,6 +45,17 @@ public class Common {
 	public static final int DEF_COLOR_MODE = 0;
 	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
 	public static final HashSet<String> DEF_FONT_STYLE = new HashSet<String>();
+	
+	public static final String BIG_UP_TRIANGLE = " \u25B2 ";
+	public static final String BIG_DOWN_TRIANGLE = " \u25BC ";
+	public static final String SMALL_UP_TRIANGLE = " \u25B4 ";
+	public static final String SMALL_DOWN_TRIANGLE = " \u25BE ";
+	
+	public static final String BIG_UP_HOLLOW_TRIANGLE = " \u25B3 ";
+	public static final String BIG_DOWN_HOLLOW_TRIANGLE = " \u25BD ";
+	public static final String SMALL_UP_HOLLOW_TRIANGLE = " \u25B5 ";
+	public static final String SMALL_DOWN_HOLLOW_TRIANGLE = " \u25BF ";
+	
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {

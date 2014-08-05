@@ -342,12 +342,12 @@ public class TrafficView extends TextView {
 		    uploadSuffix = downloadSuffix = " ";
 		    break;
 		case 1:
-		    uploadSuffix = " \u25B2 ";
-		    downloadSuffix = " \u25BC ";
+		    uploadSuffix = Common.SMALL_UP_TRIANGLE;
+		    downloadSuffix = Common.SMALL_DOWN_TRIANGLE;
 		    break;
 		case 2:
-		    uploadSuffix = " \u25B3 ";
-		    downloadSuffix = " \u25BD ";
+		    uploadSuffix = Common.SMALL_UP_HOLLOW_TRIANGLE;
+		    downloadSuffix = Common.SMALL_DOWN_HOLLOW_TRIANGLE;
 		    break;
 		}
 		
