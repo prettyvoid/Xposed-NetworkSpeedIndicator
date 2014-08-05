@@ -48,12 +48,12 @@ public class Common {
 	
 	public static final String BIG_UP_TRIANGLE = " \u25B2 ";
 	public static final String BIG_DOWN_TRIANGLE = " \u25BC ";
-	public static final String SMALL_UP_TRIANGLE = " \u25B4 ";
+	public static final String SMALL_UP_TRIANGLE = "\u25B4";
 	public static final String SMALL_DOWN_TRIANGLE = " \u25BE ";
 	
 	public static final String BIG_UP_HOLLOW_TRIANGLE = " \u25B3 ";
 	public static final String BIG_DOWN_HOLLOW_TRIANGLE = " \u25BD ";
-	public static final String SMALL_UP_HOLLOW_TRIANGLE = " \u25B5 ";
+	public static final String SMALL_UP_HOLLOW_TRIANGLE = "\u25B5";
 	public static final String SMALL_DOWN_HOLLOW_TRIANGLE = " \u25BF ";
 	
 
