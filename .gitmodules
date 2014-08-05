@@ -1,0 +1,6 @@
+[submodule "android-ColorPickerPreference"]
+	path = android-ColorPickerPreference
+	url = https://github.com/attenzione/android-ColorPickerPreference.git
+[submodule "mulsellistprefcompat"]
+	path = mulsellistprefcompat
+	url = https://github.com/h6ah4i/mulsellistprefcompat
