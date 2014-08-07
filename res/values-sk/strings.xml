@@ -2,7 +2,6 @@
 <resources>
     
     <string name="app_name">Ukazovateľ Rýchlosti Siete</string>
-    <string name="title_activity_settings">Nastavenia</string>
     <string name="pref_category_ind_settings">Nastavenia ukazovateľa</string>
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>

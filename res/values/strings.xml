@@ -3,7 +3,6 @@
     
     <string name="app_name">Network Speed Indicator</string>
     <string name="app_description">Displays traffic stats on statusbar</string>
-    <string name="title_activity_settings">Settings</string>
     <string name="pref_category_ind_settings">Indicator settings</string>
     <string name="pref_category_ind_appearance">Indicator appearance</string>
     <string name="pref_category_unit_settings">Unit settings</string>

@@ -2,7 +2,6 @@
 <resources>
     
     <string name="app_name">Indicador de Velocidad de la Red</string>
-    <string name="title_activity_settings">Configuración</string>
     <string name="pref_show_upload_speed">Mostrar velocidad de subida</string>
     <string name="pref_show_download_speed">Mostrar velocidad de descarga</string>
     <string name="pref_hide_unit">Ocultar unidad</string>
