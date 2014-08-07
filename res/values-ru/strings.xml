@@ -17,4 +17,8 @@
     <string name="pref_color">Цвет</string>
     <string name="pref_font_style">Стиль шрифта</string>
     
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Выбор цвета</string>
+    <string name="press_color_to_apply">Нажмите на цвет, чтобы применить</string>
+    
 </resources>

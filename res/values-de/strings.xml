@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-	<!-- app_name follows default -->
+    <!-- app_name follows default -->
     <string name="pref_show_upload_speed">Zeige upload geschwindigkeit</string>
     <string name="pref_show_download_speed">Zeige download geschwindigkeit</string>
     <string name="pref_hide_unit">Einheit verstecken</string>
