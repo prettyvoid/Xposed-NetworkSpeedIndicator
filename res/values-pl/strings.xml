@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Network speed indicator</string>
+    
+	<!-- app_name follows default -->
     <string name="title_activity_settings">Ustawienia</string>
     <string name="pref_show_upload_speed">Pokaż prędkość wysyłania</string>
     <string name="pref_show_download_speed">Pokaż prędkość pobierania</string>
@@ -14,13 +14,13 @@
     <string name="pref_suffix">Wskaźnik</string>
     <string name="pref_display">Wyświetlanie</string>
     
-    <string-array name="empty_array" />
     <string-array name="unit_entries">
         <item>Auto</item>
         <item>B/s</item>
         <item>KB/s</item>
         <item>MB/s</item>
     </string-array>
+    
     <string-array name="networktype_entries">
         <item>Wi-Fi i dane mobilne</item>
         <item>Tylko Wi-Fi</item>
@@ -43,4 +43,5 @@
         <item>Dwie linie</item>
         <item>Jedna linia</item>
     </string-array>
+    
 </resources>

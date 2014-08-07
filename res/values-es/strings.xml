@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Indicador de velocidad de la red</string>
+    
+    <string name="app_name">Indicador de Velocidad de la Red</string>
     <string name="title_activity_settings">Configuración</string>
     <string name="pref_show_upload_speed">Mostrar velocidad de subida</string>
     <string name="pref_show_download_speed">Mostrar velocidad de descarga</string>
@@ -12,14 +13,14 @@
     <string name="pref_position">Posición</string>
     <string name="pref_suffix">Sufijo</string>
     <string name="pref_display">Mostrar</string>
-	
-	<string-array name="empty_array" />
+    
     <string-array name="unit_entries">
         <item>Automático</item>
         <item>B/s</item>
         <item>KB/s</item>
         <item>MB/s</item>
     </string-array>
+    
     <string-array name="networktype_entries">
         <item>Wi-Fi y Móvil</item>
         <item>Sólo Wi-Fi</item>
@@ -39,7 +40,8 @@
     </string-array>
     
     <string-array name="display_entries">
-        <item>2 líneas</item>
-        <item>1 línea</item>
+        <item>Dos líneas</item>
+        <item>Una línea</item>
     </string-array>
+    
 </resources>

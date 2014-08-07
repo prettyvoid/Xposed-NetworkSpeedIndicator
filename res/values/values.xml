@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Do NOT translate these! They must remain exactly as given here for correct functioning. -->
+    
+    <string-array name="empty_array" />
+    
+    <string-array name="unit_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="networktype_values">
+        <item>both</item>
+        <item>WIFI</item>
+        <item>MOBILE</item>
+    </string-array>
+    
+    <string-array name="position_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="suffix_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="display_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    
+    <string-array name="color_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    
+    <string-array name="font_style_values">
+        <item>Bold</item>
+        <item>Italic</item>
+    </string-array>
+    
+</resources>
