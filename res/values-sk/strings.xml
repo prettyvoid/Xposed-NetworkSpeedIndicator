@@ -9,13 +9,12 @@
     <string name="pref_category_text_appearance">Vzhľad textu</string>
     <string name="pref_show_upload_speed">Zobraziť rýchlosť nahrávania</string>
     <string name="pref_show_download_speed">Zobraziť rýchlosť sťahovania</string>
-    <string name="pref_hide_unit">Skryť jednotku</string>
     <string name="pref_no_space">Bez medzery pred jednotkou</string>
     <string name="pref_hide_b">Zobraziť jednotku bez B</string>
     <string name="pref_hide_unit">Skryť jednotku</string>
     <string name="pref_force_unit">Vynútiť jednotku</string>
     <string name="pref_hide_inactive">Skryť pri nulovej rýchlosti</string>
-    <string name="pref_show_suffix">Vždy zobraziť príponu</string
+    <string name="pref_show_suffix">Vždy zobraziť príponu</string>
     <string name="pref_networktype">Typy sietí</string>
     <string name="pref_font_size">Zmeniť veľkosť písma</string>
     <string name="pref_position">Pozícia</string>

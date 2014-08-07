@@ -250,10 +250,14 @@ public class TrafficView extends TextView {
 				Context.CONNECTIVITY_SERVICE);
 
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+		
 		if (networkInfo != null) {
 			networkState = networkInfo.isConnected();
 			networkType = networkInfo.getTypeName().toUpperCase(Locale.ENGLISH);
 			Log.i(TAG, "networkType = " + networkType);
+		}
+		else {
+			networkState = false;
 		}
 	}
 
