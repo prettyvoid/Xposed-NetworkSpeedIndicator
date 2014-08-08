@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Ukazovateľ Rýchlosti Siete</string>
+    <string name="app_name">Ukazovateľ rýchlosti siete</string>
     <string name="pref_category_ind_settings">Nastavenia ukazovateľa</string>
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>
@@ -23,6 +23,9 @@
     <string name="pref_color_mode">Farebný režim</string>
     <string name="pref_color">Farba</string>
     <string name="pref_font_style">Štýl písma</string>
+    
+    <string name="dialog_color_picker">Vyberte farbu</string>
+    <string name="press_color_to_apply">Dotknite sa farby pre jej použitie</string>
     
     <string-array name="unit_entries">
         <item>Automaticky</item>
