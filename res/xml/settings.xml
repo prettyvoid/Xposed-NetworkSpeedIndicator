@@ -58,6 +58,11 @@
 		
 		<CheckBoxPreference
 		    android:defaultValue="0"
+		    android:key="small_triangle"
+		    android:title="@string/pref_small_triangle" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
 		    android:key="show_suffix"
 		    android:title="@string/pref_show_suffix" />
     </PreferenceCategory>

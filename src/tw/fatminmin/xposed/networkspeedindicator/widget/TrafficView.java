@@ -64,6 +64,7 @@ public class TrafficView extends TextView {
 	boolean prefHideB;
 	boolean prefHideInactive;
 	boolean prefShowSuffix;
+	boolean prefSmallTriangle;
 	String prefNetworkType;
 	Set<String> prefFontStyle = new HashSet<String>();
 	
@@ -162,6 +163,9 @@ public class TrafficView extends TextView {
 				}
 				if(intent.hasExtra(Common.KEY_SUFFIX)) {
 				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+				}
+				if (intent.hasExtra(Common.KEY_SMALL_TRIANGLE)) {
+				    prefSmallTriangle = intent.getBooleanExtra(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 				}
 				if(intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
 				    prefNetworkType = intent.getStringExtra(Common.KEY_NETWORK_TYPE);
@@ -346,12 +350,22 @@ public class TrafficView extends TextView {
 		    uploadSuffix = downloadSuffix = " ";
 		    break;
 		case 1:
-		    uploadSuffix = Common.SMALL_UP_TRIANGLE;
-		    downloadSuffix = Common.SMALL_DOWN_TRIANGLE;
+			if (prefSmallTriangle) {
+				uploadSuffix = Common.SMALL_UP_TRIANGLE;
+				downloadSuffix = Common.SMALL_DOWN_TRIANGLE;
+			} else {
+				uploadSuffix = Common.BIG_UP_TRIANGLE;
+				downloadSuffix = Common.BIG_DOWN_TRIANGLE;
+			}
 		    break;
 		case 2:
-		    uploadSuffix = Common.SMALL_UP_HOLLOW_TRIANGLE;
-		    downloadSuffix = Common.SMALL_DOWN_HOLLOW_TRIANGLE;
+			if (prefSmallTriangle) {
+				uploadSuffix = Common.SMALL_UP_HOLLOW_TRIANGLE;
+				downloadSuffix = Common.SMALL_DOWN_HOLLOW_TRIANGLE;
+			} else {
+				uploadSuffix = Common.BIG_UP_HOLLOW_TRIANGLE;
+				downloadSuffix = Common.BIG_DOWN_HOLLOW_TRIANGLE;
+			}
 		    break;
 		}
 		
@@ -459,6 +473,7 @@ public class TrafficView extends TextView {
 		prefFontSize = Common.getPrefInt(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+		prefSmallTriangle = mPref.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
