@@ -18,18 +18,23 @@
     <string name="pref_networktype">Network types</string>
     <string name="pref_font_size">Font size</string>
     <string name="hint_font_size">scaled pixels</string>
-    <string name="unit_font_size">px</string>
+    <string name="unit_font_size">%s px</string> <!-- see note -->
     <string name="pref_position">Position</string>
     <string name="pref_suffix">Suffix</string>
     <string name="pref_small_triangle">Use small triangles</string>
     <string name="pref_display">Display</string>
     <string name="pref_update_interval">Update interval</string>
     <string name="hint_update_interval">milliseconds</string>
-    <string name="unit_update_interval">ms</string>
+    <string name="unit_update_interval">%s ms</string> <!-- see note -->
     <string name="pref_color_mode">Color mode</string>
     <string name="pref_color">Color</string>
     <string name="pref_font_style">Font style</string>
     <string name="summary_none">None</string>
+    <!-- Note about units:
+         The placeholder %s will be replaced with the actual numeric value.
+         If it is omitted, the provided unit will be appended
+         at the end of numeric value (for example: 500 ms)
+      -->
     
     <!-- Color Picker -->
     <string name="dialog_color_picker">Pick a color</string>

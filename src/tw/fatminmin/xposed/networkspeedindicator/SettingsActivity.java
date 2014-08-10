@@ -84,7 +84,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		} catch (Exception e) {
     			summaryText = String.valueOf(Common.DEF_UPDATE_INTERVAL);
     		}
-    		summaryText += " " + getString(R.string.unit_update_interval);
+    		summaryText = formatWithUnit(summaryText, getString(R.string.unit_update_interval));
     	}
     	else if (Common.KEY_FONT_SIZE.equals(editPref.getKey())) {
     		try {
@@ -92,11 +92,19 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		} catch (Exception e) {
     			summaryText = String.valueOf(Common.DEF_FONT_SIZE);
     		}
-    		summaryText += " " + getString(R.string.unit_font_size);
+    		summaryText = formatWithUnit(summaryText, getString(R.string.unit_font_size));
     	}
     	
     	return summaryText;
     }
+    
+    private String formatWithUnit(String value, String unit) {
+		if (unit.contains("%s")) {
+			return String.format(unit, value);
+		} else {
+			return value + " " + unit;
+		}
+	}
     
     private String createMultiSelectSummary(MultiSelectListPreferenceCompat mulPref) {
     	if (mulPref.getValues().size() == 0) {
