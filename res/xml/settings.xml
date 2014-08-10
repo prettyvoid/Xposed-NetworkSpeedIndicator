@@ -76,7 +76,7 @@
 		    android:entries="@array/unit_entries"
 		    android:entryValues="@array/unit_values"
 		    android:key="force_unit"
-		    android:title="@string/pref_force_unit" />
+		    android:title="@string/pref_unit" />
 		
 		<CheckBoxPreference
 		    android:defaultValue="0"

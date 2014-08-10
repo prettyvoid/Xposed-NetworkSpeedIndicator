@@ -12,7 +12,7 @@
     <string name="pref_hide_unit">Hide unit</string>
     <string name="pref_no_space">No space before unit</string>
     <string name="pref_hide_b">Show unit without B</string>
-    <string name="pref_force_unit">Force unit</string>
+    <string name="pref_unit">Unit</string>
     <string name="pref_hide_inactive">Hide when speed is zero</string>
     <string name="pref_show_suffix">Always show suffix</string>
     <string name="pref_networktype">Network types</string>
