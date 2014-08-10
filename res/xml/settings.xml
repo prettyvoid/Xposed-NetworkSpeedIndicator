@@ -100,7 +100,7 @@
 		    android:defaultValue="10"
 		    android:key="font_size"
 		    android:title="@string/pref_font_size"
-		    android:inputType="number"
+		    android:inputType="numberDecimal"
 		    />
 	    
 	    <com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat

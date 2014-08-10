@@ -51,7 +51,7 @@ public class TrafficView extends TextView {
 	XSharedPreferences mPref;
 	int prefPosition;
 	int prefForceUnit;
-	int prefFontSize;
+	float prefFontSize;
 	int prefSuffix;
 	int prefDisplay;
 	int prefUpdateInterval;
@@ -155,7 +155,7 @@ public class TrafficView extends TextView {
 				    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 				}
 				if(intent.hasExtra(Common.KEY_FONT_SIZE)) {
-				    prefFontSize = intent.getIntExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+				    prefFontSize = intent.getFloatExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 				}
 				if(intent.hasExtra(Common.KEY_POSITION)) {
 				    prefPosition = intent.getIntExtra(Common.KEY_POSITION, Common.DEF_POSITION);
@@ -470,7 +470,7 @@ public class TrafficView extends TextView {
 		prefHideB = mPref.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
 		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
 		prefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
-		prefFontSize = Common.getPrefInt(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+		prefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 		prefSmallTriangle = mPref.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);

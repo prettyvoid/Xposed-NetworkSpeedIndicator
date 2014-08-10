@@ -38,7 +38,7 @@ public class Common {
 	public static final boolean DEF_HIDE_INACTIVE = false;
 	public static final boolean DEF_SHOW_SUFFIX = false;
 	public static final int DEF_FORCE_UNIT = 0;
-	public static final int DEF_FONT_SIZE = 10;
+	public static final float DEF_FONT_SIZE = 10;
 	public static final int DEF_POSITION = 0;
 	public static final int DEF_SUFFIX = 1;
 	public static final boolean DEF_SMALL_TRIANGLE = false;
@@ -63,6 +63,16 @@ public class Common {
 		try {
 			String value = pref.getString(key, String.valueOf(def_value));
 			return Integer.parseInt(value);
+		} catch (Exception e) {
+			// Do nothing
+		}
+		return def_value;
+	}
+	
+	public static float getPrefFloat(SharedPreferences pref, String key, float def_value) {
+		try {
+			String value = pref.getString(key, String.valueOf(def_value));
+			return Float.parseFloat(value);
 		} catch (Exception e) {
 			// Do nothing
 		}

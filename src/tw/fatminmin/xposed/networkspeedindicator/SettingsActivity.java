@@ -146,7 +146,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		    
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 		    intent.putExtra(Common.KEY_FONT_SIZE,
-		            Common.getPrefInt(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
+		            Common.getPrefFloat(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
 		    
 		    findPreference(Common.KEY_FONT_SIZE).setSummary(prefs.getString(Common.KEY_FONT_SIZE, String.valueOf(Common.DEF_FONT_SIZE)));
 		    
