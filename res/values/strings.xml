@@ -25,6 +25,7 @@
     <string name="pref_color_mode">Color mode</string>
     <string name="pref_color">Color</string>
     <string name="pref_font_style">Font style</string>
+    <string name="summary_none">None</string>
     
     <!-- Color Picker -->
     <string name="dialog_color_picker">Pick a color</string>

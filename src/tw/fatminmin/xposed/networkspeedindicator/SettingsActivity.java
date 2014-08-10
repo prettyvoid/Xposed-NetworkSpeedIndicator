@@ -67,21 +67,49 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         }
         else if(preference instanceof EditTextPreference) {
             EditTextPreference editPref = (EditTextPreference) preference;
-            preference.setSummary(editPref.getText());
+            preference.setSummary(createEditTextSummary(editPref));
         }
         else if(preference instanceof MultiSelectListPreferenceCompat) {
         	MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) preference;
-        	
-        	String summary = "";
-        	for(String str : mulPref.getValues()) {
-        		if(summary.length() > 0) {
-        			summary += ", ";
-        		}
-        		summary += str;
-        	}
-        	mulPref.setSummary(summary);
+        	preference.setSummary(createMultiSelectSummary(mulPref));
         }
 	}
+    
+    private String createEditTextSummary(EditTextPreference editPref) {
+    	String summaryText = editPref.getText();
+    	
+    	if (Common.KEY_UPDATE_INTERVAL.equals(editPref.getKey())) {
+    		try {
+    			summaryText = String.valueOf(Integer.parseInt(summaryText));
+    		} catch (Exception e) {
+    			summaryText = String.valueOf(Common.DEF_UPDATE_INTERVAL);
+    		}
+    	}
+    	else if (Common.KEY_FONT_SIZE.equals(editPref.getKey())) {
+    		try {
+    			summaryText = String.valueOf(Float.parseFloat(summaryText));
+    		} catch (Exception e) {
+    			summaryText = String.valueOf(Common.DEF_FONT_SIZE);
+    		}
+    	}
+    	
+    	return summaryText;
+    }
+    
+    private String createMultiSelectSummary(MultiSelectListPreferenceCompat mulPref) {
+    	if (mulPref.getValues().size() == 0) {
+    		return getString(R.string.summary_none);
+    	}
+    	
+    	String summary = "";
+    	for(String str : mulPref.getValues()) {
+    		if(summary.length() > 0) {
+    			summary += ", ";
+    		}
+    		summary += str;
+    	}
+    	return summary;
+    }
 	
     @SuppressWarnings("deprecation")
 	@Override
@@ -143,13 +171,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			
 		}
 		else if(key.equals(Common.KEY_FONT_SIZE)) {
-		    
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 		    intent.putExtra(Common.KEY_FONT_SIZE,
 		            Common.getPrefFloat(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
-		    
-		    findPreference(Common.KEY_FONT_SIZE).setSummary(prefs.getString(Common.KEY_FONT_SIZE, String.valueOf(Common.DEF_FONT_SIZE)));
-		    
 		}
 		else if(key.equals(Common.KEY_POSITION)) {
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
