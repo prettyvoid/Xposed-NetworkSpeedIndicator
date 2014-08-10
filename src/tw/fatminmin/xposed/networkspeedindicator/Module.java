@@ -14,7 +14,9 @@ import tw.fatminmin.xposed.networkspeedindicator.widget.TrafficView;
 import android.annotation.SuppressLint;
 import android.content.res.XResources;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -62,9 +64,13 @@ public class Module implements IXposedHookLoadPackage,
 					if(param.thisObject != getClock())
 						return;
 					
-    				if(trafficView != null && clock != null) {
-    					if(android.os.Build.VERSION.SDK_INT >= 11) {
-    						trafficView.setAlpha(clock.getAlpha());
+    				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+    					if(trafficView != null) {
+    						if (statusIcons != null) {
+    							trafficView.setAlpha(statusIcons.getAlpha());
+    						} else if (clock != null) {
+    							trafficView.setAlpha(clock.getAlpha());
+    						}
     					}
     				}
     			}
@@ -89,6 +95,7 @@ public class Module implements IXposedHookLoadPackage,
     
     TrafficView trafficView;
     TextView clock;
+    View statusIcons;
 
     public static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
 
@@ -122,6 +129,8 @@ public class Module implements IXposedHookLoadPackage,
                         FrameLayout root = (FrameLayout) liparam.view;
 
                         clock = (TextView) root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
+                        statusIcons = (View) root.findViewById(liparam.res.getIdentifier("statusIcons", "id", PKG_NAME_SYSTEM_UI));
+                        
                         if (trafficView == null) {
                             trafficView = new TrafficView(root.getContext());
                             trafficView.clock = clock;
