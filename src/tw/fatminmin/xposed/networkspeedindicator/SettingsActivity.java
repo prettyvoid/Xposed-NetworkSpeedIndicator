@@ -84,6 +84,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		} catch (Exception e) {
     			summaryText = String.valueOf(Common.DEF_UPDATE_INTERVAL);
     		}
+    		summaryText += " " + getString(R.string.unit_update_interval);
     	}
     	else if (Common.KEY_FONT_SIZE.equals(editPref.getKey())) {
     		try {
@@ -91,6 +92,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		} catch (Exception e) {
     			summaryText = String.valueOf(Common.DEF_FONT_SIZE);
     		}
+    		summaryText += " " + getString(R.string.unit_font_size);
     	}
     	
     	return summaryText;
