@@ -12,6 +12,7 @@
     <string name="pref_hide_unit">Hide unit</string>
     <string name="pref_no_space">No space before unit</string>
     <string name="pref_hide_b">Show unit without B</string>
+    <string name="pref_unit_mode">Unit mode</string>
     <string name="pref_unit">Unit</string>
     <string name="pref_hide_inactive">Hide when speed is zero</string>
     <string name="pref_show_suffix">Always show suffix</string>
@@ -29,7 +30,10 @@
     <string name="pref_color_mode">Color mode</string>
     <string name="pref_color">Color</string>
     <string name="pref_font_style">Font style</string>
+    
     <string name="summary_none">None</string>
+    <string name="item_auto">Auto</string>
+    <string name="item_manual">Manual</string>
     <!-- Note about units:
          The placeholder %s will be replaced with the actual numeric value.
          If it is omitted, the provided unit will be appended
@@ -40,11 +44,11 @@
     <string name="dialog_color_picker">Pick a color</string>
     <string name="press_color_to_apply">Tap on a color to apply</string>
     
-    <string-array name="unit_entries">
-        <item>Auto</item>
-        <item>B/s</item>
-        <item>KB/s</item>
-        <item>MB/s</item>
+    <string-array name="unit_mode_entries">
+        <item>Binary bits</item>
+        <item>Binary bytes</item>
+        <item>Decimal bits</item>
+        <item>Decimal bytes</item>
     </string-array>
     
     <string-array name="networktype_entries">
@@ -68,11 +72,6 @@
     <string-array name="display_entries">
         <item>Two lines</item>
         <item>One line</item>
-    </string-array>
-    
-    <string-array name="color_mode_entries">
-        <item>Auto</item>
-        <item>Manual</item>
     </string-array>
     
     <string-array name="font_style_entries">

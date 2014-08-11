@@ -5,7 +5,6 @@
     <string name="pref_show_upload_speed">Zeige upload geschwindigkeit</string>
     <string name="pref_show_download_speed">Zeige download geschwindigkeit</string>
     <string name="pref_hide_unit">Einheit verstecken</string>
-    <string name="pref_force_unit">Einheit erzwingen</string>
     <string name="pref_hide_inactive">Ausblended wenn geschwindigkeit null ist</string>
     <string name="pref_networktype">Netzwerk typen</string>
     <string name="pref_font_size">Schriftgröße ändern</string>
@@ -13,12 +12,8 @@
     <string name="pref_update_interval">Aktualizierungs interval</string>
     <string name="pref_color_mode">Farbmodus</string>
     
-    <string-array name="unit_entries">
-        <item>Auto</item>
-        <item>B/s</item>
-        <item>KB/s</item>
-        <item>MB/s</item>
-    </string-array>
+    <string name="item_auto">Auto</string>
+    <string name="item_manual">Manuell</string>
     
     <string-array name="networktype_entries">
         <item>WLAN und Mobil</item>
@@ -41,11 +36,6 @@
     <string-array name="display_entries">
         <item>Zwei zeilen</item>
         <item>Eine zeile</item>
-    </string-array>
-    
-    <string-array name="color_mode_entries">
-        <item>Auto</item>
-        <item>Manuell</item>
     </string-array>
     
 </resources>

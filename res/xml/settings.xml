@@ -71,9 +71,16 @@
 	<PreferenceCategory 
 	    android:title="@string/pref_category_unit_settings">
 		
+	    <ListPreference 
+		    android:defaultValue="2"
+		    android:key="unit_mode"
+		    android:title="@string/pref_unit_mode"
+		    android:entries="@array/unit_mode_entries"
+		    android:entryValues="@array/unit_mode_values" />
+		
 		<ListPreference
 		    android:defaultValue="0"
-		    android:entries="@array/unit_entries"
+		    android:entries="@array/unit_entries_decimal_bytes"
 		    android:entryValues="@array/unit_values"
 		    android:key="force_unit"
 		    android:title="@string/pref_unit" />
