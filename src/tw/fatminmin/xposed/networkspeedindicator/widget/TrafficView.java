@@ -39,6 +39,11 @@ public class TrafficView extends TextView {
 	private static final DecimalFormat formatWithDecimal    = new DecimalFormat(" ##0.0");
 	private static final DecimalFormat formatWithoutDecimal = new DecimalFormat(" ##0");
 	
+	private static final String KILO = "K";
+	private static final String MEGA = "M";
+	private static final String BYTES = "B";
+	private static final String BITS = "b";
+	
 	private boolean mAttached;
 	// TrafficStats mTrafficStats;
 
@@ -283,11 +288,11 @@ public class TrafficView extends TextView {
 		    
 		    if (((float) uploadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
                 uploadValue = ((float) uploadSpeed) / 1048576f;
-                uploadUnit = "M";
+                uploadUnit = MEGA;
                 uploadDecimalFormat = formatWithDecimal;
             } else if (((float) uploadSpeed) / 1024f >= 1) {
                 uploadValue = ((float) uploadSpeed) / 1024f;
-                uploadUnit = "K";
+                uploadUnit = KILO;
                 uploadDecimalFormat = formatWithoutDecimal;
             } else {
                 uploadValue = uploadSpeed;
@@ -297,11 +302,11 @@ public class TrafficView extends TextView {
 		    
 			if (((float) downloadSpeed) / 1048576 >= 1) { // 1024 * 1024 113
 				downloadValue = ((float) downloadSpeed) / 1048576f;
-				downloadUnit = "M";
+				downloadUnit = MEGA;
 				downloadDecimalFormat = formatWithDecimal;
 			} else if (((float) downloadSpeed) / 1024f >= 1) {
 				downloadValue = ((float) downloadSpeed) / 1024f;
-				downloadUnit = "K";
+				downloadUnit = KILO;
 				downloadDecimalFormat = formatWithoutDecimal;
 			} else {
 				downloadValue = downloadSpeed;
@@ -318,13 +323,13 @@ public class TrafficView extends TextView {
 		case 2:
 			downloadValue = ((float) downloadSpeed) / 1024f;
 			uploadValue = ((float) uploadSpeed) / 1024f;
-			uploadUnit = downloadUnit = "K";
+			uploadUnit = downloadUnit = KILO;
 			uploadDecimalFormat = downloadDecimalFormat = formatWithoutDecimal;
 			break;
 		case 3:
 			downloadValue = ((float) downloadSpeed) / 1048576f;
 			uploadValue = ((float) uploadSpeed) / 1048576f;
-			uploadUnit = downloadUnit = "M";
+			uploadUnit = downloadUnit = MEGA;
 			uploadDecimalFormat = downloadDecimalFormat = formatWithDecimal;
 			break;
 		}
@@ -419,7 +424,7 @@ public class TrafficView extends TextView {
 	
 	private String formatUnit(String unit) {
 		if (!prefHideB) {
-			unit += "B";
+			unit += BYTES;
 		}
 		if ((!prefNoSpace) && (unit.length() > 0)) {
 			unit = " " + unit;
