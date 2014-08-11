@@ -72,7 +72,7 @@
 	    android:title="@string/pref_category_unit_settings">
 		
 	    <ListPreference 
-		    android:defaultValue="2"
+		    android:defaultValue="3"
 		    android:key="unit_mode"
 		    android:title="@string/pref_unit_mode"
 		    android:entries="@array/unit_mode_entries"

@@ -37,8 +37,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		
 		@SuppressWarnings("deprecation")
 		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
+		refreshPreferences(mPrefs, null);
 		setAllSummary(settings);
-		refreshSetEnabled(mPrefs);
 		
 		mPrefs.registerOnSharedPreferenceChangeListener(this);
 	}
@@ -63,7 +63,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     void setSummary(Preference preference) {
 	    if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
-            preference.setSummary(listPref.getEntry());
+            preference.setSummary(createListPrefSummary(listPref));
         }
         else if(preference instanceof EditTextPreference) {
             EditTextPreference editPref = (EditTextPreference) preference;
@@ -74,6 +74,23 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         	preference.setSummary(createMultiSelectSummary(mulPref));
         }
 	}
+    
+    private String createListPrefSummary(ListPreference listPref) {
+    	String summaryText = listPref.getEntry().toString();
+    	
+    	if (Common.KEY_UNIT_MODE.equals(listPref.getKey())) {
+    		try {
+    			int listValue = Integer.parseInt(listPref.getValue());
+    			String[] summaryTexts = getResources().getStringArray(R.array.unit_mode_summary);
+    			summaryText += String.format(" (%s)", summaryTexts[listValue]);
+    		} catch (Exception e) {
+    			//reset
+    			summaryText = listPref.getEntry().toString();
+    		}
+    	}
+    	
+    	return summaryText;
+    }
     
     private String createEditTextSummary(EditTextPreference editPref) {
     	String summaryText = editPref.getText();
@@ -127,8 +144,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		Intent intent = new Intent();
 		Log.i(TAG, "onSharedPreferenceChanged "+key);
 		
+		refreshPreferences(prefs, key);
 		setSummary(findPreference(key));
-		refreshSetEnabled(prefs);
 		
 		if(key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
 		    
@@ -149,6 +166,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(Common.KEY_FORCE_UNIT,
 					Common.getPrefInt(prefs, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT));
+		}
+		else if (key.equals(Common.KEY_UNIT_MODE)) {
+		    
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			intent.putExtra(Common.KEY_UNIT_MODE,
+					Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE));
 		}
 		else if (key.equals(Common.KEY_HIDE_UNIT)) {
 		    
@@ -239,19 +262,59 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 	
 	@SuppressWarnings("deprecation")
-	void refreshSetEnabled(SharedPreferences prefs) {
-		int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
-		findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
+	private void refreshPreferences(SharedPreferences prefs, String key) {
+		// When key is null, refresh everything.
+		// When a key is provided, refresh only for that key.
 		
-    	//enable only when hide unit is disabled
-    	boolean prefHideUnit = prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
-    	findPreference(Common.KEY_NO_SPACE).setEnabled(!prefHideUnit);
-    	findPreference(Common.KEY_HIDE_B).setEnabled(!prefHideUnit);
+		if (key==null || key.equals(Common.KEY_COLOR_MODE)) {
+			int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
+			findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
+		}
+		
+		if (key==null || key.equals(Common.KEY_HIDE_UNIT)) {
+	    	//enable only when hide unit is disabled
+	    	boolean prefHideUnit = prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
+	    	findPreference(Common.KEY_NO_SPACE).setEnabled(!prefHideUnit);
+	    	findPreference(Common.KEY_HIDE_B).setEnabled(!prefHideUnit);
+		}
     	
-    	boolean prefHideInactive = prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
-    	int prefSuffix = Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideInactive && prefSuffix != 0);
-    	findPreference(Common.KEY_SMALL_TRIANGLE).setEnabled(prefSuffix != 0);
+		if (key==null
+				|| key.equals(Common.KEY_HIDE_INACTIVE)
+				|| key.equals(Common.KEY_SUFFIX)) {
+	    	boolean prefHideInactive = prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+	    	int prefSuffix = Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+	    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideInactive && prefSuffix != 0);
+	    	findPreference(Common.KEY_SMALL_TRIANGLE).setEnabled(prefSuffix != 0);
+		}
+    	
+		if (key==null || key.equals(Common.KEY_UNIT_MODE)) {
+			// Dynamically change the entry texts of "Unit" preference
+			int prefInt = Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+			int resId;
+			
+			switch (prefInt) {
+			case 0:
+				resId = R.array.unit_entries_binary_bits;
+				break;
+			case 1:
+				resId = R.array.unit_entries_binary_bytes;
+				break;
+			default: case 2:
+				resId = R.array.unit_entries_decimal_bits;
+				break;
+			case 3:
+				resId = R.array.unit_entries_decimal_bytes;
+				break;
+			}
+			
+			String[] unitEntries = getResources().getStringArray(resId);
+			Preference prefUnit = findPreference(Common.KEY_FORCE_UNIT);
+			((ListPreference) prefUnit).setEntries(unitEntries);
+			
+			if (key != null) { // key-specific refresh
+				setSummary(prefUnit);
+			}
+		}
 	}
 	
 }
