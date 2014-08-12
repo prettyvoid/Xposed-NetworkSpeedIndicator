@@ -29,7 +29,10 @@
     <string name="pref_color_mode">Mode de couleur</string>
     <string name="pref_color">Couleur</string>
     <string name="pref_font_style">Style de la police</string>
+    
     <string name="summary_none">Aucun</string>
+    <string name="item_auto">Auto</string>
+    <string name="item_manual">Manuel</string>
     <!-- Note about units:
          The placeholder %s will be replaced with the actual numeric value.
          If it is omitted, the provided unit will be appended
@@ -39,13 +42,6 @@
     <!-- Color Picker -->
     <string name="dialog_color_picker">Définir une couleur</string>
     <string name="press_color_to_apply">Appuyez sur la couleur pour appliquer</string>
-    
-    <string-array name="unit_entries">
-        <item>Auto</item>
-        <item>B/s</item>
-        <item>KB/s</item>
-        <item>MB/s</item>
-    </string-array>
     
     <string-array name="networktype_entries">
         <item>Wi-Fi et mobile</item>
@@ -68,11 +64,6 @@
     <string-array name="display_entries">
         <item>Deux lignes</item>
         <item>Une ligne</item>
-    </string-array>
-    
-    <string-array name="color_mode_entries">
-        <item>Auto</item>
-        <item>Manuel</item>
     </string-array>
     
     <string-array name="font_style_entries">
