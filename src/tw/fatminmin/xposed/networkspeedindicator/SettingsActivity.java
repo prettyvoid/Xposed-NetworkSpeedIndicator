@@ -162,110 +162,69 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		refreshPreferences(prefs, key);
 		setSummary(findPreference(key));
 		
-		if(key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
-		    
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		    intent.putExtra(Common.KEY_SHOW_UPLOAD_SPEED, 
-		            prefs.getBoolean(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED));
-		    
+		intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+		
+		if (key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
+		    intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_UPLOAD_SPEED));
 		}
-		else if(key.equals(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
-		    
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		    intent.putExtra(Common.KEY_SHOW_DOWNLOAD_SPEED, 
-                    prefs.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED));
-		    
+		else if (key.equals(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
+		    intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_DOWNLOAD_SPEED));
 		}
 		else if (key.equals(Common.KEY_FORCE_UNIT)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_FORCE_UNIT,
-					Common.getPrefInt(prefs, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT));
+			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_FORCE_UNIT));
 		}
 		else if (key.equals(Common.KEY_UNIT_MODE)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_UNIT_MODE,
-					Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE));
+			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UNIT_MODE));
 		}
 		else if (key.equals(Common.KEY_HIDE_UNIT)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_HIDE_UNIT, prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT));
-			
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_HIDE_UNIT));
 		}
 		else if (key.equals(Common.KEY_NO_SPACE)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_NO_SPACE, prefs.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE));
-			
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_NO_SPACE));
 		}
 		else if (key.equals(Common.KEY_HIDE_B)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_HIDE_B, prefs.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B));
-			
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_HIDE_B));
 		}
 		else if (key.equals(Common.KEY_HIDE_BELOW)) {
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_HIDE_BELOW));
 		}
 		else if (key.equals(Common.KEY_SHOW_SUFFIX)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_SHOW_SUFFIX, prefs.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX));
-			
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_SUFFIX));
 		}
-		else if(key.equals(Common.KEY_FONT_SIZE)) {
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		    intent.putExtra(Common.KEY_FONT_SIZE,
-		            Common.getPrefFloat(prefs, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE));
+		else if (key.equals(Common.KEY_FONT_SIZE)) {
+		    intent.putExtra(key, Common.getPrefFloat(prefs, key, Common.DEF_FONT_SIZE));
 		}
-		else if(key.equals(Common.KEY_POSITION)) {
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		    intent.putExtra(Common.KEY_POSITION, 
-		            Common.getPrefInt(prefs, Common.KEY_POSITION, Common.DEF_POSITION));
+		else if (key.equals(Common.KEY_POSITION)) {
+		    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_POSITION));
 		}
-		else if(key.equals(Common.KEY_SUFFIX)) {
-            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-            intent.putExtra(Common.KEY_SUFFIX, 
-                    Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX));
+		else if (key.equals(Common.KEY_SUFFIX)) {
+            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_SUFFIX));
         }
 		else if (key.equals(Common.KEY_SMALL_TRIANGLE)) {
-		    
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_SMALL_TRIANGLE, prefs.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE));
-			
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SMALL_TRIANGLE));
 		}
-		else if(key.equals(Common.KEY_NETWORK_TYPE)) {
-		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		    intent.putExtra(Common.KEY_NETWORK_TYPE, prefs.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE));
+		else if (key.equals(Common.KEY_NETWORK_TYPE)) {
+		    intent.putExtra(key, prefs.getString(key, Common.DEF_NETWORK_TYPE));
 		}
-		else if(key.equals(Common.KEY_DISPLAY)) {
-            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-            intent.putExtra(Common.KEY_DISPLAY, 
-                    Common.getPrefInt(prefs, Common.KEY_DISPLAY, Common.DEF_DISPLAY));
+		else if (key.equals(Common.KEY_DISPLAY)) {
+            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
         }
-		else if(key.equals(Common.KEY_UPDATE_INTERVAL)) {
-            intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-            intent.putExtra(Common.KEY_UPDATE_INTERVAL, 
-                    Common.getPrefInt(prefs, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL));
+		else if (key.equals(Common.KEY_UPDATE_INTERVAL)) {
+            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UPDATE_INTERVAL));
         }
-		else if(key.equals(Common.KEY_COLOR_MODE)) {
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_COLOR_MODE, 
-                    Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE));
+		else if (key.equals(Common.KEY_COLOR_MODE)) {
+			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_COLOR_MODE));
 		}
-		else if(key.equals(Common.KEY_COLOR)) {
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_COLOR, prefs.getInt(Common.KEY_COLOR, Common.DEF_COLOR));
+		else if (key.equals(Common.KEY_COLOR)) {
+			intent.putExtra(key, prefs.getInt(key, Common.DEF_COLOR));
 		}
-		else if(key.equals(Common.KEY_FONT_STYLE)) {
-			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			
+		else if (key.equals(Common.KEY_FONT_STYLE)) {
 			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
 			HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
-			intent.putExtra(Common.KEY_FONT_STYLE, value);
+			intent.putExtra(key, value);
+		}
+		else {
+			intent.setAction(null);
 		}
 		
 		if (intent.getAction() != null) {
