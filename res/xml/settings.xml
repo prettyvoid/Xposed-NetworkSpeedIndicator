@@ -6,7 +6,6 @@
     <PreferenceCategory 
 	    android:title="@string/pref_category_ind_settings">
 	    <EditTextPreference 
-		    android:defaultValue="1000"
 		    android:key="update_interval"
 		    android:title="@string/pref_update_interval"
 		    android:hint="@string/hint_update_interval"
@@ -107,7 +106,6 @@
 	    android:title="@string/pref_category_text_appearance">
 	    
 	    <EditTextPreference
-		    android:defaultValue="10"
 		    android:key="font_size"
 		    android:title="@string/pref_font_size"
 		    android:hint="@string/hint_font_size"
