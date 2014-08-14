@@ -49,6 +49,7 @@ public class TrafficView extends TextView {
 	long uploadSpeed, downloadSpeed;
 	long totalTxBytes, totalRxBytes;
 	long lastUpdateTime;
+	boolean justLaunched = true;
 	String networkType;
 	boolean networkState;
 
@@ -283,8 +284,17 @@ public class TrafficView extends TextView {
 	}
 
 	public void updateTraffic() {
-		lastUpdateTime = SystemClock.elapsedRealtime();
-		totalRxBytes = TrafficStats.getTotalRxBytes();
+		
+		if (justLaunched) {
+			//get the values for the first time
+			lastUpdateTime = SystemClock.elapsedRealtime();
+			totalTxBytes = TrafficStats.getTotalTxBytes();
+			totalRxBytes = TrafficStats.getTotalRxBytes();
+			
+			//don't get the values again
+			justLaunched = false;
+		}
+		
 		mTrafficHandler.sendEmptyMessage(0);
 	}
 
