@@ -13,7 +13,7 @@
     <string name="pref_no_space">Aucun espace avant l\'unité</string>
     <string name="pref_hide_b">Afficher l\'unité sans B</string>
     <string name="pref_unit">Unité</string>
-    <string name="pref_hide_inactive">Masquer quand il n\'y a pas de trafic</string>
+    <string name="sum1_hide_below">Masquer quand il n\'y a pas de trafic</string>
     <string name="pref_show_suffix">Toujours afficher le suffixe</string>
     <string name="pref_networktype">Types de réseaux</string>
     <string name="pref_font_size">Taille de la police</string>

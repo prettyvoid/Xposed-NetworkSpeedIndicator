@@ -5,7 +5,7 @@
     <string name="pref_show_upload_speed">Скорость отдачи</string>
     <string name="pref_show_download_speed">Скорость приема</string>
     <string name="pref_hide_unit">Скрыть ед. измерения</string>
-    <string name="pref_hide_inactive">Скрыть если = нулю</string>
+    <string name="sum1_hide_below">Скрыть если = нулю</string>
     <string name="pref_networktype">Типы сетей</string>
     <string name="pref_font_size">Размер шрифта</string>
     <string name="pref_position">Позиция</string>

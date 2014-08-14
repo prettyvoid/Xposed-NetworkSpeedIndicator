@@ -5,7 +5,7 @@
     <string name="pref_show_upload_speed">Mostrar velocidad de subida</string>
     <string name="pref_show_download_speed">Mostrar velocidad de descarga</string>
     <string name="pref_hide_unit">Ocultar unidad</string>
-    <string name="pref_hide_inactive">Ocultar cuando la velocidad es cero</string>
+    <string name="sum1_hide_below">Ocultar cuando la velocidad es cero</string>
     <string name="pref_networktype">Tipos de redes</string>
     <string name="pref_font_size">Cambiar tamaño de la fuente</string>
     <string name="pref_position">Posición</string>

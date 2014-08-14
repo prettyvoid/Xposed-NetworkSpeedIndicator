@@ -27,10 +27,12 @@
 		    android:key="show_download_speed"
 		    android:title="@string/pref_show_download_speed" />
 		
-		<CheckBoxPreference
-		    android:defaultValue="0"
-		    android:key="hide_inactive"
-		    android:title="@string/pref_hide_inactive" />
+	    <EditTextPreference 
+		    android:key="hide_below"
+		    android:title="@string/pref_hide_below"
+		    android:hint="@string/hint_hide_below"
+		    android:dialogMessage="@string/dmsg_hide_below"
+		    android:inputType="number" />
     </PreferenceCategory>
 	
 	<PreferenceCategory 

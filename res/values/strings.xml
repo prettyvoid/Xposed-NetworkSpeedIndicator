@@ -14,7 +14,12 @@
     <string name="pref_hide_b">Show unit without B</string>
     <string name="pref_unit_mode">Unit mode</string>
     <string name="pref_unit">Unit</string>
-    <string name="pref_hide_inactive">Hide when speed is zero</string>
+    <string name="pref_hide_below">Display threshold</string>
+    <string name="dmsg_hide_below">Speeds less than this value will not be shown. Enter 0 to always show speed or 1 to hide when speed is zero.</string>
+    <string name="hint_hide_below">bytes per sec</string>
+    <string name="sum0_hide_below">Always show speeds</string>
+    <string name="sum1_hide_below">Hide when speed is zero</string>
+    <string name="unit_hide_below">Hide speeds below %s B/s</string> <!-- see note -->
     <string name="pref_show_suffix">Always show suffix</string>
     <string name="pref_networktype">Network types</string>
     <string name="pref_font_size">Font size</string>

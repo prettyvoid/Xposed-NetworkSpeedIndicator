@@ -67,7 +67,7 @@ public class TrafficView extends TextView {
 	boolean prefHideUnit;
 	boolean prefNoSpace;
 	boolean prefHideB;
-	boolean prefHideInactive;
+	int prefHideBelow;
 	boolean prefShowSuffix;
 	boolean prefSmallTriangle;
 	String prefNetworkType;
@@ -153,8 +153,8 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_HIDE_B)) {
 				    prefHideB = intent.getBooleanExtra(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
 				}
-				if (intent.hasExtra(Common.KEY_HIDE_INACTIVE)) {
-					prefHideInactive = intent.getBooleanExtra(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+				if (intent.hasExtra(Common.KEY_HIDE_BELOW)) {
+					prefHideBelow = intent.getIntExtra(Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
 				}
 				if (intent.hasExtra(Common.KEY_SHOW_SUFFIX)) {
 				    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
@@ -340,9 +340,10 @@ public class TrafficView extends TextView {
 		return ret;
 	}
 	
-	private String formatSpeed(long transferSpeed, String transferSuffix) {
+	private String formatSpeed(final long transferSpeedBytes, final String transferSuffix) {
 		
 		float unitFactor;
+		long transferSpeed = transferSpeedBytes;
 		
 		switch (prefUnitMode) {
 		case 0: // Binary bits
@@ -402,7 +403,7 @@ public class TrafficView extends TextView {
 		
 		String strTransferValue;
 		
-		if (prefHideInactive && transferValue <= 0) {
+		if (transferSpeedBytes < prefHideBelow) {
             strTransferValue = "";
         }
         else {
@@ -477,7 +478,7 @@ public class TrafficView extends TextView {
 		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 		prefNoSpace = mPref.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE);
 		prefHideB = mPref.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
-		prefHideInactive = mPref.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+		prefHideBelow = Common.getPrefInt(mPref, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
 		prefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 		prefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);

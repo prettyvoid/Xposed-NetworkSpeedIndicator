@@ -103,6 +103,21 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		}
     		summaryText = formatWithUnit(summaryText, getString(R.string.unit_update_interval));
     	}
+    	else if (Common.KEY_HIDE_BELOW.equals(editPref.getKey())) {
+    		int value;
+    		try {
+    			value = Integer.parseInt(summaryText);
+    		} catch (Exception e) {
+    			value = Common.DEF_HIDE_BELOW;
+    		}
+    		if (value <= 0) {
+    			summaryText = getString(R.string.sum0_hide_below);
+    		} else if (value == 1) {
+    			summaryText = getString(R.string.sum1_hide_below);
+    		} else {
+    			summaryText = formatWithUnit(String.valueOf(value), getString(R.string.unit_hide_below));
+    		}
+    	}
     	else if (Common.KEY_FONT_SIZE.equals(editPref.getKey())) {
     		try {
     			summaryText = String.valueOf(Float.parseFloat(summaryText));
@@ -191,11 +206,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.putExtra(Common.KEY_HIDE_B, prefs.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B));
 			
 		}
-		else if (key.equals(Common.KEY_HIDE_INACTIVE)) {
-			
+		else if (key.equals(Common.KEY_HIDE_BELOW)) {
 		    intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-			intent.putExtra(Common.KEY_HIDE_INACTIVE,
-					prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE));
+			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_HIDE_BELOW));
 		}
 		else if (key.equals(Common.KEY_SHOW_SUFFIX)) {
 		    
@@ -279,11 +292,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
     	
 		if (key==null
-				|| key.equals(Common.KEY_HIDE_INACTIVE)
+				|| key.equals(Common.KEY_HIDE_BELOW)
 				|| key.equals(Common.KEY_SUFFIX)) {
-	    	boolean prefHideInactive = prefs.getBoolean(Common.KEY_HIDE_INACTIVE, Common.DEF_HIDE_INACTIVE);
+	    	int prefHideBelow = Common.getPrefInt(prefs, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
 	    	int prefSuffix = Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-	    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideInactive && prefSuffix != 0);
+	    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideBelow > 0 && prefSuffix != 0);
 	    	findPreference(Common.KEY_SMALL_TRIANGLE).setEnabled(prefSuffix != 0);
 		}
     	

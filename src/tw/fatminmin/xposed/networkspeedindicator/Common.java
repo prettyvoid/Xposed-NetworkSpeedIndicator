@@ -15,7 +15,7 @@ public class Common {
 	public static final String KEY_HIDE_UNIT = "hide_unit";
 	public static final String KEY_NO_SPACE = "no_space";
 	public static final String KEY_HIDE_B = "hide_b";
-	public static final String KEY_HIDE_INACTIVE = "hide_inactive";
+	public static final String KEY_HIDE_BELOW = "hide_below";
 	public static final String KEY_SHOW_SUFFIX = "show_suffix";
 	public static final String KEY_UNIT_MODE = "unit_mode";
 	public static final String KEY_FORCE_UNIT = "force_unit";
@@ -36,7 +36,7 @@ public class Common {
 	public static final boolean DEF_HIDE_UNIT = false;
 	public static final boolean DEF_NO_SPACE = false;
 	public static final boolean DEF_HIDE_B = false;
-	public static final boolean DEF_HIDE_INACTIVE = false;
+	public static final int DEF_HIDE_BELOW = 0;
 	public static final boolean DEF_SHOW_SUFFIX = false;
 	public static final int DEF_UNIT_MODE = 3; //Decimal bytes
 	public static final int DEF_FORCE_UNIT = 0;
