@@ -127,21 +127,24 @@ public class TrafficView extends TextView {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
+			
 			if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
 				updateConnectionInfo();
 				updateViewVisibility();
-			} else if (action.equals(Common.ACTION_SETTINGS_CHANGED)) {
+			}
+			else if (action.equals(Common.ACTION_SETTINGS_CHANGED)) {
 				Log.i(TAG, "SettingsChanged");
+				
 				if (intent.hasExtra(Common.KEY_FORCE_UNIT)) {
 					prefForceUnit = intent.getIntExtra(Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 				}
 				if (intent.hasExtra(Common.KEY_UNIT_MODE)) {
 					prefUnitMode = intent.getIntExtra(Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
 				}
-				if(intent.hasExtra(Common.KEY_SHOW_UPLOAD_SPEED)) {
+				if (intent.hasExtra(Common.KEY_SHOW_UPLOAD_SPEED)) {
 				    prefShowUploadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED);
 				}
-				if(intent.hasExtra(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
+				if (intent.hasExtra(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
 				    prefShowDownloadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 				}
 				if (intent.hasExtra(Common.KEY_HIDE_UNIT)) {
@@ -159,38 +162,38 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_SHOW_SUFFIX)) {
 				    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 				}
-				if(intent.hasExtra(Common.KEY_FONT_SIZE)) {
+				if (intent.hasExtra(Common.KEY_FONT_SIZE)) {
 				    prefFontSize = intent.getFloatExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 				}
-				if(intent.hasExtra(Common.KEY_POSITION)) {
+				if (intent.hasExtra(Common.KEY_POSITION)) {
 				    prefPosition = intent.getIntExtra(Common.KEY_POSITION, Common.DEF_POSITION);
 				    refreshPosition();
 				}
-				if(intent.hasExtra(Common.KEY_SUFFIX)) {
+				if (intent.hasExtra(Common.KEY_SUFFIX)) {
 				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 				}
 				if (intent.hasExtra(Common.KEY_SMALL_TRIANGLE)) {
 				    prefSmallTriangle = intent.getBooleanExtra(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 				}
-				if(intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
+				if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
 				    prefNetworkType = intent.getStringExtra(Common.KEY_NETWORK_TYPE);
 				}
-				if(intent.hasExtra(Common.KEY_DISPLAY)) {
+				if (intent.hasExtra(Common.KEY_DISPLAY)) {
                     prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
                 }
-				
-				if(intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
+				if (intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
                     prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
                 }
-				if(intent.hasExtra(Common.KEY_COLOR_MODE)) {
+				if (intent.hasExtra(Common.KEY_COLOR_MODE)) {
 					prefColorMode = intent.getIntExtra(Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
 				}
-				if(intent.hasExtra(Common.KEY_COLOR)) {
+				if (intent.hasExtra(Common.KEY_COLOR)) {
 					prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
 				}
-				if(intent.hasExtra(Common.KEY_FONT_STYLE)) {
+				if (intent.hasExtra(Common.KEY_FONT_STYLE)) {
 					prefFontStyle = (Set<String>) intent.getSerializableExtra(Common.KEY_FONT_STYLE);
 				}
+				
 				updateViewVisibility();
 			}
 		}
@@ -200,19 +203,28 @@ public class TrafficView extends TextView {
     Handler mTrafficHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			long td = SystemClock.elapsedRealtime() - lastUpdateTime;
-			if (td == 0) {
-				return;
+			
+			// changing values must be fetched together and only once
+			long lastUpdateTimeNew = SystemClock.elapsedRealtime();
+			long totalTxBytesNew = TrafficStats.getTotalTxBytes();
+			long totalRxBytesNew = TrafficStats.getTotalRxBytes();
+			
+			long elapsedTime = lastUpdateTimeNew - lastUpdateTime;
+			
+			if (elapsedTime == 0) {
+				uploadSpeed = 0;
+				downloadSpeed = 0;
+			} else {
+				uploadSpeed = ((totalTxBytesNew - totalTxBytes) * 1000) / elapsedTime;
+				downloadSpeed = ((totalRxBytesNew - totalRxBytes) * 1000) / elapsedTime;
 			}
 			
-			
-			uploadSpeed = (TrafficStats.getTotalTxBytes() - totalTxBytes) * 1000 / td;
-			downloadSpeed = (TrafficStats.getTotalRxBytes() - totalRxBytes) * 1000 / td;
-			totalTxBytes = TrafficStats.getTotalTxBytes();
-			totalRxBytes = TrafficStats.getTotalRxBytes();
-			lastUpdateTime = SystemClock.elapsedRealtime();
+			totalTxBytes = totalTxBytesNew;
+			totalRxBytes = totalRxBytesNew;
+			lastUpdateTime = lastUpdateTimeNew;
 			
 			SpannableString spanString = new SpannableString(createText());
+			
 			if(prefFontStyle.contains("Bold")) {
 				spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
 			}
