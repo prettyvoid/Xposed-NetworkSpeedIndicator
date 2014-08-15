@@ -2,8 +2,7 @@
 <resources>
     <!-- Alternative spellings for British English -->
     
-    <string name="pref_color_mode">Colour mode</string>
-    <string name="pref_color">Colour</string>
+    <string name="pref_font_color">Font colour</string>
     
     <!-- Color Picker -->
     <string name="dialog_color_picker">Pick a colour</string>

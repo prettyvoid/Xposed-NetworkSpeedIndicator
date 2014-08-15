@@ -212,8 +212,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		else if (key.equals(Common.KEY_UPDATE_INTERVAL)) {
             intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UPDATE_INTERVAL));
         }
-		else if (key.equals(Common.KEY_COLOR_MODE)) {
-			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_COLOR_MODE));
+		else if (key.equals(Common.KEY_FONT_COLOR)) {
+			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_FONT_COLOR));
 		}
 		else if (key.equals(Common.KEY_COLOR)) {
 			intent.putExtra(key, prefs.getInt(key, Common.DEF_COLOR));
@@ -237,11 +237,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	private void refreshPreferences(SharedPreferences prefs, String key) {
 		// When key is null, refresh everything.
 		// When a key is provided, refresh only for that key.
-		
-		if (key==null || key.equals(Common.KEY_COLOR_MODE)) {
-			int prefColorMode = Common.getPrefInt(prefs, Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
-			findPreference(Common.KEY_COLOR).setEnabled(prefColorMode == 1);
-		}
 		
 		if (key==null || key.equals(Common.KEY_HIDE_UNIT)) {
 	    	//enable only when hide unit is disabled

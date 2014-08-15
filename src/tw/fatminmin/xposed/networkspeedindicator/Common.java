@@ -26,7 +26,7 @@ public class Common {
 	public static final String KEY_SMALL_TRIANGLE = "small_triangle";
 	public static final String KEY_DISPLAY = "display";
 	public static final String KEY_UPDATE_INTERVAL = "update_interval";
-	public static final String KEY_COLOR_MODE = "color_mode";
+	public static final String KEY_FONT_COLOR = "font_color";
 	public static final String KEY_COLOR = "color";
 	public static final String KEY_FONT_STYLE = "font_style";
 	
@@ -46,7 +46,7 @@ public class Common {
 	public static final boolean DEF_SMALL_TRIANGLE = false;
 	public static final int DEF_DISPLAY = 0;
 	public static final int DEF_UPDATE_INTERVAL = 1000;
-	public static final int DEF_COLOR_MODE = 0;
+	public static final boolean DEF_FONT_COLOR = false;
 	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
 	public static final HashSet<String> DEF_FONT_STYLE = new HashSet<String>();
 	

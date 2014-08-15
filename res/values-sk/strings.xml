@@ -19,12 +19,9 @@
     <string name="pref_suffix">Prípona</string>
     <string name="pref_display">Zobrazenie</string>
     <string name="pref_update_interval">Interval aktualizácie</string>
-    <string name="pref_color_mode">Farebný režim</string>
-    <string name="pref_color">Farba</string>
     <string name="pref_font_style">Štýl písma</string>
     
     <string name="item_auto">Automatický</string>
-    <string name="item_manual">Ručný</string>
     
     <string name="dialog_color_picker">Vyberte farbu</string>
     <string name="press_color_to_apply">Dotknite sa farby pre jej použitie</string>

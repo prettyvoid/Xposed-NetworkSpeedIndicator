@@ -26,13 +26,10 @@
     <string name="pref_update_interval">Intervalle d\'actualisation</string>
     <string name="hint_update_interval">millisecondes</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
-    <string name="pref_color_mode">Mode de couleur</string>
-    <string name="pref_color">Couleur</string>
     <string name="pref_font_style">Style de la police</string>
     
     <string name="summary_none">Aucun</string>
     <string name="item_auto">Auto</string>
-    <string name="item_manual">Manuel</string>
     <!-- Note about units:
          The placeholder %s will be replaced with the actual numeric value.
          If it is omitted, the provided unit will be appended

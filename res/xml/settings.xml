@@ -118,17 +118,18 @@
 	        android:title="@string/pref_font_style"
 	        android:entries="@array/font_style_entries"
 		    android:entryValues="@array/font_style_values" />
-		<ListPreference
-		    android:defaultValue="0"
-		    android:entries="@array/color_mode_entries"
-		    android:entryValues="@array/color_mode_values"
-		    android:key="color_mode"
-		    android:title="@string/pref_color_mode" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="false"
+		    android:key="font_color"
+		    android:title="@string/pref_font_color" />
+		
 	    <net.margaritov.preference.colorpicker.ColorPickerPreference
 			android:key="color"
-			android:title="@string/pref_color"
-			android:defaultValue="@android:color/white"    
-			alphaSlider="true"                              
+			android:title="@string/dialog_color_picker"
+			android:defaultValue="@android:color/white"
+			android:dependency="font_color"
+			alphaSlider="true"
 		/>
 	</PreferenceCategory>
 	

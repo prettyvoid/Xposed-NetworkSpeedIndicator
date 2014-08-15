@@ -12,8 +12,6 @@
     <string name="pref_suffix">Суффикс</string>
     <string name="pref_display">Отображение</string>
     <string name="pref_update_interval">Интервал обновления</string>
-    <string name="pref_color_mode">Режим цвета</string>
-    <string name="pref_color">Цвет</string>
     <string name="pref_font_style">Стиль шрифта</string>
     
     <!-- Color Picker -->

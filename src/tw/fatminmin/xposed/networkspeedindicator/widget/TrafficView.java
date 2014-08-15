@@ -61,7 +61,7 @@ public class TrafficView extends TextView {
 	int prefSuffix;
 	int prefDisplay;
 	int prefUpdateInterval;
-	int prefColorMode;
+	boolean prefFontColor;
 	int prefColor;
 	boolean prefShowUploadSpeed;
 	boolean prefShowDownloadSpeed;
@@ -106,8 +106,10 @@ public class TrafficView extends TextView {
 	
 	@SuppressLint("NewApi")
 	public void refreshColor() {
-		switch(prefColorMode) {
-		case 0:
+		if (prefFontColor) {
+			setTextColor(prefColor);
+		}
+		else {
 			if(clock != null) {
 				setTextColor(clock.getCurrentTextColor());
 			}
@@ -115,10 +117,6 @@ public class TrafficView extends TextView {
 				// gingerbread;
 				setTextColor(Color.parseColor("#33b5e5"));
 			}
-			break;
-		case 1:
-			setTextColor(prefColor);
-			break;
 		}
 	}
 	
@@ -185,8 +183,8 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
                     prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
                 }
-				if (intent.hasExtra(Common.KEY_COLOR_MODE)) {
-					prefColorMode = intent.getIntExtra(Common.KEY_COLOR_MODE, Common.DEF_COLOR_MODE);
+				if (intent.hasExtra(Common.KEY_FONT_COLOR)) {
+					prefFontColor = intent.getBooleanExtra(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
 				}
 				if (intent.hasExtra(Common.KEY_COLOR)) {
 					prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
@@ -509,7 +507,7 @@ public class TrafficView extends TextView {
 		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
-		prefColorMode = Common.getPrefInt(mPref, Common.KEY_COLOR_MODE	, Common.DEF_COLOR_MODE);
+		prefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
 		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
 		prefFontStyle = mPref.getStringSet(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
 	}

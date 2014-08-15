@@ -10,10 +10,8 @@
     <string name="pref_font_size">Schriftgröße ändern</string>
     <string name="pref_display">Anzeige</string>
     <string name="pref_update_interval">Aktualizierungs interval</string>
-    <string name="pref_color_mode">Farbmodus</string>
     
     <string name="item_auto">Auto</string>
-    <string name="item_manual">Manuell</string>
     
     <string-array name="networktype_entries">
         <item>WLAN und Mobil</item>

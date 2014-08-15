@@ -32,13 +32,11 @@
     <string name="pref_update_interval">Update interval</string>
     <string name="hint_update_interval">milliseconds</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
-    <string name="pref_color_mode">Color mode</string>
-    <string name="pref_color">Color</string>
+    <string name="pref_font_color">Font color</string>
     <string name="pref_font_style">Font style</string>
     
     <string name="summary_none">None</string>
     <string name="item_auto">Auto</string>
-    <string name="item_manual">Manual</string>
     <!-- Note about units:
          The placeholder %s will be replaced with the actual numeric value.
          If it is omitted, the provided unit will be appended
