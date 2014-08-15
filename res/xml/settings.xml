@@ -10,12 +10,14 @@
 		    android:title="@string/pref_update_interval"
 		    android:hint="@string/hint_update_interval"
 		    android:inputType="number" />
-	    <ListPreference 
-		    android:defaultValue="both"
-		    android:key="network_type"
-		    android:title="@string/pref_networktype"
-		    android:entries="@array/networktype_entries"
-		    android:entryValues="@array/networktype_values" />
+		
+		<com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat
+			android:defaultValue="@array/networktype_values"
+			android:key="network_type"
+			android:title="@string/pref_networktype"
+			android:entries="@array/networktype_entries"
+			android:entryValues="@array/networktype_values" />
+		
 	    <CheckBoxPreference 
 		    android:defaultValue="true"
 		    android:key="show_upload_speed"

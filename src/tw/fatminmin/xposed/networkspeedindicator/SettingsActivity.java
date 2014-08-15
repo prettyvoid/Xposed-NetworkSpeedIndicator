@@ -204,7 +204,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SMALL_TRIANGLE));
 		}
 		else if (key.equals(Common.KEY_NETWORK_TYPE)) {
-		    intent.putExtra(key, prefs.getString(key, Common.DEF_NETWORK_TYPE));
+			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
+			HashSet<String> value = (HashSet<String>) mulPref.getValues();
+			intent.putExtra(key, value);
 		}
 		else if (key.equals(Common.KEY_DISPLAY)) {
             intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));

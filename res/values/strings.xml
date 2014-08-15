@@ -55,9 +55,8 @@
     </string-array>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi and Mobile</item>
-        <item>Wi-Fi only</item>
-        <item>Mobile only</item>
+        <item>Wi-Fi</item>
+        <item>Mobile</item>
     </string-array>
     
     <string-array name="position_entries">

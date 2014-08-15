@@ -15,9 +15,8 @@
     <string name="item_auto">Auto</string>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi i dane mobilne</item>
-        <item>Tylko Wi-Fi</item>
-        <item>Tylko dane mobilne</item>
+        <item>Wi-Fi</item>
+        <item>Dane mobilne</item>
     </string-array>
     
     <string-array name="position_entries">

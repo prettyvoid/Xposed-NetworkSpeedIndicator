@@ -41,9 +41,8 @@
     <string name="press_color_to_apply">Appuyez sur la couleur pour appliquer</string>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi et mobile</item>
-        <item>Wi-Fi uniquement</item>
-        <item>Mobile uniquement</item>
+        <item>Wi-Fi</item>
+        <item>Mobile</item>
     </string-array>
     
     <string-array name="position_entries">

@@ -27,9 +27,8 @@
     <string name="press_color_to_apply">Dotknite sa farby pre jej použitie</string>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi a mobilné dáta</item>
-        <item>Len Wi-Fi</item>
-        <item>Len mobilné dáta</item>
+        <item>Wi-Fi</item>
+        <item>Mobilné dáta</item>
     </string-array>
     
     <string-array name="position_entries">

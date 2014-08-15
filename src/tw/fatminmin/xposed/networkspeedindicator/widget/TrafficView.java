@@ -1,7 +1,6 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
 import java.text.DecimalFormat;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -71,8 +70,8 @@ public class TrafficView extends TextView {
 	int prefHideBelow;
 	boolean prefShowSuffix;
 	boolean prefSmallTriangle;
-	String prefNetworkType;
-	Set<String> prefFontStyle = new HashSet<String>();
+	Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
+	Set<String> prefFontStyle = Common.DEF_FONT_STYLE;
 
 	public TrafficView(Context context) {
 		this(context, null);
@@ -175,7 +174,7 @@ public class TrafficView extends TextView {
 				    prefSmallTriangle = intent.getBooleanExtra(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 				}
 				if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
-				    prefNetworkType = intent.getStringExtra(Common.KEY_NETWORK_TYPE);
+				    prefNetworkType = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_TYPE);
 				}
 				if (intent.hasExtra(Common.KEY_DISPLAY)) {
                     prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
@@ -469,12 +468,7 @@ public class TrafficView extends TextView {
 	};
 	
 	private boolean isCorrectNetworkType() {
-	    if(prefNetworkType == null || prefNetworkType.equals("both")) {
-	        return true;
-	    }
-	    else {
-	        return prefNetworkType.contains(networkType);
-	    }
+		return prefNetworkType.contains(networkType);
 	}
 	
 	private void updateViewVisibility() {
@@ -504,7 +498,7 @@ public class TrafficView extends TextView {
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 		prefSmallTriangle = mPref.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
-		prefNetworkType = mPref.getString(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
+		prefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
 		prefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);

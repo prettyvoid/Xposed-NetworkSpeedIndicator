@@ -14,9 +14,8 @@
     <string name="item_auto">Auto</string>
     
     <string-array name="networktype_entries">
-        <item>WLAN und Mobil</item>
-        <item>Nur WLAN</item>
-        <item>Nur Mobil</item>
+        <item>WLAN</item>
+        <item>Mobil</item>
     </string-array>
     
     <string-array name="position_entries">

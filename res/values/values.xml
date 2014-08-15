@@ -54,7 +54,6 @@
     </string-array>
     
     <string-array name="networktype_values">
-        <item>both</item>
         <item>WIFI</item>
         <item>MOBILE</item>
     </string-array>
