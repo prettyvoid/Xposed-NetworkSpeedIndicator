@@ -45,6 +45,8 @@
         <item>Žiadna</item>
         <item>Pevný trojuholník</item>
         <item>Dutý trojuholník</item>
+        <item>Small solid triangle</item> <!-- please translate -->
+        <item>Small hollow triangle</item> <!-- please translate -->
     </string-array>
     
     <string-array name="display_entries">

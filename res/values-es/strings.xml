@@ -35,6 +35,8 @@
         <item>Ninguno</item>
         <item>Triángulo sólido</item>
         <item>Triángulo hueco</item>
+        <item>Small solid triangle</item> <!-- please translate -->
+        <item>Small hollow triangle</item> <!-- please translate -->
     </string-array>
     
     <string-array name="display_entries">

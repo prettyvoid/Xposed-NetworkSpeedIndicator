@@ -29,6 +29,8 @@
         <item>Kein</item>
         <item>Gefühltes dreieck</item>
         <item>Hohles dreieck</item>
+        <item>Small solid triangle</item> <!-- please translate -->
+        <item>Small hollow triangle</item> <!-- please translate -->
     </string-array>
     
     <string-array name="display_entries">

@@ -21,7 +21,6 @@ public class Common {
 	public static final String KEY_FONT_SIZE = "font_size";
 	public static final String KEY_POSITION = "position";
 	public static final String KEY_SUFFIX = "suffix";
-	public static final String KEY_SMALL_TRIANGLE = "small_triangle";
 	public static final String KEY_DISPLAY = "display";
 	public static final String KEY_UPDATE_INTERVAL = "update_interval";
 	public static final String KEY_FONT_COLOR = "font_color";
@@ -54,7 +53,6 @@ public class Common {
 	public static final float DEF_FONT_SIZE = 10;
 	public static final int DEF_POSITION = 0;
 	public static final int DEF_SUFFIX = 1;
-	public static final boolean DEF_SMALL_TRIANGLE = false;
 	public static final int DEF_DISPLAY = 0;
 	public static final int DEF_UPDATE_INTERVAL = 1000;
 	public static final boolean DEF_FONT_COLOR = false;

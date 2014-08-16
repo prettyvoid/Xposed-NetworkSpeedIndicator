@@ -245,9 +245,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		else if (key.equals(Common.KEY_SUFFIX)) {
             intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_SUFFIX));
         }
-		else if (key.equals(Common.KEY_SMALL_TRIANGLE)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SMALL_TRIANGLE));
-		}
 		else if (key.equals(Common.KEY_DISPLAY)) {
             intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
         }
@@ -304,7 +301,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	    	int prefHideBelow = Common.getPrefInt(prefs, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
 	    	int prefSuffix = Common.getPrefInt(prefs, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 	    	findPreference(Common.KEY_SHOW_SUFFIX).setEnabled(prefHideBelow > 0 && prefSuffix != 0);
-	    	findPreference(Common.KEY_SMALL_TRIANGLE).setEnabled(prefSuffix != 0);
 		}
     	
 		if (key==null || key.equals(Common.KEY_UNIT_MODE)) {

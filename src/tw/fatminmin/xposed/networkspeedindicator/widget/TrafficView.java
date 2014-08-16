@@ -58,7 +58,6 @@ public class TrafficView extends TextView {
 	int prefColor;
 	int prefHideBelow;
 	boolean prefShowSuffix;
-	boolean prefSmallTriangle;
 	Set<String> prefUnitFormat = Common.DEF_UNIT_FORMAT;
 	Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
 	Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
@@ -148,9 +147,6 @@ public class TrafficView extends TextView {
 				}
 				if (intent.hasExtra(Common.KEY_SUFFIX)) {
 				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-				}
-				if (intent.hasExtra(Common.KEY_SMALL_TRIANGLE)) {
-				    prefSmallTriangle = intent.getBooleanExtra(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 				}
 				if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
 				    prefNetworkType = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_TYPE);
@@ -287,22 +283,20 @@ public class TrafficView extends TextView {
 		    uploadSuffix = downloadSuffix = " ";
 		    break;
 		case 1:
-			if (prefSmallTriangle) {
-				uploadSuffix = Common.SMALL_UP_TRIANGLE;
-				downloadSuffix = Common.SMALL_DOWN_TRIANGLE;
-			} else {
-				uploadSuffix = Common.BIG_UP_TRIANGLE;
-				downloadSuffix = Common.BIG_DOWN_TRIANGLE;
-			}
+			uploadSuffix = Common.BIG_UP_TRIANGLE;
+			downloadSuffix = Common.BIG_DOWN_TRIANGLE;
 		    break;
 		case 2:
-			if (prefSmallTriangle) {
-				uploadSuffix = Common.SMALL_UP_HOLLOW_TRIANGLE;
-				downloadSuffix = Common.SMALL_DOWN_HOLLOW_TRIANGLE;
-			} else {
-				uploadSuffix = Common.BIG_UP_HOLLOW_TRIANGLE;
-				downloadSuffix = Common.BIG_DOWN_HOLLOW_TRIANGLE;
-			}
+			uploadSuffix = Common.BIG_UP_HOLLOW_TRIANGLE;
+			downloadSuffix = Common.BIG_DOWN_HOLLOW_TRIANGLE;
+		    break;
+		case 3:
+			uploadSuffix = Common.SMALL_UP_TRIANGLE;
+			downloadSuffix = Common.SMALL_DOWN_TRIANGLE;
+		    break;
+		case 4:
+			uploadSuffix = Common.SMALL_UP_HOLLOW_TRIANGLE;
+			downloadSuffix = Common.SMALL_DOWN_HOLLOW_TRIANGLE;
 		    break;
 		}
 		
@@ -454,7 +448,6 @@ public class TrafficView extends TextView {
 		prefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
 		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-		prefSmallTriangle = mPref.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 		prefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 		prefNetworkSpeed = mPref.getStringSet(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
