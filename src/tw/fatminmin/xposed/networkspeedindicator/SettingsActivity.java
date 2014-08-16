@@ -29,6 +29,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	private SharedPreferences mPrefs;
 	private final Set<String> networkTypeEntries = new LinkedHashSet<String>();
 	private final Set<String> networkTypeValues = new LinkedHashSet<String>();
+	private int prefUnitMode;
+	private int prefForceUnit;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -178,12 +180,24 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
     
     private String createMultiSelectSummary(MultiSelectListPreferenceCompat mulPref) {
-    	if (mulPref.getValues().size() == 0) {
+    	Set<String> valueSet = mulPref.getValues();
+    	
+    	if (Common.KEY_UNIT_FORMAT.equals(mulPref.getKey())) {
+    		String formattedUnit = Common.formatUnit(prefUnitMode, prefForceUnit, valueSet);
+    		
+    		if (formattedUnit.length() == 0) {
+    			return getString(R.string.unit_format_hidden);
+    		} else {
+    			return getString(R.string.unit_format_fmt_as) + " #" + formattedUnit;
+    		}
+    	}
+    	
+    	if (valueSet.size() == 0) {
     		return getString(R.string.summary_none);
     	}
     	
     	TreeMap<Integer, String> selections = new TreeMap<Integer, String>();
-    	for (String value : mulPref.getValues()) {
+    	for (String value : valueSet) {
     		int index = mulPref.findIndexOfValue(value);
     		String entry = (String) mulPref.getEntries()[index];
     		selections.put(index, entry);
@@ -215,15 +229,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 		else if (key.equals(Common.KEY_UNIT_MODE)) {
 			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UNIT_MODE));
-		}
-		else if (key.equals(Common.KEY_HIDE_UNIT)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_HIDE_UNIT));
-		}
-		else if (key.equals(Common.KEY_NO_SPACE)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_NO_SPACE));
-		}
-		else if (key.equals(Common.KEY_HIDE_B)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_HIDE_B));
 		}
 		else if (key.equals(Common.KEY_HIDE_BELOW)) {
 			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_HIDE_BELOW));
@@ -257,6 +262,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 		else if (key.equals(Common.KEY_NETWORK_TYPE)
 				|| key.equals(Common.KEY_NETWORK_SPEED)
+				|| key.equals(Common.KEY_UNIT_FORMAT)
 				|| key.equals(Common.KEY_FONT_STYLE)) {
 			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
 			HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
@@ -283,11 +289,13 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			mulPref.setEntryValues(networkTypeValues.toArray(new String[]{}));
 		}
 		
-		if (key==null || key.equals(Common.KEY_HIDE_UNIT)) {
-	    	//enable only when hide unit is disabled
-	    	boolean prefHideUnit = prefs.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
-	    	findPreference(Common.KEY_NO_SPACE).setEnabled(!prefHideUnit);
-	    	findPreference(Common.KEY_HIDE_B).setEnabled(!prefHideUnit);
+		if (Common.KEY_FORCE_UNIT.equals(key)) {
+			getUnitSettings(prefs);
+			setSummary(findPreference(Common.KEY_UNIT_FORMAT));
+		}
+		
+		if (Common.KEY_UNIT_FORMAT.equals(key)) {
+			getUnitSettings(prefs);
 		}
     	
 		if (key==null
@@ -301,10 +309,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     	
 		if (key==null || key.equals(Common.KEY_UNIT_MODE)) {
 			// Dynamically change the entry texts of "Unit" preference
-			int prefInt = Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+			getUnitSettings(prefs);
 			int resId;
 			
-			switch (prefInt) {
+			switch (prefUnitMode) {
 			case 0:
 				resId = R.array.unit_entries_binary_bits;
 				break;
@@ -325,8 +333,13 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			
 			if (key != null) { // key-specific refresh
 				setSummary(prefUnit);
+				setSummary(findPreference(Common.KEY_UNIT_FORMAT));
 			}
 		}
 	}
 	
+	private void getUnitSettings(SharedPreferences prefs) {
+		prefUnitMode = Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+		prefForceUnit = Common.getPrefInt(prefs, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+	}
 }

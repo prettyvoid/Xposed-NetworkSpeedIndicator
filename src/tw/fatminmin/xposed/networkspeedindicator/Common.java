@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import android.content.SharedPreferences;
 
@@ -10,12 +11,10 @@ public class Common {
 	public static final String PREFERENCE_FILE = PKG_NAME + "_preferences";
 	public static final String ACTION_SETTINGS_CHANGED = PKG_NAME + ".changed";
 	
-	public static final String KEY_HIDE_UNIT = "hide_unit";
-	public static final String KEY_NO_SPACE = "no_space";
-	public static final String KEY_HIDE_B = "hide_b";
 	public static final String KEY_HIDE_BELOW = "hide_below";
 	public static final String KEY_SHOW_SUFFIX = "show_suffix";
 	public static final String KEY_UNIT_MODE = "unit_mode";
+	public static final String KEY_UNIT_FORMAT = "unit_format";
 	public static final String KEY_FORCE_UNIT = "force_unit";
 	public static final String KEY_NETWORK_TYPE = "network_type";
 	public static final String KEY_NETWORK_SPEED = "network_speed";
@@ -31,9 +30,13 @@ public class Common {
 	
 	public static final HashSet<String> DEF_NETWORK_TYPE = new HashSet<String>();
 	public static final HashSet<String> DEF_NETWORK_SPEED = new HashSet<String>();
-	public static final boolean DEF_HIDE_UNIT = false;
-	public static final boolean DEF_NO_SPACE = false;
-	public static final boolean DEF_HIDE_B = false;
+	public static final HashSet<String> DEF_UNIT_FORMAT = new HashSet<String>();
+	static {
+		DEF_UNIT_FORMAT.add("Sp");
+		DEF_UNIT_FORMAT.add("KM");
+		DEF_UNIT_FORMAT.add("Bb");
+	}
+	
 	public static final int DEF_HIDE_BELOW = 0;
 	public static final boolean DEF_SHOW_SUFFIX = false;
 	public static final int DEF_UNIT_MODE = 3; //Decimal bytes
@@ -84,6 +87,55 @@ public class Common {
 			// Do nothing
 		}
 		return def_value;
+	}
+	
+	public static String formatUnit(int prefUnitMode, int prefUnitFactor, Set<String> prefUnitFormat) {
+		
+		boolean binaryMode = (prefUnitMode == 0 || prefUnitMode == 1);
+		boolean bitMode = (prefUnitMode == 0 || prefUnitMode == 2);
+		
+		String factor = "K";
+		if (prefUnitFactor == 3)
+			factor = "M";
+		else if (prefUnitFactor == 1)
+			factor = "";
+		
+		StringBuilder unit = new StringBuilder();
+		
+		if (prefUnitFormat.contains("KM")) {
+			unit.append(factor);
+			if (binaryMode) {
+				if (prefUnitFormat.contains("i") && factor.length() > 0) {
+					unit.append("i");
+				}
+			}
+		}
+		
+		if (prefUnitFormat.contains("Bb")) {
+			if (bitMode)
+				unit.append("b"); //Bits
+			else
+				unit.append("B"); //Bytes
+		}
+		
+		if (prefUnitFormat.contains("p")) {
+			if (bitMode)
+				unit.append("p");
+			else
+				unit.append("/");
+		}
+		
+		if (prefUnitFormat.contains("s")) {
+			unit.append("s");
+		}
+		
+		if (prefUnitFormat.contains("Sp")) {
+			if (unit.length() > 0) {
+				unit.insert(0, " ");
+			}
+		}
+		
+		return unit.toString();
 	}
 
 }

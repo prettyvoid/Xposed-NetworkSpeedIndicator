@@ -6,9 +6,6 @@
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>
     <string name="pref_category_text_appearance">Vzhľad textu</string>
-    <string name="pref_hide_unit">Skryť jednotku</string>
-    <string name="pref_no_space">Bez medzery pred jednotkou</string>
-    <string name="pref_hide_b">Zobraziť jednotku bez B</string>
     <string name="sum1_hide_below">Skryť pri nulovej rýchlosti</string>
     <string name="pref_show_suffix">Vždy zobraziť príponu</string>
     <string name="pref_networktype">Typy sietí</string>

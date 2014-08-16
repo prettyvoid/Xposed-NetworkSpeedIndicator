@@ -36,11 +36,6 @@ public class TrafficView extends TextView {
 	private static final DecimalFormat formatWithDecimal    = new DecimalFormat(" ##0.0");
 	private static final DecimalFormat formatWithoutDecimal = new DecimalFormat(" ##0");
 	
-	private static final String KILO = "K";
-	private static final String MEGA = "M";
-	private static final String BYTES = "B";
-	private static final String BITS = "b";
-	
 	private boolean mAttached;
 	// TrafficStats mTrafficStats;
 
@@ -61,12 +56,10 @@ public class TrafficView extends TextView {
 	int prefUpdateInterval;
 	boolean prefFontColor;
 	int prefColor;
-	boolean prefHideUnit;
-	boolean prefNoSpace;
-	boolean prefHideB;
 	int prefHideBelow;
 	boolean prefShowSuffix;
 	boolean prefSmallTriangle;
+	Set<String> prefUnitFormat = Common.DEF_UNIT_FORMAT;
 	Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
 	Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
 	Set<String> prefFontStyle = Common.DEF_FONT_STYLE;
@@ -137,14 +130,8 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_UNIT_MODE)) {
 					prefUnitMode = intent.getIntExtra(Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
 				}
-				if (intent.hasExtra(Common.KEY_HIDE_UNIT)) {
-				    prefHideUnit = intent.getBooleanExtra(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
-				}
-				if (intent.hasExtra(Common.KEY_NO_SPACE)) {
-				    prefNoSpace = intent.getBooleanExtra(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE);
-				}
-				if (intent.hasExtra(Common.KEY_HIDE_B)) {
-				    prefHideB = intent.getBooleanExtra(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
+				if (intent.hasExtra(Common.KEY_UNIT_FORMAT)) {
+				    prefUnitFormat = (Set<String>) intent.getSerializableExtra(Common.KEY_UNIT_FORMAT);
 				}
 				if (intent.hasExtra(Common.KEY_HIDE_BELOW)) {
 					prefHideBelow = intent.getIntExtra(Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
@@ -381,7 +368,6 @@ public class TrafficView extends TextView {
 		float megaTransferSpeed = ((float) transferSpeed) / (unitFactor * unitFactor);
 		float kiloTransferSpeed = ((float) transferSpeed) / unitFactor;
 		
-		String transferUnit;
 		float transferValue;
 		DecimalFormat transferDecimalFormat;
 		
@@ -401,18 +387,15 @@ public class TrafficView extends TextView {
 		switch (tempPrefUnit) {
 		case 3:
 			transferValue = megaTransferSpeed;
-			transferUnit = MEGA;
 			transferDecimalFormat = formatWithDecimal;
 			break;
 		case 2:
 			transferValue = kiloTransferSpeed;
-			transferUnit = KILO;
 			transferDecimalFormat = formatWithoutDecimal;
 			break;
 		default:
 		case 1:
 			transferValue = transferSpeed;
-			transferUnit = "";
 			transferDecimalFormat = formatWithoutDecimal;
 			break;
 		}
@@ -427,9 +410,7 @@ public class TrafficView extends TextView {
         }
 		
 		if(strTransferValue.length() > 0) {
-		    if(!prefHideUnit) {
-		        strTransferValue += formatUnit(transferUnit);
-		    }
+		    strTransferValue += Common.formatUnit(prefUnitMode, tempPrefUnit, prefUnitFormat);
 		    strTransferValue += transferSuffix;
 		}
 		else if (prefShowSuffix) {
@@ -437,19 +418,6 @@ public class TrafficView extends TextView {
 		}
 		
 		return strTransferValue;
-	}
-	
-	private String formatUnit(String unit) {
-		if (!prefHideB) {
-			if (prefUnitMode == 0 || prefUnitMode == 2)
-				unit += BITS;
-			else
-				unit += BYTES;
-		}
-		if ((!prefNoSpace) && (unit.length() > 0)) {
-			unit = " " + unit;
-		}
-		return unit;
 	}
 
 	public void update() {
@@ -480,9 +448,7 @@ public class TrafficView extends TextView {
 		mPref = new XSharedPreferences(Common.PKG_NAME);
 		prefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 		prefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
-		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
-		prefNoSpace = mPref.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE);
-		prefHideB = mPref.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
+		prefUnitFormat = mPref.getStringSet(Common.KEY_UNIT_FORMAT, Common.DEF_UNIT_FORMAT);
 		prefHideBelow = Common.getPrefInt(mPref, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
 		prefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
 		prefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);

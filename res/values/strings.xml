@@ -7,11 +7,9 @@
     <string name="pref_category_ind_appearance">Indicator appearance</string>
     <string name="pref_category_unit_settings">Unit settings</string>
     <string name="pref_category_text_appearance">Text appearance</string>
-    <string name="pref_hide_unit">Hide unit</string>
-    <string name="pref_no_space">No space before unit</string>
-    <string name="pref_hide_b">Show unit without B</string>
     <string name="pref_unit_mode">Unit mode</string>
     <string name="pref_unit">Unit</string>
+    <string name="pref_unit_format">Display and format</string>
     <string name="pref_hide_below">Display threshold</string>
     <string name="dmsg_hide_below">Speeds less than this value will not be shown. Enter 0 to always show speed or 1 to hide when speed is zero.</string>
     <string name="hint_hide_below">bytes per sec</string>
@@ -34,6 +32,8 @@
     <string name="pref_font_color">Font color</string>
     <string name="pref_font_style">Font style</string>
     
+    <string name="unit_format_hidden">Hidden</string>
+    <string name="unit_format_fmt_as">Formatted as</string>
     <string name="summary_none">None</string>
     <string name="item_auto">Auto</string>
     <!-- Note about units:
@@ -51,6 +51,15 @@
         <item>Binary bytes</item>
         <item>Decimal bits</item>
         <item>Decimal bytes</item>
+    </string-array>
+    
+    <string-array name="unit_format_entries">
+        <item>Space prefix</item>
+        <item>Factor (K,M)</item>
+        <item>Binary mode (i)</item>
+        <item>Bytes or bits</item>
+        <item>Every (p,/)</item>
+        <item>Second (s)</item>
     </string-array>
     
     <string-array name="networktype_entries">

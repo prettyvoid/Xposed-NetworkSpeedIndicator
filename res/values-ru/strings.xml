@@ -2,7 +2,6 @@
 <resources>
     
     <string name="app_name">Индикатор Скорости Сети</string>
-    <string name="pref_hide_unit">Скрыть ед. измерения</string>
     <string name="sum1_hide_below">Скрыть если = нулю</string>
     <string name="pref_networktype">Типы сетей</string>
     <string name="pref_font_size">Размер шрифта</string>
