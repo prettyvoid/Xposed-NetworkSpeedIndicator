@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -181,12 +182,19 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     		return getString(R.string.summary_none);
     	}
     	
+    	TreeMap<Integer, String> selections = new TreeMap<Integer, String>();
+    	for (String value : mulPref.getValues()) {
+    		int index = mulPref.findIndexOfValue(value);
+    		String entry = (String) mulPref.getEntries()[index];
+    		selections.put(index, entry);
+    	}
+    	
     	String summary = "";
-    	for(String str : mulPref.getValues()) {
+    	for (String entry : selections.values()) {
     		if(summary.length() > 0) {
     			summary += ", ";
     		}
-    		summary += str;
+    		summary += entry;
     	}
     	return summary;
     }

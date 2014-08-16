@@ -222,10 +222,10 @@ public class TrafficView extends TextView {
 			
 			SpannableString spanString = new SpannableString(createText());
 			
-			if(prefFontStyle.contains("Bold")) {
+			if(prefFontStyle.contains("B")) {
 				spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
 			}
-			if(prefFontStyle.contains("Italic")) {
+			if(prefFontStyle.contains("I")) {
 				spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
 			}
 			

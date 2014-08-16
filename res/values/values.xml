@@ -85,8 +85,8 @@
     </string-array>
     
     <string-array name="font_style_values">
-        <item>Bold</item>
-        <item>Italic</item>
+        <item>B</item>
+        <item>I</item>
     </string-array>
     
 </resources>
