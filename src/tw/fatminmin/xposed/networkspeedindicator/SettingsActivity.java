@@ -36,11 +36,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
 		addPreferencesFromResource(R.xml.settings);
 		mPrefs = getPreferenceScreen().getSharedPreferences();
-		
 	}
 
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();
 		
 		@SuppressWarnings("deprecation")
@@ -53,12 +52,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 
 	@Override
-	public void onPause() {
+	protected void onPause() {
 		mPrefs.unregisterOnSharedPreferenceChangeListener(this);
 		super.onPause();
 	}
 
-	void setAllSummary(PreferenceGroup group) {
+	private void setAllSummary(PreferenceGroup group) {
 		for(int i = 0; i < group.getPreferenceCount(); i++) {
 			if(group.getPreference(i) instanceof PreferenceGroup) {
 				setAllSummary((PreferenceGroup) group.getPreference(i));
@@ -99,7 +98,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
 	
-    void setSummary(Preference preference) {
+    private void setSummary(Preference preference) {
 	    if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
             preference.setSummary(createListPrefSummary(listPref));
