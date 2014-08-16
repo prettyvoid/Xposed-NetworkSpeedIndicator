@@ -15,8 +15,12 @@
     <string name="item_auto">Auto</string>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi</item>
         <item>Dane mobilne</item>
+        <item>Wi-Fi</item>
+        <item>WiMAX</item>
+        <item>Bluetooth</item>
+        <item>Ethernet</item>
+        <item>Wi-Fi Direct</item>
     </string-array>
     
     <string-array name="position_entries">

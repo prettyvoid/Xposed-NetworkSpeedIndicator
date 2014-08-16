@@ -1,7 +1,6 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
 import java.text.DecimalFormat;
-import java.util.Locale;
 import java.util.Set;
 
 import tw.fatminmin.xposed.networkspeedindicator.Common;
@@ -272,7 +271,7 @@ public class TrafficView extends TextView {
 		
 		if (networkInfo != null) {
 			networkState = networkInfo.isAvailable();
-			networkType = networkInfo.getTypeName().toUpperCase(Locale.ENGLISH);
+			networkType = String.valueOf(networkInfo.getType());
 			Log.i(TAG, "networkType = " + networkType);
 		}
 		else {
@@ -467,12 +466,8 @@ public class TrafficView extends TextView {
 		}
 	};
 	
-	private boolean isCorrectNetworkType() {
-		return prefNetworkType.contains(networkType);
-	}
-	
 	private void updateViewVisibility() {
-		if (networkState && isCorrectNetworkType()) {
+		if (networkState && prefNetworkType.contains(networkType)) {
 			if (mAttached) {
 				updateTraffic();
 			}

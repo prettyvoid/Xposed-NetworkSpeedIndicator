@@ -41,8 +41,12 @@
     <string name="press_color_to_apply">Appuyez sur la couleur pour appliquer</string>
     
     <string-array name="networktype_entries">
-        <item>Wi-Fi</item>
         <item>Mobile</item>
+        <item>Wi-Fi</item>
+        <item>WiMAX</item>
+        <item>Bluetooth</item>
+        <item>Ethernet</item>
+        <item>Wi-Fi Direct</item>
     </string-array>
     
     <string-array name="position_entries">

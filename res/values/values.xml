@@ -54,8 +54,17 @@
     </string-array>
     
     <string-array name="networktype_values">
-        <item>WIFI</item>
-        <item>MOBILE</item>
+        <item>0</item>
+        <item>1</item>
+        <item>6</item>
+        <item>7</item>
+        <item>9</item>
+        <item>13</item>
+    </string-array>
+    
+    <string-array name="networktype_defaults">
+        <item>0</item>
+        <item>1</item>
     </string-array>
     
     <string-array name="position_values">

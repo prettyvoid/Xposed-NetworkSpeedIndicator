@@ -12,7 +12,7 @@
 		    android:inputType="number" />
 		
 		<com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat
-			android:defaultValue="@array/networktype_values"
+			android:defaultValue="@array/networktype_defaults"
 			android:key="network_type"
 			android:title="@string/pref_networktype"
 			android:entries="@array/networktype_entries"

@@ -1,11 +1,17 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -20,6 +26,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 	private static final String TAG = SettingsActivity.class.getSimpleName();
 	private SharedPreferences mPrefs;
+	private final Set<String> networkTypeEntries = new LinkedHashSet<String>();
+	private final Set<String> networkTypeValues = new LinkedHashSet<String>();
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -37,6 +45,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		
 		@SuppressWarnings("deprecation")
 		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
+		refreshNetworkTypes();
 		refreshPreferences(mPrefs, null);
 		setAllSummary(settings);
 		
@@ -56,6 +65,36 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			}
 			else {
 				setSummary(group.getPreference(i));
+			}
+		}
+	}
+
+	private void refreshNetworkTypes() {
+		// Get the network types supported by device
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo[] allNetInfo = cm.getAllNetworkInfo();
+		
+		networkTypeEntries.clear();
+		networkTypeValues.clear();
+		
+		if (allNetInfo == null) {
+			Log.e(TAG, "Array containing all network info is null!");
+		}
+		else {
+			List<String> resNetworkTypeEntries  = Arrays.asList(getResources().getStringArray(R.array.networktype_entries));
+			List<String> resNetworkTypeValues   = Arrays.asList(getResources().getStringArray(R.array.networktype_values));
+			
+			for (NetworkInfo netInfo : allNetInfo) {
+				if (netInfo == null) {
+					Log.w(TAG, "Network info object is null.");
+				} else {
+					String netInfoType = String.valueOf(netInfo.getType());
+					int index = resNetworkTypeValues.indexOf(netInfoType);
+					if (index >= 0 && index < resNetworkTypeEntries.size()) {
+						networkTypeEntries.add(resNetworkTypeEntries.get(index));
+						networkTypeValues .add(resNetworkTypeValues .get(index));
+					}
+				}
 			}
 		}
 	}
@@ -239,6 +278,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	private void refreshPreferences(SharedPreferences prefs, String key) {
 		// When key is null, refresh everything.
 		// When a key is provided, refresh only for that key.
+		
+		if (key==null) { //only first time
+			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(Common.KEY_NETWORK_TYPE);
+			mulPref.setEntries(networkTypeEntries.toArray(new String[]{}));
+			mulPref.setEntryValues(networkTypeValues.toArray(new String[]{}));
+		}
 		
 		if (key==null || key.equals(Common.KEY_HIDE_UNIT)) {
 	    	//enable only when hide unit is disabled
