@@ -29,7 +29,17 @@ public class Common {
 	public static final String KEY_FONT_STYLE = "font_style";
 	
 	public static final HashSet<String> DEF_NETWORK_TYPE = new HashSet<String>();
+	static {
+		DEF_NETWORK_TYPE.add("0");
+		DEF_NETWORK_TYPE.add("1");
+	}
+	
 	public static final HashSet<String> DEF_NETWORK_SPEED = new HashSet<String>();
+	static {
+		DEF_NETWORK_SPEED.add("U");
+		DEF_NETWORK_SPEED.add("D");
+	}
+	
 	public static final HashSet<String> DEF_UNIT_FORMAT = new HashSet<String>();
 	static {
 		DEF_UNIT_FORMAT.add("Sp");
@@ -60,14 +70,6 @@ public class Common {
 	public static final String BIG_DOWN_HOLLOW_TRIANGLE = " \u25BD ";
 	public static final String SMALL_UP_HOLLOW_TRIANGLE = "\u25B5";
 	public static final String SMALL_DOWN_HOLLOW_TRIANGLE = " \u25BF ";
-	
-	static {
-		DEF_NETWORK_TYPE.add("0");
-		DEF_NETWORK_TYPE.add("1");
-		
-		DEF_NETWORK_SPEED.add("U");
-		DEF_NETWORK_SPEED.add("D");
-	}
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
 		try {
