@@ -6,8 +6,6 @@
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>
     <string name="pref_category_text_appearance">Vzhľad textu</string>
-    <string name="pref_show_upload_speed">Zobraziť rýchlosť nahrávania</string>
-    <string name="pref_show_download_speed">Zobraziť rýchlosť sťahovania</string>
     <string name="pref_hide_unit">Skryť jednotku</string>
     <string name="pref_no_space">Bez medzery pred jednotkou</string>
     <string name="pref_hide_b">Zobraziť jednotku bez B</string>
@@ -33,6 +31,11 @@
         <item>Bluetooth</item>
         <item>Ethernet</item>
         <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>Nahrávania</item>
+        <item>Sťahovania</item>
     </string-array>
     
     <string-array name="position_entries">

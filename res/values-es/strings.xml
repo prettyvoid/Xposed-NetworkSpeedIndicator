@@ -2,8 +2,6 @@
 <resources>
     
     <string name="app_name">Indicador de Velocidad de la Red</string>
-    <string name="pref_show_upload_speed">Mostrar velocidad de subida</string>
-    <string name="pref_show_download_speed">Mostrar velocidad de descarga</string>
     <string name="pref_hide_unit">Ocultar unidad</string>
     <string name="sum1_hide_below">Ocultar cuando la velocidad es cero</string>
     <string name="pref_networktype">Tipos de redes</string>
@@ -21,6 +19,11 @@
         <item>Bluetooth</item>
         <item>Ethernet</item>
         <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>Subida</item>
+        <item>Descarga</item>
     </string-array>
     
     <string-array name="position_entries">

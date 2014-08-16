@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Network Speed Indicator</string>
+    <!-- app_name follows default -->
     <string name="app_description">Affiche les statistiques de trafic sur la barre d\'état</string>
     <string name="pref_category_ind_settings">Paramètres de l\'indicateur</string>
     <string name="pref_category_ind_appearance">Apparence de l\'indicateur</string>
     <string name="pref_category_unit_settings">Paramètres de l\'unité</string>
     <string name="pref_category_text_appearance">Apparence du texte</string>
-    <string name="pref_show_upload_speed">Afficher débit montant</string>
-    <string name="pref_show_download_speed">Afficher débit descendant</string>
     <string name="pref_hide_unit">Masquer l\'unité</string>
     <string name="pref_no_space">Aucun espace avant l\'unité</string>
     <string name="pref_hide_b">Afficher l\'unité sans B</string>
@@ -47,6 +45,11 @@
         <item>Bluetooth</item>
         <item>Ethernet</item>
         <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>Montant</item>
+        <item>Descendant</item>
     </string-array>
     
     <string-array name="position_entries">

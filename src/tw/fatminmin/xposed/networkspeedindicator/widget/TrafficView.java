@@ -61,8 +61,6 @@ public class TrafficView extends TextView {
 	int prefUpdateInterval;
 	boolean prefFontColor;
 	int prefColor;
-	boolean prefShowUploadSpeed;
-	boolean prefShowDownloadSpeed;
 	boolean prefHideUnit;
 	boolean prefNoSpace;
 	boolean prefHideB;
@@ -70,6 +68,7 @@ public class TrafficView extends TextView {
 	boolean prefShowSuffix;
 	boolean prefSmallTriangle;
 	Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
+	Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
 	Set<String> prefFontStyle = Common.DEF_FONT_STYLE;
 
 	public TrafficView(Context context) {
@@ -138,12 +137,6 @@ public class TrafficView extends TextView {
 				if (intent.hasExtra(Common.KEY_UNIT_MODE)) {
 					prefUnitMode = intent.getIntExtra(Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
 				}
-				if (intent.hasExtra(Common.KEY_SHOW_UPLOAD_SPEED)) {
-				    prefShowUploadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED);
-				}
-				if (intent.hasExtra(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
-				    prefShowDownloadSpeed = intent.getBooleanExtra(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
-				}
 				if (intent.hasExtra(Common.KEY_HIDE_UNIT)) {
 				    prefHideUnit = intent.getBooleanExtra(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 				}
@@ -174,6 +167,9 @@ public class TrafficView extends TextView {
 				}
 				if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
 				    prefNetworkType = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_TYPE);
+				}
+				if (intent.hasExtra(Common.KEY_NETWORK_SPEED)) {
+				    prefNetworkSpeed = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_SPEED);
 				}
 				if (intent.hasExtra(Common.KEY_DISPLAY)) {
                     prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
@@ -323,16 +319,18 @@ public class TrafficView extends TextView {
 		    break;
 		}
 		
-		boolean showInExactPosition = (prefShowUploadSpeed && prefShowDownloadSpeed);
+		boolean showUploadSpeed = prefNetworkSpeed.contains("U");
+		boolean showDownloadSpeed = prefNetworkSpeed.contains("D");
+		boolean showInExactPosition = (showUploadSpeed && showDownloadSpeed);
 		
-		if(prefShowUploadSpeed) {
+		if(showUploadSpeed) {
 		    strUploadValue = formatSpeed(uploadSpeed, uploadSuffix);
 		}
 		else {
 			strUploadValue = "";
 		}
 		
-		if(prefShowDownloadSpeed) {
+		if(showDownloadSpeed) {
 		    strDownloadValue = formatSpeed(downloadSpeed, downloadSuffix);
 		}
 		else {
@@ -482,8 +480,6 @@ public class TrafficView extends TextView {
 		mPref = new XSharedPreferences(Common.PKG_NAME);
 		prefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 		prefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
-		prefShowUploadSpeed = mPref.getBoolean(Common.KEY_SHOW_UPLOAD_SPEED, Common.DEF_SHOW_UPLOAD_SPEED);
-		prefShowDownloadSpeed = mPref.getBoolean(Common.KEY_SHOW_DOWNLOAD_SPEED, Common.DEF_SHOW_DOWNLOAD_SPEED);
 		prefHideUnit = mPref.getBoolean(Common.KEY_HIDE_UNIT, Common.DEF_HIDE_UNIT);
 		prefNoSpace = mPref.getBoolean(Common.KEY_NO_SPACE, Common.DEF_NO_SPACE);
 		prefHideB = mPref.getBoolean(Common.KEY_HIDE_B, Common.DEF_HIDE_B);
@@ -494,6 +490,7 @@ public class TrafficView extends TextView {
 		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
 		prefSmallTriangle = mPref.getBoolean(Common.KEY_SMALL_TRIANGLE, Common.DEF_SMALL_TRIANGLE);
 		prefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
+		prefNetworkSpeed = mPref.getStringSet(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
 		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
 		prefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);

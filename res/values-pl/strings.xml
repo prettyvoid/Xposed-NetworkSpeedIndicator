@@ -2,8 +2,6 @@
 <resources>
     
     <!-- app_name follows default -->
-    <string name="pref_show_upload_speed">Pokaż prędkość wysyłania</string>
-    <string name="pref_show_download_speed">Pokaż prędkość pobierania</string>
     <string name="pref_hide_unit">Ukryj jednostkę</string>
     <string name="sum1_hide_below">Ukryj gdy brak aktywności</string>
     <string name="pref_networktype">Rodzaje połączeń</string>
@@ -21,6 +19,11 @@
         <item>Bluetooth</item>
         <item>Ethernet</item>
         <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>Wysyłania</item>
+        <item>Pobierania</item>
     </string-array>
     
     <string-array name="position_entries">

@@ -18,15 +18,12 @@
 			android:entries="@array/networktype_entries"
 			android:entryValues="@array/networktype_values" />
 		
-	    <CheckBoxPreference 
-		    android:defaultValue="true"
-		    android:key="show_upload_speed"
-		    android:title="@string/pref_show_upload_speed" />
-		
-		<CheckBoxPreference 
-		    android:defaultValue="true"
-		    android:key="show_download_speed"
-		    android:title="@string/pref_show_download_speed" />
+		<com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat
+			android:defaultValue="@array/networkspeed_values"
+			android:key="network_speed"
+			android:title="@string/pref_networkspeed"
+			android:entries="@array/networkspeed_entries"
+			android:entryValues="@array/networkspeed_values" />
 		
 	    <EditTextPreference 
 		    android:key="hide_below"

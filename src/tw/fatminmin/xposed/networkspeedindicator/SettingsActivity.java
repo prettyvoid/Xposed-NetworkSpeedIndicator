@@ -210,13 +210,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		
 		intent.setAction(Common.ACTION_SETTINGS_CHANGED);
 		
-		if (key.equals(Common.KEY_SHOW_UPLOAD_SPEED)) {
-		    intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_UPLOAD_SPEED));
-		}
-		else if (key.equals(Common.KEY_SHOW_DOWNLOAD_SPEED)) {
-		    intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_DOWNLOAD_SPEED));
-		}
-		else if (key.equals(Common.KEY_FORCE_UNIT)) {
+		if (key.equals(Common.KEY_FORCE_UNIT)) {
 			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_FORCE_UNIT));
 		}
 		else if (key.equals(Common.KEY_UNIT_MODE)) {
@@ -249,11 +243,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		else if (key.equals(Common.KEY_SMALL_TRIANGLE)) {
 			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SMALL_TRIANGLE));
 		}
-		else if (key.equals(Common.KEY_NETWORK_TYPE)) {
-			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
-			HashSet<String> value = (HashSet<String>) mulPref.getValues();
-			intent.putExtra(key, value);
-		}
 		else if (key.equals(Common.KEY_DISPLAY)) {
             intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
         }
@@ -266,7 +255,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		else if (key.equals(Common.KEY_COLOR)) {
 			intent.putExtra(key, prefs.getInt(key, Common.DEF_COLOR));
 		}
-		else if (key.equals(Common.KEY_FONT_STYLE)) {
+		else if (key.equals(Common.KEY_NETWORK_TYPE)
+				|| key.equals(Common.KEY_NETWORK_SPEED)
+				|| key.equals(Common.KEY_FONT_STYLE)) {
 			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
 			HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
 			intent.putExtra(key, value);

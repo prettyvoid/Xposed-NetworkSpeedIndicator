@@ -7,8 +7,6 @@
     <string name="pref_category_ind_appearance">Indicator appearance</string>
     <string name="pref_category_unit_settings">Unit settings</string>
     <string name="pref_category_text_appearance">Text appearance</string>
-    <string name="pref_show_upload_speed">Show upload speed</string>
-    <string name="pref_show_download_speed">Show download speed</string>
     <string name="pref_hide_unit">Hide unit</string>
     <string name="pref_no_space">No space before unit</string>
     <string name="pref_hide_b">Show unit without B</string>
@@ -22,6 +20,7 @@
     <string name="unit_hide_below">Hide speeds below %s B/s</string> <!-- see note -->
     <string name="pref_show_suffix">Always show suffix</string>
     <string name="pref_networktype">Network types</string>
+    <string name="pref_networkspeed">Network speeds</string>
     <string name="pref_font_size">Font size</string>
     <string name="hint_font_size">scaled pixels</string>
     <string name="unit_font_size">%s px</string> <!-- see note -->
@@ -61,6 +60,11 @@
         <item>Bluetooth</item>
         <item>Ethernet</item>
         <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>Upload</item>
+        <item>Download</item>
     </string-array>
     
     <string-array name="position_entries">

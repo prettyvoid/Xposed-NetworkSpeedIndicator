@@ -10,8 +10,6 @@ public class Common {
 	public static final String PREFERENCE_FILE = PKG_NAME + "_preferences";
 	public static final String ACTION_SETTINGS_CHANGED = PKG_NAME + ".changed";
 	
-	public static final String KEY_SHOW_UPLOAD_SPEED = "show_upload_speed";
-	public static final String KEY_SHOW_DOWNLOAD_SPEED = "show_download_speed";
 	public static final String KEY_HIDE_UNIT = "hide_unit";
 	public static final String KEY_NO_SPACE = "no_space";
 	public static final String KEY_HIDE_B = "hide_b";
@@ -20,6 +18,7 @@ public class Common {
 	public static final String KEY_UNIT_MODE = "unit_mode";
 	public static final String KEY_FORCE_UNIT = "force_unit";
 	public static final String KEY_NETWORK_TYPE = "network_type";
+	public static final String KEY_NETWORK_SPEED = "network_speed";
 	public static final String KEY_FONT_SIZE = "font_size";
 	public static final String KEY_POSITION = "position";
 	public static final String KEY_SUFFIX = "suffix";
@@ -31,8 +30,7 @@ public class Common {
 	public static final String KEY_FONT_STYLE = "font_style";
 	
 	public static final HashSet<String> DEF_NETWORK_TYPE = new HashSet<String>();
-	public static final boolean DEF_SHOW_UPLOAD_SPEED = true;
-	public static final boolean DEF_SHOW_DOWNLOAD_SPEED = true;
+	public static final HashSet<String> DEF_NETWORK_SPEED = new HashSet<String>();
 	public static final boolean DEF_HIDE_UNIT = false;
 	public static final boolean DEF_NO_SPACE = false;
 	public static final boolean DEF_HIDE_B = false;
@@ -63,6 +61,9 @@ public class Common {
 	static {
 		DEF_NETWORK_TYPE.add("0");
 		DEF_NETWORK_TYPE.add("1");
+		
+		DEF_NETWORK_SPEED.add("U");
+		DEF_NETWORK_SPEED.add("D");
 	}
 
 	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
