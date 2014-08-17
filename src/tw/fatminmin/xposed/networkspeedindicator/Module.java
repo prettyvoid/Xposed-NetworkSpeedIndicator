@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import tw.fatminmin.xposed.networkspeedindicator.widget.GingerBreadPositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.JellyBeanPositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.PositionCallbackImpl;
@@ -32,6 +33,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public final class Module implements IXposedHookLoadPackage,
         IXposedHookInitPackageResources {
 
+	private static final String TAG = Module.class.getSimpleName();
     
 	private final TextView getClock() {
 		if(trafficView == null || trafficView.mPositionCallback == null) { 
@@ -45,12 +47,16 @@ public final class Module implements IXposedHookLoadPackage,
 		return null;
 	}
 	
-    
 	@Override
     public final void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-        if(!lpparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
-            return;
-        }
+        try {
+			if(!lpparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
+			    return;
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "handleLoadPackage failed: ", e);
+			throw e;
+		}
         try {
         	// we hook this method to follow alpha changes in kitkat
         	Class<?> cClock = XposedHelpers.findClass("com.android.systemui.statusbar.policy.Clock", lpparam.classLoader);
@@ -60,36 +66,44 @@ public final class Module implements IXposedHookLoadPackage,
 				@SuppressLint("NewApi")
 				@Override
     			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
-    				
-					if(param.thisObject != getClock())
-						return;
-					
-    				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-    					if(trafficView != null) {
-    						if (statusIcons != null) {
-    							trafficView.setAlpha(statusIcons.getAlpha());
-    						} else if (clock != null) {
-    							trafficView.setAlpha(clock.getAlpha());
-    						}
-    					}
-    				}
+					try {
+						if(param.thisObject != getClock())
+							return;
+						
+						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+							if(trafficView != null) {
+								if (statusIcons != null) {
+									trafficView.setAlpha(statusIcons.getAlpha());
+								} else if (clock != null) {
+									trafficView.setAlpha(clock.getAlpha());
+								}
+							}
+						}
+					} catch (Exception e) {
+						Log.e(TAG, "afterHookedMethod (setAlpha) failed: ", e);
+						throw e;
+					}
     			}
     		});
     		XposedBridge.hookAllMethods(cClock, "setTextColor", new XC_MethodHook() {
 				@Override
     			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
-    				
-					if(param.thisObject != getClock())
-						return;
-					
-    				if(trafficView != null && clock != null) {
-    					trafficView.setTextColor(clock.getCurrentTextColor());
-    				}
+					try {
+						if(param.thisObject != getClock())
+							return;
+						
+						if(trafficView != null && clock != null) {
+							trafficView.setTextColor(clock.getCurrentTextColor());
+						}
+					} catch (Exception e) {
+						Log.e(TAG, "afterHookedMethod (setTextColor) failed: ", e);
+						throw e;
+					}
     			}
     		});
         }
         catch(Exception e){
-            
+            Log.e(TAG, "handleLoadPackage failure ignored: ", e);
         }
     }
     
@@ -111,58 +125,70 @@ public final class Module implements IXposedHookLoadPackage,
     @Override
     public final void handleInitPackageResources(final InitPackageResourcesParam resparam)
             throws Throwable {
-        if (!resparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
-            return;
-        }
-        XResources res = resparam.res;
+        try {
+			if (!resparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
+			    return;
+			}
+			XResources res = resparam.res;
 
-        final Entry<String, String> layoutInfo = findLayoutInfo(res);
-        if (layoutInfo == null)
-            return;
+			final Entry<String, String> layoutInfo = findLayoutInfo(res);
+			if (layoutInfo == null)
+			    return;
 
-        res.hookLayout(PKG_NAME_SYSTEM_UI, "layout", layoutInfo.getKey(),
-                new XC_LayoutInflated() {
+			res.hookLayout(PKG_NAME_SYSTEM_UI, "layout", layoutInfo.getKey(),
+			        new XC_LayoutInflated() {
 
-                    @Override
-                    public final void handleLayoutInflated(final LayoutInflatedParam liparam)
-                            throws Throwable {
-                        FrameLayout root = (FrameLayout) liparam.view;
+			            @Override
+			            public final void handleLayoutInflated(final LayoutInflatedParam liparam)
+			                    throws Throwable {
+			                try {
+								FrameLayout root = (FrameLayout) liparam.view;
 
-                        clock = (TextView) root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
-                        statusIcons = (View) root.findViewById(liparam.res.getIdentifier("statusIcons", "id", PKG_NAME_SYSTEM_UI));
-                        
-                        if (trafficView == null) {
-                            trafficView = new TrafficView(root.getContext());
-                            trafficView.clock = clock;
-                        }
-                        if (clock != null) {
-                            trafficView.setLayoutParams(clock.getLayoutParams());
-                            trafficView.setTextColor(clock.getCurrentTextColor());
-                        } else {
-                            // gingerbread
-                            trafficView.setLayoutParams(new LayoutParams(
-                                    LayoutParams.WRAP_CONTENT,
-                                    LayoutParams.MATCH_PARENT));
-                            trafficView.setTextColor(Color
-                                    .parseColor("#33b5e5"));
-                        }
-                        trafficView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+								clock = (TextView) root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
+								statusIcons = (View) root.findViewById(liparam.res.getIdentifier("statusIcons", "id", PKG_NAME_SYSTEM_UI));
+								
+								if (trafficView == null) {
+								    trafficView = new TrafficView(root.getContext());
+								    trafficView.clock = clock;
+								}
+								if (clock != null) {
+								    trafficView.setLayoutParams(clock.getLayoutParams());
+								    trafficView.setTextColor(clock.getCurrentTextColor());
+								} else {
+									Log.i(TAG, "Clock: Gingerbread");
+								    trafficView.setLayoutParams(new LayoutParams(
+								            LayoutParams.WRAP_CONTENT,
+								            LayoutParams.MATCH_PARENT));
+								    trafficView.setTextColor(Color
+								            .parseColor("#33b5e5"));
+								}
+								trafficView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 
-                        if (liparam.res.getIdentifier("status_bar_contents", "id", PKG_NAME_SYSTEM_UI) != 0) {
-                            // kitkat
-                            trafficView.mPositionCallback = new PositionCallbackImpl();
-                        } else if (liparam.res.getIdentifier("notification_icon_area", "id",PKG_NAME_SYSTEM_UI) != 0) {
-                            // jellybean
-                            trafficView.mPositionCallback = new JellyBeanPositionCallbackImpl();
-                        } else if (liparam.res.getIdentifier("notificationIcons", "id", PKG_NAME_SYSTEM_UI) != 0) {
-                            // gingerbread
-                            trafficView.mPositionCallback = new GingerBreadPositionCallbackImpl();
-                        }
+								if (liparam.res.getIdentifier("status_bar_contents", "id", PKG_NAME_SYSTEM_UI) != 0) {
+								    Log.i(TAG, "PositionCallback: KitKat");
+								    trafficView.mPositionCallback = new PositionCallbackImpl();
+								    
+								} else if (liparam.res.getIdentifier("notification_icon_area", "id",PKG_NAME_SYSTEM_UI) != 0) {
+								    Log.i(TAG, "PositionCallback: Jelly Bean");
+								    trafficView.mPositionCallback = new JellyBeanPositionCallbackImpl();
+								    
+								} else if (liparam.res.getIdentifier("notificationIcons", "id", PKG_NAME_SYSTEM_UI) != 0) {
+									Log.i(TAG, "PositionCallback: Gingerbread");
+								    trafficView.mPositionCallback = new GingerBreadPositionCallbackImpl();
+								}
 
-                        trafficView.mPositionCallback.setup(liparam, trafficView);
-                        trafficView.refreshPosition();
-                    }
-                });
+								trafficView.mPositionCallback.setup(liparam, trafficView);
+								trafficView.refreshPosition();
+							} catch (Exception e) {
+								Log.e(TAG, "handleLayoutInflated failed: ", e);
+								throw e;
+							}
+			            }
+			        });
+		} catch (Exception e) {
+			Log.e(TAG, "handleInitPackageResources failed: ", e);
+			throw e;
+		}
     }
 
     private static final Entry<String, String> findLayoutInfo(final XResources res) {

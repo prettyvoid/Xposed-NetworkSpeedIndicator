@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Set;
 
 import tw.fatminmin.xposed.networkspeedindicator.Common;
+import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +20,6 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -36,7 +36,6 @@ public final class TrafficView extends TextView {
 	private static final DecimalFormat formatWithoutDecimal = new DecimalFormat(" ##0");
 	
 	private boolean mAttached;
-	// TrafficStats mTrafficStats;
 
 	private long uploadSpeed;
 	private long downloadSpeed;
@@ -96,7 +95,7 @@ public final class TrafficView extends TextView {
 				setTextColor(clock.getCurrentTextColor());
 			}
 			else {
-				// gingerbread;
+				Log.i(TAG, "Gingerbread");
 				setTextColor(Color.parseColor("#33b5e5"));
 			}
 		}
@@ -107,63 +106,72 @@ public final class TrafficView extends TextView {
 		@SuppressWarnings("unchecked")
 		@Override
 		public final void onReceive(final Context context, final Intent intent) {
-			String action = intent.getAction();
-			
-			if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-				updateConnectionInfo();
-				updateViewVisibility();
-			}
-			else if (action.equals(Common.ACTION_SETTINGS_CHANGED)) {
-				Log.i(TAG, "SettingsChanged");
+			try {
+				String action = intent.getAction();
 				
-				if (intent.hasExtra(Common.KEY_FORCE_UNIT)) {
-					prefForceUnit = intent.getIntExtra(Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+				if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+					Log.i(TAG, "Connectivity changed");
+					updateConnectionInfo();
+					updateViewVisibility();
 				}
-				if (intent.hasExtra(Common.KEY_UNIT_MODE)) {
-					prefUnitMode = intent.getIntExtra(Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+				else if (action.equals(Common.ACTION_SETTINGS_CHANGED)) {
+					Log.i(TAG, "Settings changed");
+					
+					if (intent.hasExtra(Common.KEY_FORCE_UNIT)) {
+						prefForceUnit = intent.getIntExtra(Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+					}
+					if (intent.hasExtra(Common.KEY_UNIT_MODE)) {
+						prefUnitMode = intent.getIntExtra(Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+					}
+					if (intent.hasExtra(Common.KEY_UNIT_FORMAT)) {
+					    prefUnitFormat = (Set<String>) intent.getSerializableExtra(Common.KEY_UNIT_FORMAT);
+					}
+					if (intent.hasExtra(Common.KEY_HIDE_BELOW)) {
+						prefHideBelow = intent.getIntExtra(Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
+					}
+					if (intent.hasExtra(Common.KEY_SHOW_SUFFIX)) {
+					    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
+					}
+					if (intent.hasExtra(Common.KEY_FONT_SIZE)) {
+					    prefFontSize = intent.getFloatExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+					}
+					if (intent.hasExtra(Common.KEY_POSITION)) {
+					    prefPosition = intent.getIntExtra(Common.KEY_POSITION, Common.DEF_POSITION);
+					    refreshPosition();
+					}
+					if (intent.hasExtra(Common.KEY_SUFFIX)) {
+					    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+					}
+					if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
+					    prefNetworkType = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_TYPE);
+					}
+					if (intent.hasExtra(Common.KEY_NETWORK_SPEED)) {
+					    prefNetworkSpeed = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_SPEED);
+					}
+					if (intent.hasExtra(Common.KEY_DISPLAY)) {
+				        prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+				    }
+					if (intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
+				        prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
+				    }
+					if (intent.hasExtra(Common.KEY_FONT_COLOR)) {
+						prefFontColor = intent.getBooleanExtra(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
+					}
+					if (intent.hasExtra(Common.KEY_COLOR)) {
+						prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
+					}
+					if (intent.hasExtra(Common.KEY_FONT_STYLE)) {
+						prefFontStyle = (Set<String>) intent.getSerializableExtra(Common.KEY_FONT_STYLE);
+					}
+					if (intent.hasExtra(Common.KEY_ENABLE_LOG)) {
+						Log.enableLogging = intent.getBooleanExtra(Common.KEY_ENABLE_LOG, Common.DEF_ENABLE_LOG);
+					}
+					
+					updateViewVisibility();
 				}
-				if (intent.hasExtra(Common.KEY_UNIT_FORMAT)) {
-				    prefUnitFormat = (Set<String>) intent.getSerializableExtra(Common.KEY_UNIT_FORMAT);
-				}
-				if (intent.hasExtra(Common.KEY_HIDE_BELOW)) {
-					prefHideBelow = intent.getIntExtra(Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
-				}
-				if (intent.hasExtra(Common.KEY_SHOW_SUFFIX)) {
-				    prefShowSuffix = intent.getBooleanExtra(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
-				}
-				if (intent.hasExtra(Common.KEY_FONT_SIZE)) {
-				    prefFontSize = intent.getFloatExtra(Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
-				}
-				if (intent.hasExtra(Common.KEY_POSITION)) {
-				    prefPosition = intent.getIntExtra(Common.KEY_POSITION, Common.DEF_POSITION);
-				    refreshPosition();
-				}
-				if (intent.hasExtra(Common.KEY_SUFFIX)) {
-				    prefSuffix = intent.getIntExtra(Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-				}
-				if (intent.hasExtra(Common.KEY_NETWORK_TYPE)) {
-				    prefNetworkType = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_TYPE);
-				}
-				if (intent.hasExtra(Common.KEY_NETWORK_SPEED)) {
-				    prefNetworkSpeed = (Set<String>) intent.getSerializableExtra(Common.KEY_NETWORK_SPEED);
-				}
-				if (intent.hasExtra(Common.KEY_DISPLAY)) {
-                    prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
-                }
-				if (intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
-                    prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
-                }
-				if (intent.hasExtra(Common.KEY_FONT_COLOR)) {
-					prefFontColor = intent.getBooleanExtra(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
-				}
-				if (intent.hasExtra(Common.KEY_COLOR)) {
-					prefColor = intent.getIntExtra(Common.KEY_COLOR, Common.DEF_COLOR);
-				}
-				if (intent.hasExtra(Common.KEY_FONT_STYLE)) {
-					prefFontStyle = (Set<String>) intent.getSerializableExtra(Common.KEY_FONT_STYLE);
-				}
-				
-				updateViewVisibility();
+			} catch (Exception e) {
+				Log.e(TAG, "onReceive failed: ", e);
+				Common.throwException(e);
 			}
 		}
 	};
@@ -172,70 +180,84 @@ public final class TrafficView extends TextView {
     private final Handler mTrafficHandler = new Handler() {
 		@Override
 		public final void handleMessage(final Message msg) {
-			
-			// changing values must be fetched together and only once
-			long lastUpdateTimeNew = SystemClock.elapsedRealtime();
-			long totalTxBytesNew = TrafficStats.getTotalTxBytes();
-			long totalRxBytesNew = TrafficStats.getTotalRxBytes();
-			
-			long elapsedTime = lastUpdateTimeNew - lastUpdateTime;
-			
-			if (elapsedTime == 0) {
-				uploadSpeed = 0;
-				downloadSpeed = 0;
-			} else {
-				uploadSpeed = ((totalTxBytesNew - totalTxBytes) * 1000) / elapsedTime;
-				downloadSpeed = ((totalRxBytesNew - totalRxBytes) * 1000) / elapsedTime;
+			try {
+				// changing values must be fetched together and only once
+				long lastUpdateTimeNew = SystemClock.elapsedRealtime();
+				long totalTxBytesNew = TrafficStats.getTotalTxBytes();
+				long totalRxBytesNew = TrafficStats.getTotalRxBytes();
+				
+				long elapsedTime = lastUpdateTimeNew - lastUpdateTime;
+				
+				if (elapsedTime == 0) {
+					Log.w(TAG, "Elapsed time is zero");
+					uploadSpeed = 0;
+					downloadSpeed = 0;
+				} else {
+					uploadSpeed = ((totalTxBytesNew - totalTxBytes) * 1000) / elapsedTime;
+					downloadSpeed = ((totalRxBytesNew - totalRxBytes) * 1000) / elapsedTime;
+				}
+				
+				totalTxBytes = totalTxBytesNew;
+				totalRxBytes = totalRxBytesNew;
+				lastUpdateTime = lastUpdateTimeNew;
+				
+				SpannableString spanString = new SpannableString(createText());
+				
+				if(prefFontStyle.contains("B")) {
+					spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
+				}
+				if(prefFontStyle.contains("I")) {
+					spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+				}
+				
+				setText(spanString);
+				setTextSize(TypedValue.COMPLEX_UNIT_SP, prefFontSize);
+				refreshColor();
+				
+				update();
+				
+				super.handleMessage(msg);
+			} catch (Exception e) {
+				Log.e(TAG, "handleMessage failed: ", e);
+				Common.throwException(e);
 			}
-			
-			totalTxBytes = totalTxBytesNew;
-			totalRxBytes = totalRxBytesNew;
-			lastUpdateTime = lastUpdateTimeNew;
-			
-			SpannableString spanString = new SpannableString(createText());
-			
-			if(prefFontStyle.contains("B")) {
-				spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
-			}
-			if(prefFontStyle.contains("I")) {
-				spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
-			}
-			
-			setText(spanString);
-			setTextSize(TypedValue.COMPLEX_UNIT_SP, prefFontSize);
-			refreshColor();
-			
-			update();
-			
-			super.handleMessage(msg);
 		}
 	};
 
 	@Override
 	protected final void onAttachedToWindow() {
-		super.onAttachedToWindow();
+		try {
+			super.onAttachedToWindow();
 
-		if (!mAttached) {
-			mAttached = true;
-			IntentFilter filter = new IntentFilter();
-			filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-			filter.addAction(Common.ACTION_SETTINGS_CHANGED);
-			getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
+			if (!mAttached) {
+				mAttached = true;
+				IntentFilter filter = new IntentFilter();
+				filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+				filter.addAction(Common.ACTION_SETTINGS_CHANGED);
+				getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
+			}
+			updateViewVisibility();
+		} catch (Exception e) {
+			Log.e(TAG, "onAttachedToWindow failed: ", e);
+			Common.throwException(e);
 		}
-		updateViewVisibility();
 	}
 
 	@Override
 	protected final void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
-		if (mAttached) {
-			getContext().unregisterReceiver(mIntentReceiver);
-			mAttached = false;
+		try {
+			super.onDetachedFromWindow();
+			if (mAttached) {
+				getContext().unregisterReceiver(mIntentReceiver);
+				mAttached = false;
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "onDetachedFromWindow failed: ", e);
+			Common.throwException(e);
 		}
 	}
 
 	private final void updateConnectionInfo() {
-		Log.i(TAG, "updateConnectionInfo");
 		ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(
 				Context.CONNECTIVITY_SERVICE);
 
@@ -244,7 +266,7 @@ public final class TrafficView extends TextView {
 		if (networkInfo != null) {
 			networkState = networkInfo.isAvailable();
 			networkType = String.valueOf(networkInfo.getType());
-			Log.i(TAG, "networkType = " + networkType);
+			Log.i(TAG, "Network type: ", networkType);
 		}
 		else {
 			networkState = false;
@@ -252,7 +274,6 @@ public final class TrafficView extends TextView {
 	}
 
 	private final void updateTraffic() {
-		
 		if (justLaunched) {
 			//get the values for the first time
 			lastUpdateTime = SystemClock.elapsedRealtime();
@@ -331,7 +352,6 @@ public final class TrafficView extends TextView {
 	}
 	
 	private final String formatSpeed(final long transferSpeedBytes, final String transferSuffix) {
-		
 		float unitFactor;
 		long transferSpeed = transferSpeedBytes;
 		
@@ -390,11 +410,11 @@ public final class TrafficView extends TextView {
 		String strTransferValue;
 		
 		if (transferSpeedBytes < prefHideBelow) {
-            strTransferValue = "";
-        }
-        else {
-            strTransferValue = transferDecimalFormat.format(transferValue);
-        }
+		    strTransferValue = "";
+		}
+		else {
+		    strTransferValue = transferDecimalFormat.format(transferValue);
+		}
 		
 		if(strTransferValue.length() > 0) {
 		    strTransferValue += Common.formatUnit(prefUnitMode, tempPrefUnit, prefUnitFormat);
@@ -415,7 +435,12 @@ public final class TrafficView extends TextView {
 	private final Runnable mRunnable = new Runnable() {
 		@Override
 		public void run() {
-			mTrafficHandler.sendEmptyMessage(0);
+			try {
+				mTrafficHandler.sendEmptyMessage(0);
+			} catch (Exception e) {
+				Log.e(TAG, "run failed: ", e);
+				Common.throwException(e);
+			}
 		}
 	};
 	
@@ -428,7 +453,6 @@ public final class TrafficView extends TextView {
 		} else {
 			setVisibility(View.GONE);
 		}
-		
 	}
 
 	private final void loadPreferences() {
@@ -448,5 +472,6 @@ public final class TrafficView extends TextView {
 		prefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
 		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
 		prefFontStyle = mPref.getStringSet(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
+		Log.enableLogging = mPref.getBoolean(Common.KEY_ENABLE_LOG, Common.DEF_ENABLE_LOG);
 	}
 }

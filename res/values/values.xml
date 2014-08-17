@@ -111,4 +111,6 @@
         <item>I</item>
     </string-array>
     
+    <string name="url_report_issue">https://github.com/chiehmin/Xposed-NetworkSpeedIndicator/issues</string>
+    
 </resources>

@@ -3,10 +3,12 @@ package tw.fatminmin.xposed.networkspeedindicator;
 import java.util.HashSet;
 import java.util.Set;
 
+import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.content.SharedPreferences;
 
 public final class Common {
 
+	private static final String TAG = Common.class.getSimpleName();
 	public static final String PKG_NAME = "tw.fatminmin.xposed.networkspeedindicator";
 	public static final String ACTION_SETTINGS_CHANGED = PKG_NAME + ".changed";
 	
@@ -25,6 +27,7 @@ public final class Common {
 	public static final String KEY_FONT_COLOR = "font_color";
 	public static final String KEY_COLOR = "color";
 	public static final String KEY_FONT_STYLE = "font_style";
+	public static final String KEY_ENABLE_LOG = "enable_logging";
 	
 	public static final HashSet<String> DEF_NETWORK_TYPE = new HashSet<String>();
 	static {
@@ -57,6 +60,7 @@ public final class Common {
 	public static final boolean DEF_FONT_COLOR = false;
 	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
 	public static final HashSet<String> DEF_FONT_STYLE = new HashSet<String>();
+	public static final boolean DEF_ENABLE_LOG = false;
 	
 	public static final String BIG_UP_TRIANGLE = " \u25B2 ";
 	public static final String BIG_DOWN_TRIANGLE = " \u25BC ";
@@ -73,7 +77,7 @@ public final class Common {
 			String value = pref.getString(key, String.valueOf(def_value));
 			return Integer.parseInt(value);
 		} catch (Exception e) {
-			// Do nothing
+			Log.w(TAG, "Key: ", key, ". Def: ", def_value, ". Exception ignored: ", e);
 		}
 		return def_value;
 	}
@@ -83,13 +87,12 @@ public final class Common {
 			String value = pref.getString(key, String.valueOf(def_value));
 			return Float.parseFloat(value);
 		} catch (Exception e) {
-			// Do nothing
+			Log.w(TAG, "Key: ", key, ". Def: ", def_value, ". Exception ignored: ", e);
 		}
 		return def_value;
 	}
 	
 	public static final String formatUnit(final int prefUnitMode, final int prefUnitFactor, final Set<String> prefUnitFormat) {
-		
 		boolean binaryMode = (prefUnitMode == 0 || prefUnitMode == 1);
 		boolean bitMode = (prefUnitMode == 0 || prefUnitMode == 2);
 		
@@ -135,6 +138,13 @@ public final class Common {
 		}
 		
 		return unit.toString();
+	}
+	
+	public static final void throwException(final Exception e) {
+		if ((e != null) && (e instanceof RuntimeException))
+			throw (RuntimeException) e;
+		else
+			throw new RuntimeException(e);
 	}
 
 }

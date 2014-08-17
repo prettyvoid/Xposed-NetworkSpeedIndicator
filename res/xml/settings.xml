@@ -120,5 +120,22 @@
 		/>
 	</PreferenceCategory>
 	
+	<PreferenceCategory 
+	    android:title="@string/pref_category_help">
+		
+		<CheckBoxPreference
+		    android:defaultValue="false"
+		    android:key="enable_logging"
+		    android:title="@string/pref_enable_logging" />
+		
+		<PreferenceScreen
+		    android:title="@string/pref_report_issue">
+		    <intent
+		        android:action="android.intent.action.VIEW"
+		        android:data="@string/url_report_issue" />
+		</PreferenceScreen>
+		
+	</PreferenceCategory>
+	
 
 </PreferenceScreen>

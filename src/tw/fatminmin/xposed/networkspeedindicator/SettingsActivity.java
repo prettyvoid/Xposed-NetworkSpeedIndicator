@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
+import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +20,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
-import android.util.Log;
 
 import com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat;
 
@@ -35,29 +35,44 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 	@SuppressWarnings("deprecation")
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
-		addPreferencesFromResource(R.xml.settings);
-		mPrefs = getPreferenceScreen().getSharedPreferences();
+		try {
+			super.onCreate(savedInstanceState);
+			getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+			addPreferencesFromResource(R.xml.settings);
+			mPrefs = getPreferenceScreen().getSharedPreferences();
+		} catch (Exception e) {
+			Log.e(TAG, "onCreate failed: ", e);
+			Common.throwException(e);
+		}
 	}
 
 	@Override
 	protected final void onResume() {
-		super.onResume();
-		
-		@SuppressWarnings("deprecation")
-		PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
-		refreshNetworkTypes();
-		refreshPreferences(mPrefs, null);
-		setAllSummary(settings);
-		
-		mPrefs.registerOnSharedPreferenceChangeListener(this);
+		try {
+			super.onResume();
+			
+			@SuppressWarnings("deprecation")
+			PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
+			refreshNetworkTypes();
+			refreshPreferences(mPrefs, null);
+			setAllSummary(settings);
+			
+			mPrefs.registerOnSharedPreferenceChangeListener(this);
+		} catch (Exception e) {
+			Log.e(TAG, "onResume failed: ", e);
+			Common.throwException(e);
+		}
 	}
 
 	@Override
 	protected final void onPause() {
-		mPrefs.unregisterOnSharedPreferenceChangeListener(this);
-		super.onPause();
+		try {
+			mPrefs.unregisterOnSharedPreferenceChangeListener(this);
+			super.onPause();
+		} catch (Exception e) {
+			Log.e(TAG, "onPause failed: ", e);
+			Common.throwException(e);
+		}
 	}
 
 	private final void setAllSummary(final PreferenceGroup group) {
@@ -216,62 +231,69 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
     @SuppressWarnings("deprecation")
 	@Override
 	public final void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
-		Intent intent = new Intent();
-		Log.i(TAG, "onSharedPreferenceChanged "+key);
-		
-		refreshPreferences(prefs, key);
-		setSummary(findPreference(key));
-		
-		intent.setAction(Common.ACTION_SETTINGS_CHANGED);
-		
-		if (key.equals(Common.KEY_FORCE_UNIT)) {
-			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_FORCE_UNIT));
-		}
-		else if (key.equals(Common.KEY_UNIT_MODE)) {
-			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UNIT_MODE));
-		}
-		else if (key.equals(Common.KEY_HIDE_BELOW)) {
-			intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_HIDE_BELOW));
-		}
-		else if (key.equals(Common.KEY_SHOW_SUFFIX)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_SUFFIX));
-		}
-		else if (key.equals(Common.KEY_FONT_SIZE)) {
-		    intent.putExtra(key, Common.getPrefFloat(prefs, key, Common.DEF_FONT_SIZE));
-		}
-		else if (key.equals(Common.KEY_POSITION)) {
-		    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_POSITION));
-		}
-		else if (key.equals(Common.KEY_SUFFIX)) {
-            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_SUFFIX));
-        }
-		else if (key.equals(Common.KEY_DISPLAY)) {
-            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
-        }
-		else if (key.equals(Common.KEY_UPDATE_INTERVAL)) {
-            intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UPDATE_INTERVAL));
-        }
-		else if (key.equals(Common.KEY_FONT_COLOR)) {
-			intent.putExtra(key, prefs.getBoolean(key, Common.DEF_FONT_COLOR));
-		}
-		else if (key.equals(Common.KEY_COLOR)) {
-			intent.putExtra(key, prefs.getInt(key, Common.DEF_COLOR));
-		}
-		else if (key.equals(Common.KEY_NETWORK_TYPE)
-				|| key.equals(Common.KEY_NETWORK_SPEED)
-				|| key.equals(Common.KEY_UNIT_FORMAT)
-				|| key.equals(Common.KEY_FONT_STYLE)) {
-			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
-			HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
-			intent.putExtra(key, value);
-		}
-		else {
-			intent.setAction(null);
-		}
-		
-		if (intent.getAction() != null) {
-			sendBroadcast(intent);
-			Log.i(TAG, "sendBroadcast");
+		try {
+			Intent intent = new Intent();
+			Log.i(TAG, "onSharedPreferenceChanged ", key);
+			
+			refreshPreferences(prefs, key);
+			setSummary(findPreference(key));
+			
+			intent.setAction(Common.ACTION_SETTINGS_CHANGED);
+			
+			if (key.equals(Common.KEY_FORCE_UNIT)) {
+				intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_FORCE_UNIT));
+			}
+			else if (key.equals(Common.KEY_UNIT_MODE)) {
+				intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UNIT_MODE));
+			}
+			else if (key.equals(Common.KEY_HIDE_BELOW)) {
+				intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_HIDE_BELOW));
+			}
+			else if (key.equals(Common.KEY_SHOW_SUFFIX)) {
+				intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SHOW_SUFFIX));
+			}
+			else if (key.equals(Common.KEY_FONT_SIZE)) {
+			    intent.putExtra(key, Common.getPrefFloat(prefs, key, Common.DEF_FONT_SIZE));
+			}
+			else if (key.equals(Common.KEY_POSITION)) {
+			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_POSITION));
+			}
+			else if (key.equals(Common.KEY_SUFFIX)) {
+			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_SUFFIX));
+			}
+			else if (key.equals(Common.KEY_DISPLAY)) {
+			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
+			}
+			else if (key.equals(Common.KEY_UPDATE_INTERVAL)) {
+			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UPDATE_INTERVAL));
+			}
+			else if (key.equals(Common.KEY_FONT_COLOR)) {
+				intent.putExtra(key, prefs.getBoolean(key, Common.DEF_FONT_COLOR));
+			}
+			else if (key.equals(Common.KEY_COLOR)) {
+				intent.putExtra(key, prefs.getInt(key, Common.DEF_COLOR));
+			}
+			else if (key.equals(Common.KEY_ENABLE_LOG)) {
+				intent.putExtra(key, prefs.getBoolean(key, Common.DEF_ENABLE_LOG));
+			}
+			else if (key.equals(Common.KEY_NETWORK_TYPE)
+					|| key.equals(Common.KEY_NETWORK_SPEED)
+					|| key.equals(Common.KEY_UNIT_FORMAT)
+					|| key.equals(Common.KEY_FONT_STYLE)) {
+				MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
+				HashSet<String> value = (HashSet<String>) mulPref.getValues(); 
+				intent.putExtra(key, value);
+			}
+			else {
+				intent.setAction(null);
+			}
+			
+			if (intent.getAction() != null) {
+				sendBroadcast(intent);
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "onSharedPreferenceChanged failed: ", e);
+			Common.throwException(e);
 		}
 	}
 	
@@ -331,6 +353,11 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 				setSummary(prefUnit);
 				setSummary(findPreference(Common.KEY_UNIT_FORMAT));
 			}
+		}
+		
+		if (key==null
+				|| key.equals(Common.KEY_ENABLE_LOG)) {
+			Log.enableLogging = prefs.getBoolean(Common.KEY_ENABLE_LOG, Common.DEF_ENABLE_LOG);
 		}
 	}
 	
