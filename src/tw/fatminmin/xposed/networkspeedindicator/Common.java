@@ -5,10 +5,9 @@ import java.util.Set;
 
 import android.content.SharedPreferences;
 
-public class Common {
+public final class Common {
 
 	public static final String PKG_NAME = "tw.fatminmin.xposed.networkspeedindicator";
-	public static final String PREFERENCE_FILE = PKG_NAME + "_preferences";
 	public static final String ACTION_SETTINGS_CHANGED = PKG_NAME + ".changed";
 	
 	public static final String KEY_HIDE_BELOW = "hide_below";
@@ -69,7 +68,7 @@ public class Common {
 	public static final String SMALL_UP_HOLLOW_TRIANGLE = "\u25B5";
 	public static final String SMALL_DOWN_HOLLOW_TRIANGLE = " \u25BF ";
 
-	public static int getPrefInt(SharedPreferences pref, String key, int def_value) {
+	public static final int getPrefInt(final SharedPreferences pref, final String key, final int def_value) {
 		try {
 			String value = pref.getString(key, String.valueOf(def_value));
 			return Integer.parseInt(value);
@@ -79,7 +78,7 @@ public class Common {
 		return def_value;
 	}
 	
-	public static float getPrefFloat(SharedPreferences pref, String key, float def_value) {
+	public static final float getPrefFloat(final SharedPreferences pref, final String key, final float def_value) {
 		try {
 			String value = pref.getString(key, String.valueOf(def_value));
 			return Float.parseFloat(value);
@@ -89,7 +88,7 @@ public class Common {
 		return def_value;
 	}
 	
-	public static String formatUnit(int prefUnitMode, int prefUnitFactor, Set<String> prefUnitFormat) {
+	public static final String formatUnit(final int prefUnitMode, final int prefUnitFactor, final Set<String> prefUnitFormat) {
 		
 		boolean binaryMode = (prefUnitMode == 0 || prefUnitMode == 1);
 		boolean bitMode = (prefUnitMode == 0 || prefUnitMode == 2);

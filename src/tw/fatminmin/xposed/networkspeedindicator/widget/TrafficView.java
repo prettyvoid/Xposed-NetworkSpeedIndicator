@@ -19,7 +19,6 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -27,7 +26,7 @@ import android.widget.TextView;
 import de.robv.android.xposed.XSharedPreferences;
 
 @SuppressLint("HandlerLeak")
-public class TrafficView extends TextView {
+public final class TrafficView extends TextView {
 
     public PositionCallback mPositionCallback = null;
     public TextView clock = null;
@@ -39,47 +38,41 @@ public class TrafficView extends TextView {
 	private boolean mAttached;
 	// TrafficStats mTrafficStats;
 
-	long uploadSpeed, downloadSpeed;
-	long totalTxBytes, totalRxBytes;
-	long lastUpdateTime;
-	boolean justLaunched = true;
-	String networkType;
-	boolean networkState;
+	private long uploadSpeed;
+	private long downloadSpeed;
+	private long totalTxBytes;
+	private long totalRxBytes;
+	private long lastUpdateTime;
+	private boolean justLaunched = true;
+	private String networkType;
+	private boolean networkState;
 
-	XSharedPreferences mPref;
-	int prefPosition;
-	int prefForceUnit;
-	int prefUnitMode;
-	float prefFontSize;
-	int prefSuffix;
-	int prefDisplay;
-	int prefUpdateInterval;
-	boolean prefFontColor;
-	int prefColor;
-	int prefHideBelow;
-	boolean prefShowSuffix;
-	Set<String> prefUnitFormat = Common.DEF_UNIT_FORMAT;
-	Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
-	Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
-	Set<String> prefFontStyle = Common.DEF_FONT_STYLE;
+	private XSharedPreferences mPref;
+	private int prefPosition;
+	private int prefForceUnit;
+	private int prefUnitMode;
+	private float prefFontSize;
+	private int prefSuffix;
+	private int prefDisplay;
+	private int prefUpdateInterval;
+	private boolean prefFontColor;
+	private int prefColor;
+	private int prefHideBelow;
+	private boolean prefShowSuffix;
+	private Set<String> prefUnitFormat = Common.DEF_UNIT_FORMAT;
+	private Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
+	private Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
+	private Set<String> prefFontStyle = Common.DEF_FONT_STYLE;
 
-	public TrafficView(Context context) {
-		this(context, null);
-		mAttached = false;
-	}
-
-	public TrafficView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
-
-	public TrafficView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+	public TrafficView(final Context context) {
+		super(context, null, 0);
 		loadPreferences();
 		updateConnectionInfo();
 		updateViewVisibility();
+		mAttached = false;
 	}
 	
-	public void refreshPosition() {
+	public final void refreshPosition() {
 	    switch(prefPosition) {
         case 0:
             mPositionCallback.setLeft();
@@ -94,7 +87,7 @@ public class TrafficView extends TextView {
 	}
 	
 	@SuppressLint("NewApi")
-	public void refreshColor() {
+	private final void refreshColor() {
 		if (prefFontColor) {
 			setTextColor(prefColor);
 		}
@@ -113,7 +106,7 @@ public class TrafficView extends TextView {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public void onReceive(Context context, Intent intent) {
+		public final void onReceive(final Context context, final Intent intent) {
 			String action = intent.getAction();
 			
 			if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
@@ -176,9 +169,9 @@ public class TrafficView extends TextView {
 	};
 
 	@SuppressLint("HandlerLeak")
-    Handler mTrafficHandler = new Handler() {
+    private final Handler mTrafficHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg) {
+		public final void handleMessage(final Message msg) {
 			
 			// changing values must be fetched together and only once
 			long lastUpdateTimeNew = SystemClock.elapsedRealtime();
@@ -219,7 +212,7 @@ public class TrafficView extends TextView {
 	};
 
 	@Override
-	protected void onAttachedToWindow() {
+	protected final void onAttachedToWindow() {
 		super.onAttachedToWindow();
 
 		if (!mAttached) {
@@ -233,7 +226,7 @@ public class TrafficView extends TextView {
 	}
 
 	@Override
-	protected void onDetachedFromWindow() {
+	protected final void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		if (mAttached) {
 			getContext().unregisterReceiver(mIntentReceiver);
@@ -241,7 +234,7 @@ public class TrafficView extends TextView {
 		}
 	}
 
-	private void updateConnectionInfo() {
+	private final void updateConnectionInfo() {
 		Log.i(TAG, "updateConnectionInfo");
 		ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(
 				Context.CONNECTIVITY_SERVICE);
@@ -258,7 +251,7 @@ public class TrafficView extends TextView {
 		}
 	}
 
-	public void updateTraffic() {
+	private final void updateTraffic() {
 		
 		if (justLaunched) {
 			//get the values for the first time
@@ -273,7 +266,7 @@ public class TrafficView extends TextView {
 		mTrafficHandler.sendEmptyMessage(0);
 	}
 
-	private String createText() {
+	private final String createText() {
 		String uploadSuffix, downloadSuffix;
 		String strUploadValue, strDownloadValue;
 		
@@ -337,7 +330,7 @@ public class TrafficView extends TextView {
 		return ret;
 	}
 	
-	private String formatSpeed(final long transferSpeedBytes, final String transferSuffix) {
+	private final String formatSpeed(final long transferSpeedBytes, final String transferSuffix) {
 		
 		float unitFactor;
 		long transferSpeed = transferSpeedBytes;
@@ -414,19 +407,19 @@ public class TrafficView extends TextView {
 		return strTransferValue;
 	}
 
-	public void update() {
+	private final void update() {
 		mTrafficHandler.removeCallbacks(mRunnable);
 		mTrafficHandler.postDelayed(mRunnable, prefUpdateInterval);
 	}
 
-	Runnable mRunnable = new Runnable() {
+	private final Runnable mRunnable = new Runnable() {
 		@Override
 		public void run() {
 			mTrafficHandler.sendEmptyMessage(0);
 		}
 	};
 	
-	private void updateViewVisibility() {
+	private final void updateViewVisibility() {
 		if (networkState && prefNetworkType.contains(networkType)) {
 			if (mAttached) {
 				updateTraffic();
@@ -438,7 +431,7 @@ public class TrafficView extends TextView {
 		
 	}
 
-	private void loadPreferences() {
+	private final void loadPreferences() {
 		mPref = new XSharedPreferences(Common.PKG_NAME);
 		prefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 		prefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);

@@ -1,41 +1,22 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated.LayoutInflatedParam;
 
 public class PositionCallbackImpl implements PositionCallback {
 	
-    public static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
-    
+    private static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
 	private LinearLayout mSystemIconArea;
 	private LinearLayout mStatusBarContents;
 	private LinearLayout container;
 	private View view;
-
-	@Override
-	public void setup(MethodHookParam param, View v) {
-		 view = v;
-		 mSystemIconArea = (LinearLayout)XposedHelpers.getObjectField(param.thisObject, "mSystemIconArea");
-         mStatusBarContents = (LinearLayout)XposedHelpers.getObjectField(param.thisObject, "mStatusBarContents");
-         Context mContext = (Context)XposedHelpers.getObjectField(param.thisObject, "mContext");
-
-         container = new LinearLayout(mContext);
-         container.setOrientation(LinearLayout.HORIZONTAL);
-         container.setWeightSum(1);
-         container.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
-         container.setVisibility(View.GONE);
-         mStatusBarContents.addView(container, 0);
-	}
 	
 	@Override
-	public void setup(LayoutInflatedParam liparam, View v) {
+	public void setup(final LayoutInflatedParam liparam, final View v) {
 	    view = v;
 	    
 	    FrameLayout root = (FrameLayout) liparam.view;
@@ -77,7 +58,7 @@ public class PositionCallbackImpl implements PositionCallback {
         container.setVisibility(View.GONE);
 	}
 	
-	private void removeFromParent() {
+	private final void removeFromParent() {
         if(view.getParent() != null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }

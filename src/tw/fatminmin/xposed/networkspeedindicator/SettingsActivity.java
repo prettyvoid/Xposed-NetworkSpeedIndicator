@@ -23,7 +23,7 @@ import android.util.Log;
 
 import com.h6ah4i.android.compat.preference.MultiSelectListPreferenceCompat;
 
-public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public final class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private static final String TAG = SettingsActivity.class.getSimpleName();
 	private SharedPreferences mPrefs;
@@ -34,7 +34,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
 		addPreferencesFromResource(R.xml.settings);
@@ -42,7 +42,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 
 	@Override
-	protected void onResume() {
+	protected final void onResume() {
 		super.onResume();
 		
 		@SuppressWarnings("deprecation")
@@ -55,12 +55,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 
 	@Override
-	protected void onPause() {
+	protected final void onPause() {
 		mPrefs.unregisterOnSharedPreferenceChangeListener(this);
 		super.onPause();
 	}
 
-	private void setAllSummary(PreferenceGroup group) {
+	private final void setAllSummary(final PreferenceGroup group) {
 		for(int i = 0; i < group.getPreferenceCount(); i++) {
 			if(group.getPreference(i) instanceof PreferenceGroup) {
 				setAllSummary((PreferenceGroup) group.getPreference(i));
@@ -71,7 +71,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
 
-	private void refreshNetworkTypes() {
+	private final void refreshNetworkTypes() {
 		// Get the network types supported by device
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo[] allNetInfo = cm.getAllNetworkInfo();
@@ -101,7 +101,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
 	
-    private void setSummary(Preference preference) {
+    private final void setSummary(final Preference preference) {
 	    if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
             preference.setSummary(createListPrefSummary(listPref));
@@ -116,7 +116,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         }
 	}
     
-    private String createListPrefSummary(ListPreference listPref) {
+    private final String createListPrefSummary(final ListPreference listPref) {
     	String summaryText = listPref.getEntry().toString();
     	
     	if (Common.KEY_UNIT_MODE.equals(listPref.getKey())) {
@@ -133,7 +133,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     	return summaryText;
     }
     
-    private String createEditTextSummary(EditTextPreference editPref) {
+    private final String createEditTextSummary(final EditTextPreference editPref) {
     	String summaryText = editPref.getText();
     	
     	if (Common.KEY_UPDATE_INTERVAL.equals(editPref.getKey())) {
@@ -171,7 +171,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     	return summaryText;
     }
     
-    private String formatWithUnit(String value, String unit) {
+    private static final String formatWithUnit(final String value, final String unit) {
 		if (unit.contains("%s")) {
 			return String.format(unit, value);
 		} else {
@@ -179,7 +179,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
     
-    private String createMultiSelectSummary(MultiSelectListPreferenceCompat mulPref) {
+    private final String createMultiSelectSummary(final MultiSelectListPreferenceCompat mulPref) {
     	Set<String> valueSet = mulPref.getValues();
     	
     	if (Common.KEY_UNIT_FORMAT.equals(mulPref.getKey())) {
@@ -215,7 +215,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	
     @SuppressWarnings("deprecation")
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+	public final void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
 		Intent intent = new Intent();
 		Log.i(TAG, "onSharedPreferenceChanged "+key);
 		
@@ -276,7 +276,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void refreshPreferences(SharedPreferences prefs, String key) {
+	private final void refreshPreferences(final SharedPreferences prefs, final String key) {
 		// When key is null, refresh everything.
 		// When a key is provided, refresh only for that key.
 		
@@ -334,7 +334,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}
 	}
 	
-	private void getUnitSettings(SharedPreferences prefs) {
+	private final void getUnitSettings(final SharedPreferences prefs) {
 		prefUnitMode = Common.getPrefInt(prefs, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
 		prefForceUnit = Common.getPrefInt(prefs, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 	}

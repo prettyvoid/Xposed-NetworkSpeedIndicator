@@ -29,11 +29,11 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Module implements IXposedHookLoadPackage,
+public final class Module implements IXposedHookLoadPackage,
         IXposedHookInitPackageResources {
 
     
-	public TextView getClock() {
+	private final TextView getClock() {
 		if(trafficView == null || trafficView.mPositionCallback == null) { 
 			return null;
 		}
@@ -47,7 +47,7 @@ public class Module implements IXposedHookLoadPackage,
 	
     
 	@Override
-    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+    public final void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
         if(!lpparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
             return;
         }
@@ -59,7 +59,7 @@ public class Module implements IXposedHookLoadPackage,
     		XposedBridge.hookMethod(setAlpha, new XC_MethodHook() {
 				@SuppressLint("NewApi")
 				@Override
-    			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+    			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
     				
 					if(param.thisObject != getClock())
 						return;
@@ -77,7 +77,7 @@ public class Module implements IXposedHookLoadPackage,
     		});
     		XposedBridge.hookAllMethods(cClock, "setTextColor", new XC_MethodHook() {
 				@Override
-    			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+    			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
     				
 					if(param.thisObject != getClock())
 						return;
@@ -93,13 +93,13 @@ public class Module implements IXposedHookLoadPackage,
         }
     }
     
-    TrafficView trafficView;
-    TextView clock;
-    View statusIcons;
+    private TrafficView trafficView;
+    private TextView clock;
+    private View statusIcons;
 
-    public static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
+    private static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
 
-    private static Map<String, String> mLayouts;
+    private static final Map<String, String> mLayouts;
     static {
         Map<String, String> tmpMap = new HashMap<String, String>();
         tmpMap.put("tw_super_status_bar", "statusIcons");
@@ -109,7 +109,7 @@ public class Module implements IXposedHookLoadPackage,
     }
     
     @Override
-    public void handleInitPackageResources(InitPackageResourcesParam resparam)
+    public final void handleInitPackageResources(final InitPackageResourcesParam resparam)
             throws Throwable {
         if (!resparam.packageName.equals(PKG_NAME_SYSTEM_UI)) {
             return;
@@ -124,7 +124,7 @@ public class Module implements IXposedHookLoadPackage,
                 new XC_LayoutInflated() {
 
                     @Override
-                    public void handleLayoutInflated(LayoutInflatedParam liparam)
+                    public final void handleLayoutInflated(final LayoutInflatedParam liparam)
                             throws Throwable {
                         FrameLayout root = (FrameLayout) liparam.view;
 
@@ -165,7 +165,7 @@ public class Module implements IXposedHookLoadPackage,
                 });
     }
 
-    public static Entry<String, String> findLayoutInfo(XResources res) {
+    private static final Entry<String, String> findLayoutInfo(final XResources res) {
         Iterator<Entry<String, String>> iterator = mLayouts.entrySet()
                 .iterator();
 
