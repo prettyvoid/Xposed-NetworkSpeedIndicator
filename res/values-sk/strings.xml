@@ -2,24 +2,61 @@
 <resources>
     
     <string name="app_name">Ukazovateľ rýchlosti siete</string>
+    <string name="app_description">Zobrazí štatistiky siete v stavovom riadku</string>
     <string name="pref_category_ind_settings">Nastavenia ukazovateľa</string>
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>
     <string name="pref_category_text_appearance">Vzhľad textu</string>
+    <string name="pref_category_help">Pomocník</string>
+    <string name="pref_unit_mode">Režim jednotky</string>
+    <string name="pref_unit">Jednotka</string>
+    <string name="pref_unit_format">Zobrazenie a formát</string>
+    <string name="pref_hide_below">Hranica zobrazenia</string>
+    <string name="dmsg_hide_below">Rýchlosti menšie ako táto hodnota nebudú zobrazené. Zadajte 0 pre trvalé zobrazenie rýchlosti alebo 1 pre skrytie rýchlosti pod nulou.</string>
+    <string name="hint_hide_below">bajty za sekundu</string>
+    <string name="sum0_hide_below">Vždy zobraziť rýchlosti</string>
     <string name="sum1_hide_below">Skryť pri nulovej rýchlosti</string>
+    <string name="unit_hide_below">Skryť rýchlosti pod %s B/s</string>
     <string name="pref_show_suffix">Vždy zobraziť príponu</string>
     <string name="pref_networktype">Typy sietí</string>
-    <string name="pref_font_size">Zmeniť veľkosť písma</string>
+    <string name="pref_networkspeed">Rýchlosti sietí</string>
+    <string name="pref_font_size">Veľkosť písma</string>
+    <string name="hint_font_size">škálované pixely</string>
+    <string name="unit_font_size">%s px</string>
     <string name="pref_position">Pozícia</string>
     <string name="pref_suffix">Prípona</string>
     <string name="pref_display">Zobrazenie</string>
     <string name="pref_update_interval">Interval aktualizácie</string>
+    <string name="hint_update_interval">millisekundy</string>
+    <string name="pref_font_color">Farba písma</string>
+    <string name="unit_update_interval">%s ms</string>
     <string name="pref_font_style">Štýl písma</string>
+    <string name="pref_enable_logging">Povoliť zaznamenávanie</string>
+    <string name="pref_report_issue">Nahlásiť problém</string>
     
-    <string name="item_auto">Automatický</string>
+    <string name="unit_format_hidden">Skrytá</string>
+    <string name="unit_format_fmt_as">Formátovaná ako</string>
+    <string name="summary_none">Žiadna</string>
+    <string name="item_auto">Automatická</string>
     
     <string name="dialog_color_picker">Vyberte farbu</string>
     <string name="press_color_to_apply">Dotknite sa farby pre jej použitie</string>
+    
+    <string-array name="unit_mode_entries">
+        <item>Binárne bity</item>
+        <item>Binárne bajty</item>
+        <item>Decimálne bity</item>
+        <item>Decimálne bajty</item>
+    </string-array>
+    
+    <string-array name="unit_format_entries">
+        <item>Medzera ako predpona</item>
+        <item>Faktor (K,M)</item>
+        <item>Binárny režim (i)</item>
+        <item>Bajty alebo bity</item>
+        <item>Každá (p,/)</item>
+        <item>Sekunda (s)</item>
+    </string-array>
     
     <string-array name="networktype_entries">
         <item>Mobilné dáta</item>
@@ -43,10 +80,10 @@
     
     <string-array name="suffix_entries">
         <item>Žiadna</item>
-        <item>Pevný trojuholník</item>
+        <item>Plný trojuholník</item>
         <item>Dutý trojuholník</item>
-        <item>Small solid triangle</item> <!-- please translate -->
-        <item>Small hollow triangle</item> <!-- please translate -->
+        <item>Malý plný trojuholník</item>
+        <item>Malý dutý trojuholník</item>
     </string-array>
     
     <string-array name="display_entries">
