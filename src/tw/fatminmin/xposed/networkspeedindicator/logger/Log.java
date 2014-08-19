@@ -17,7 +17,8 @@ public class Log {
 	
 	private static final String TAG = Log.class.getSimpleName();
 	private static final String logNull = "null";
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss", Locale.US);
+	private static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	private static final SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 	private static PrintWriter pw = null;
 	
 	public static boolean enableLogging = false;
@@ -62,12 +63,12 @@ public class Log {
 				if (!folder.isDirectory())
 					return;
 				
-				String filename = foldername + "/" + sdf.format(new Date()) + ".log";
+				String filename = foldername + "/" + sdfDate.format(new Date()) + ".log";
 				pw = new PrintWriter(new FileWriter(filename, true));
 			}
 			pw.print(level);
 			pw.print('/');
-			pw.print(sdf.format(new Date()));
+			pw.print(sdfTime.format(new Date()));
 			pw.print('/');
 			pw.println(msg);
 			if (thr != null)
@@ -91,15 +92,14 @@ public class Log {
 	}
 	
 	public static final void e(final String tag, final Object... msg) {
-		if (enableLogging) {
-			String concatMsg = concatArray(msg);
-			android.util.Log.e(tag, concatMsg);
-			
-			Throwable thr = getThrowable(msg);
-			android.util.Log.e(tag, "Stack trace: ", thr);
-			
-			writeToFile('E', concatMsg, thr);
-		}
+		// always log errors
+		String concatMsg = concatArray(msg);
+		android.util.Log.e(tag, concatMsg);
+		
+		Throwable thr = getThrowable(msg);
+		android.util.Log.e(tag, "Stack trace: ", thr);
+		
+		writeToFile('E', concatMsg, thr);
 	}
 	
 	public static final void i(final String tag, final Object... msg) {
