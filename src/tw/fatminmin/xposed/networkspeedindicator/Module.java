@@ -26,6 +26,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -58,9 +59,25 @@ public final class Module implements IXposedHookLoadPackage,
 			throw e;
 		}
         try {
-        	// we hook this method to follow alpha changes in kitkat
         	Class<?> cClock = XposedHelpers.findClass("com.android.systemui.statusbar.policy.Clock", lpparam.classLoader);
+    		XposedBridge.hookAllMethods(cClock, "setTextColor", new XC_MethodHook() {
+				@Override
+    			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
+					try {
+						if(param.thisObject != getClock())
+							return;
+						
+						if(trafficView != null && clock != null) {
+							trafficView.setTextColor(clock.getCurrentTextColor());
+						}
+					} catch (Exception e) {
+						Log.e(TAG, "afterHookedMethod (setTextColor) failed: ", e);
+						throw e;
+					}
+    			}
+    		});
         	
+        	// we hook this method to follow alpha changes in kitkat
     		Method setAlpha = XposedHelpers.findMethodBestMatch(cClock, "setAlpha", Float.class);
     		XposedBridge.hookMethod(setAlpha, new XC_MethodHook() {
 				@SuppressLint("NewApi")
@@ -85,25 +102,17 @@ public final class Module implements IXposedHookLoadPackage,
 					}
     			}
     		});
-    		XposedBridge.hookAllMethods(cClock, "setTextColor", new XC_MethodHook() {
-				@Override
-    			protected final void afterHookedMethod(final MethodHookParam param) throws Throwable {
-					try {
-						if(param.thisObject != getClock())
-							return;
-						
-						if(trafficView != null && clock != null) {
-							trafficView.setTextColor(clock.getCurrentTextColor());
-						}
-					} catch (Exception e) {
-						Log.e(TAG, "afterHookedMethod (setTextColor) failed: ", e);
-						throw e;
-					}
-    			}
-    		});
         }
         catch(Exception e){
             Log.e(TAG, "handleLoadPackage failure ignored: ", e);
+        }
+        catch(ClassNotFoundError e) {
+        	// Clock class not found, ignore
+        	Log.w(TAG, "handleLoadPackage failure ignored: ", e);
+        }
+        catch(NoSuchMethodError e) {
+        	// setAlpha method not found, ignore
+        	Log.w(TAG, "handleLoadPackage failure ignored: ", e);
         }
     }
     
