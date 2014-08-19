@@ -60,7 +60,7 @@
         <item>Factor (K,M)</item>
         <item>Binary mode (i)</item>
         <item>Bytes or bits</item>
-        <item>Every (p,/)</item>
+        <item>Per (p,/)</item><!-- can be translated as "Every (p,/)" -->
         <item>Second (s)</item>
     </string-array>
     
