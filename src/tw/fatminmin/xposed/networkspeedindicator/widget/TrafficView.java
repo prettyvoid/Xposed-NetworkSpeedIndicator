@@ -458,6 +458,11 @@ public final class TrafficView extends TextView {
 		try {
 			XSharedPreferences mPref = new XSharedPreferences(Common.PKG_NAME);
 			
+			int currentVersionCode = mPref.getInt(Common.KEY_CURRENT_VERSION_CODE, Common.DEF_CURRENT_VERSION_CODE);
+			if (currentVersionCode <= Common.MAX_INCOMPATIBLE_VERSION_CODE) {
+				throw new Exception("Outdated version code: " + currentVersionCode + " <= " + Common.MAX_INCOMPATIBLE_VERSION_CODE);
+			}
+			
 			// fetch all preferences first
 			int localPrefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
 			int localPrefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);

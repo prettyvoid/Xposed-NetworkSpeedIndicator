@@ -91,11 +91,9 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			Log.e(TAG, "Reading version code preference failed: ", e);
 		}
 		
-		int maxIncompatibleVersionCode = getResources().getInteger(R.integer.max_incompatible_version_code);
-		
 		Editor prefsEdit = prefs.edit();
-		if (currentVersionCode <= maxIncompatibleVersionCode) {
-			Log.e(TAG, "Outdated version code: ", currentVersionCode, " <= ", maxIncompatibleVersionCode);
+		if (currentVersionCode <= Common.MAX_INCOMPATIBLE_VERSION_CODE) {
+			Log.e(TAG, "Outdated version code: ", currentVersionCode, " <= ", Common.MAX_INCOMPATIBLE_VERSION_CODE);
 			prefsEdit.clear();
 			preferenceWereReset = true;
 		}
