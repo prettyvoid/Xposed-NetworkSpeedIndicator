@@ -46,18 +46,17 @@ public final class TrafficView extends TextView {
 	private String networkType;
 	private boolean networkState;
 
-	private XSharedPreferences mPref;
-	private int prefPosition;
-	private int prefForceUnit;
-	private int prefUnitMode;
-	private float prefFontSize;
-	private int prefSuffix;
-	private int prefDisplay;
-	private int prefUpdateInterval;
-	private boolean prefFontColor;
-	private int prefColor;
-	private int prefHideBelow;
-	private boolean prefShowSuffix;
+	private int prefPosition = Common.DEF_POSITION;
+	private int prefForceUnit = Common.DEF_FORCE_UNIT;
+	private int prefUnitMode = Common.DEF_UNIT_MODE;
+	private float prefFontSize = Common.DEF_FONT_SIZE;
+	private int prefSuffix = Common.DEF_SUFFIX;
+	private int prefDisplay = Common.DEF_DISPLAY;
+	private int prefUpdateInterval = Common.DEF_UPDATE_INTERVAL;
+	private boolean prefFontColor = Common.DEF_FONT_COLOR;
+	private int prefColor = Common.DEF_COLOR;
+	private int prefHideBelow = Common.DEF_HIDE_BELOW;
+	private boolean prefShowSuffix = Common.DEF_SHOW_SUFFIX;
 	private Set<String> prefUnitFormat = Common.DEF_UNIT_FORMAT;
 	private Set<String> prefNetworkType = Common.DEF_NETWORK_TYPE;
 	private Set<String> prefNetworkSpeed = Common.DEF_NETWORK_SPEED;
@@ -456,22 +455,47 @@ public final class TrafficView extends TextView {
 	}
 
 	private final void loadPreferences() {
-		mPref = new XSharedPreferences(Common.PKG_NAME);
-		prefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
-		prefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
-		prefUnitFormat = mPref.getStringSet(Common.KEY_UNIT_FORMAT, Common.DEF_UNIT_FORMAT);
-		prefHideBelow = Common.getPrefInt(mPref, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
-		prefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
-		prefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
-		prefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
-		prefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
-		prefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
-		prefNetworkSpeed = mPref.getStringSet(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
-		prefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
-		prefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
-		prefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
-		prefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
-		prefFontStyle = mPref.getStringSet(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
-		Log.enableLogging = mPref.getBoolean(Common.KEY_ENABLE_LOG, Common.DEF_ENABLE_LOG);
+		try {
+			XSharedPreferences mPref = new XSharedPreferences(Common.PKG_NAME);
+			
+			// fetch all preferences first
+			int localPrefForceUnit = Common.getPrefInt(mPref, Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
+			int localPrefUnitMode = Common.getPrefInt(mPref, Common.KEY_UNIT_MODE, Common.DEF_UNIT_MODE);
+			Set<String> localPrefUnitFormat = mPref.getStringSet(Common.KEY_UNIT_FORMAT, Common.DEF_UNIT_FORMAT);
+			int localPrefHideBelow = Common.getPrefInt(mPref, Common.KEY_HIDE_BELOW, Common.DEF_HIDE_BELOW);
+			boolean localPrefShowSuffix = mPref.getBoolean(Common.KEY_SHOW_SUFFIX, Common.DEF_SHOW_SUFFIX);
+			float localPrefFontSize = Common.getPrefFloat(mPref, Common.KEY_FONT_SIZE, Common.DEF_FONT_SIZE);
+			int localPrefPosition = Common.getPrefInt(mPref, Common.KEY_POSITION, Common.DEF_POSITION);
+			int localPrefSuffix = Common.getPrefInt(mPref, Common.KEY_SUFFIX, Common.DEF_SUFFIX);
+			Set<String> localPrefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
+			Set<String> localPrefNetworkSpeed = mPref.getStringSet(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
+			int localPrefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+			int localPrefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
+			boolean localPrefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
+			int localPrefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
+			Set<String> localPrefFontStyle = mPref.getStringSet(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
+			boolean localEnableLogging = mPref.getBoolean(Common.KEY_ENABLE_LOG, Common.DEF_ENABLE_LOG);
+			
+			// only when all are fetched, set them to fields
+			prefForceUnit = localPrefForceUnit;
+			prefUnitMode = localPrefUnitMode;
+			prefUnitFormat = localPrefUnitFormat;
+			prefHideBelow = localPrefHideBelow;
+			prefShowSuffix = localPrefShowSuffix;
+			prefFontSize = localPrefFontSize;
+			prefPosition = localPrefPosition;
+			prefSuffix = localPrefSuffix;
+			prefNetworkType = localPrefNetworkType;
+			prefNetworkSpeed = localPrefNetworkSpeed;
+			prefDisplay = localPrefDisplay;
+			prefUpdateInterval = localPrefUpdateInterval;
+			prefFontColor = localPrefFontColor;
+			prefColor = localPrefColor;
+			prefFontStyle = localPrefFontStyle;
+			Log.enableLogging = localEnableLogging;
+			
+		} catch (Exception e) {
+			Log.e(TAG, "loadPreferences failure ignored, using defaults. Exception: ", e);
+		}
 	}
 }

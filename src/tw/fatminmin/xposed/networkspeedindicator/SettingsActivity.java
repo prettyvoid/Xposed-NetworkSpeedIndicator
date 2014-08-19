@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,7 +12,9 @@ import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -31,15 +34,20 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 	private final Set<String> networkTypeValues = new LinkedHashSet<String>();
 	private int prefUnitMode;
 	private int prefForceUnit;
+	private boolean preferencesWereReset;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected final void onCreate(final Bundle savedInstanceState) {
 		try {
 			super.onCreate(savedInstanceState);
+			
 			getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+			mPrefs = getPreferenceManager().getSharedPreferences();
+			
+			preferencesWereReset = checkVersionCodeAndResetPreferences(mPrefs);
+			
 			addPreferencesFromResource(R.xml.settings);
-			mPrefs = getPreferenceScreen().getSharedPreferences();
 		} catch (Exception e) {
 			Log.e(TAG, "onCreate failed: ", e);
 			Common.throwException(e);
@@ -51,6 +59,11 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 		try {
 			super.onResume();
 			
+			if (preferencesWereReset) {
+				resetMultiSelectLists();
+				preferencesWereReset = false;
+			}
+			
 			@SuppressWarnings("deprecation")
 			PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
 			refreshNetworkTypes();
@@ -58,9 +71,50 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			setAllSummary(settings);
 			
 			mPrefs.registerOnSharedPreferenceChangeListener(this);
+			
 		} catch (Exception e) {
 			Log.e(TAG, "onResume failed: ", e);
 			Common.throwException(e);
+		}
+	}
+
+	private final boolean checkVersionCodeAndResetPreferences(final SharedPreferences prefs) throws NameNotFoundException {
+		boolean preferenceWereReset = false;
+		int packageVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+		
+		int currentVersionCode = Common.DEF_CURRENT_VERSION_CODE;
+		try {
+			currentVersionCode = prefs.getInt(Common.KEY_CURRENT_VERSION_CODE, currentVersionCode);
+		} catch (ClassCastException e) {
+			Log.e(TAG, "Reading version code preference failed: ", e);
+		}
+		
+		int maxIncompatibleVersionCode = getResources().getInteger(R.integer.max_incompatible_version_code);
+		
+		Editor prefsEdit = prefs.edit();
+		if (currentVersionCode <= maxIncompatibleVersionCode) {
+			Log.e(TAG, "Outdated version code: ", currentVersionCode, " <= ", maxIncompatibleVersionCode);
+			prefsEdit.clear();
+			preferenceWereReset = true;
+		}
+		prefsEdit.putInt(Common.KEY_CURRENT_VERSION_CODE, packageVersionCode);
+		prefsEdit.commit();
+		
+		return preferenceWereReset;
+	}
+
+	@SuppressWarnings("deprecation")
+	private final void resetMultiSelectLists() {
+		
+		HashMap<String, Set<String>> map = new HashMap<String, Set<String>>();
+		map.put(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
+		map.put(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
+		map.put(Common.KEY_UNIT_FORMAT, Common.DEF_UNIT_FORMAT);
+		map.put(Common.KEY_FONT_STYLE, Common.DEF_FONT_STYLE);
+		
+		for (String key : map.keySet()) {
+			MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) findPreference(key);
+			mulPref.setValues(map.get(key));
 		}
 	}
 
