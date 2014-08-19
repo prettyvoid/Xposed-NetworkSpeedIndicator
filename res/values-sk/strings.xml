@@ -7,7 +7,7 @@
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
     <string name="pref_category_unit_settings">Nastavenia jednotky</string>
     <string name="pref_category_text_appearance">Vzhľad textu</string>
-    <string name="pref_category_help">Pomocník</string>
+    <string name="pref_category_help">Pomoc</string>
     <string name="pref_unit_mode">Režim jednotky</string>
     <string name="pref_unit">Jednotka</string>
     <string name="pref_unit_format">Zobrazenie a formát</string>
@@ -36,10 +36,10 @@
     
     <string name="unit_format_hidden">Skrytá</string>
     <string name="unit_format_fmt_as">Formátovaná ako</string>
-    <string name="summary_none">Žiadna</string>
+    <string name="summary_none">Žiadne</string>
     <string name="item_auto">Automatická</string>
     
-    <string name="dialog_color_picker">Vyberte farbu</string>
+    <string name="dialog_color_picker">Vybrať farbu</string>
     <string name="press_color_to_apply">Dotknite sa farby pre jej použitie</string>
     
     <string-array name="unit_mode_entries">
@@ -54,7 +54,7 @@
         <item>Faktor (K,M)</item>
         <item>Binárny režim (i)</item>
         <item>Bajty alebo bity</item>
-        <item>Každá (p,/)</item>
+        <item>Za (p,/)</item>
         <item>Sekunda (s)</item>
     </string-array>
     
