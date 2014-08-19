@@ -48,6 +48,10 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			preferencesWereReset = checkVersionCodeAndResetPreferences(mPrefs);
 			
 			addPreferencesFromResource(R.xml.settings);
+			
+			refreshNetworkTypes();
+			refreshPreferences(mPrefs, null);
+			
 		} catch (Exception e) {
 			Log.e(TAG, "onCreate failed: ", e);
 			Common.throwException(e);
@@ -66,8 +70,6 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			
 			@SuppressWarnings("deprecation")
 			PreferenceGroup settings = (PreferenceGroup) findPreference("settings");
-			refreshNetworkTypes();
-			refreshPreferences(mPrefs, null);
 			setAllSummary(settings);
 			
 			mPrefs.registerOnSharedPreferenceChangeListener(this);
