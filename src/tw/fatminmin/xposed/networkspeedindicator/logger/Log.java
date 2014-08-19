@@ -97,7 +97,9 @@ public class Log {
 		android.util.Log.e(tag, concatMsg);
 		
 		Throwable thr = getThrowable(msg);
-		android.util.Log.e(tag, "Stack trace: ", thr);
+		if (thr != null) {
+			android.util.Log.e(tag, "Stack trace: ", thr);
+		}
 		
 		writeToFile('E', concatMsg, thr);
 	}
