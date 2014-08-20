@@ -268,8 +268,12 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
     	TreeMap<Integer, String> selections = new TreeMap<Integer, String>();
     	for (String value : valueSet) {
     		int index = mulPref.findIndexOfValue(value);
-    		String entry = (String) mulPref.getEntries()[index];
-    		selections.put(index, entry);
+    		if (index < 0 || index >= mulPref.getEntries().length) {
+    			Log.w(TAG, "Found multi select value without entry: ", value);
+    		} else {
+	    		String entry = (String) mulPref.getEntries()[index];
+	    		selections.put(index, entry);
+    		}
     	}
     	
     	String summary = "";
