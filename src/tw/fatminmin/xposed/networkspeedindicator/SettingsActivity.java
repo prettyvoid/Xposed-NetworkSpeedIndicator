@@ -97,6 +97,7 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			prefsEdit.clear();
 			preferenceWereReset = true;
 		}
+		Log.i(TAG, "Current version code: ", packageVersionCode);
 		prefsEdit.putInt(Common.KEY_CURRENT_VERSION_CODE, packageVersionCode);
 		prefsEdit.commit();
 		
