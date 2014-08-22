@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Network Speed Indicator</string>
+    <!-- app_name follows default -->
     <string name="app_description">Affiche les stats du trafic sur la barre d\'état</string>
     <string name="pref_category_ind_settings">Paramètres de l\'indicateur</string>
     <string name="pref_category_ind_appearance">Apparence de l\'indicateur</string>
