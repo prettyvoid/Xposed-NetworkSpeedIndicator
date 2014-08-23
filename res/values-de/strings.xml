@@ -2,11 +2,11 @@
 <resources>
     
     <!-- app_name follows default -->
-    <string name="sum1_hide_below">Ausblended wenn geschwindigkeit null ist</string>
-    <string name="pref_networktype">Netzwerk typen</string>
+    <string name="sum1_hide_below">Bei keinem Netzwerkverkehr ausblenden</string>
+    <string name="pref_networktype">Netzwerkarten</string>
     <string name="pref_font_size">Schriftgröße ändern</string>
     <string name="pref_display">Anzeige</string>
-    <string name="pref_update_interval">Aktualizierungs interval</string>
+    <string name="pref_update_interval">Aktualizierungsinterval</string>
     
     <string name="item_auto">Auto</string>
     
@@ -27,15 +27,15 @@
     
     <string-array name="suffix_entries">
         <item>Kein</item>
-        <item>Gefühltes dreieck</item>
-        <item>Hohles dreieck</item>
-        <item>Small solid triangle</item> <!-- please translate -->
-        <item>Small hollow triangle</item> <!-- please translate -->
+        <item>Festes Dreieck</item>
+        <item>Hohles Dreieck</item>
+        <item>Kleines festes Dreieck</item>
+        <item>Kleines hohles Dreieck</item>
     </string-array>
     
     <string-array name="display_entries">
-        <item>Zwei zeilen</item>
-        <item>Eine zeile</item>
+        <item>Zwei Zeilen</item>
+        <item>Eine Zeile</item>
     </string-array>
     
 </resources>
