@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">Network Speed Indicator</string>
+    <string name="app_description">再状态拦上显示网路速度</string>
+    <string name="pref_category_ind_settings">显示器设定</string>
+    <string name="pref_category_ind_appearance">显示器外观</string>
+    <string name="pref_category_unit_settings">单位设定</string>
+    <string name="pref_category_text_appearance">字体外观</string>
+    <string name="pref_category_help">帮助</string>
+    <string name="pref_unit_mode">单位模式</string>
+    <string name="pref_unit">单位</string>
+    <string name="pref_unit_format">显示与格式</string>
+    <string name="pref_hide_below">显示上限</string>
+    <string name="dmsg_hide_below">网路速度在此单位以下不会显示。输入0会永远显示网速，输入1会在网速为0的时候隐藏显示器</string>
+    <string name="hint_hide_below">每秒几的byte</string>
+    <string name="sum0_hide_below">永远显示网速</string>
+    <string name="sum1_hide_below">在网速为0时隐藏</string>
+    <string name="unit_hide_below">再网速为 %s B/s 以下时隐藏</string> <!-- see note -->
+    <string name="pref_show_suffix">永远显示后缀</string>
+    <string name="pref_networktype">连网模式</string>
+    <string name="pref_networkspeed">网路速度</string>
+    <string name="pref_font_size">字体大小</string>
+    <string name="hint_font_size">scaled pixels</string>
+    <string name="unit_font_size">%s px</string> <!-- see note -->
+    <string name="pref_position">位置</string>
+    <string name="pref_suffix">后缀</string>
+    <string name="pref_display">显示</string>
+    <string name="pref_update_interval">更新间隔</string>
+    <string name="hint_update_interval">毫秒</string>
+    <string name="unit_update_interval">%s ms</string> <!-- see note -->
+    <string name="pref_font_color">字体颜色</string>
+    <string name="pref_font_style">字体样式</string>
+    <string name="pref_enable_logging">开启日志</string>
+    <string name="pref_report_issue">回报问题</string>
+    
+    <string name="unit_format_hidden">隐藏</string>
+    <string name="unit_format_fmt_as">格式化为</string>
+    <string name="summary_none">不显示</string>
+    <string name="item_auto">自动</string>
+    <!-- Note about units:
+         The placeholder %s will be replaced with the actual numeric value.
+         If it is omitted, the provided unit will be appended
+         at the end of numeric value (for example: 500 ms)
+      -->
+    
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">选择一个颜色</string>
+    <string name="press_color_to_apply">选择一个颜色并套用</string>
+    
+    <string-array name="unit_mode_entries">
+        <item>二进位 bits</item>
+        <item>二进位 bytes</item>
+        <item>十进位 bits</item>
+        <item>十进位 bytes</item>
+    </string-array>
+    
+    <string-array name="unit_format_entries">
+        <item>Space prefix</item>
+        <item>Factor (K,M)</item>
+        <item>Binary mode (i)</item>
+        <item>Bytes or bits</item>
+        <item>Per (p,/)</item><!-- can be translated as "Every (p,/)" -->
+        <item>Second (s)</item>
+    </string-array>
+    
+    <string-array name="networktype_entries">
+        <item>Mobile</item>
+        <item>Wi-Fi</item>
+        <item>WiMAX</item>
+        <item>Bluetooth</item>
+        <item>Ethernet</item>
+        <item>Wi-Fi Direct</item>
+    </string-array>
+    
+    <string-array name="networkspeed_entries">
+        <item>上传</item>
+        <item>下载</item>
+    </string-array>
+    
+    <string-array name="position_entries">
+        <item>左边</item>
+        <item>右边</item>
+        <item>通知拦</item>
+    </string-array>
+    
+    <string-array name="suffix_entries">
+        <item>不显示</item>
+        <item>实心三角</item>
+        <item>空心三角</item>
+        <item>小实心三角</item>
+        <item>小空心三角</item>
+    </string-array>
+    
+    <string-array name="display_entries">
+        <item>双行</item>
+        <item>单行</item>
+    </string-array>
+    
+    <string-array name="font_style_entries">
+        <item>粗体</item>
+        <item>斜体</item>
+    </string-array>
+    
+</resources>
