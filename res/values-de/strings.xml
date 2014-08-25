@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <!-- app_name follows default -->
-    <string name="sum1_hide_below">Ausblended wenn geschwindigkeit null ist</string>
-    <string name="pref_networktype">Netzwerk typen</string>
-    <string name="pref_font_size">Schriftgröße ändern</string>
+    <string name="app_name">Netzwerkgeschwindigkeitsanzeige</string>
+    <string name="app_description">Netzwerkgeschwindigkeit in der Statusleiste anzeigen</string>
+    <string name="pref_category_ind_settings">Anzeigeeinstellungen</string>
+    <string name="pref_category_ind_appearance">Anzeigeaussehen</string>
+    <string name="pref_category_unit_settings">Einheiteneinstellungen</string>
+    <string name="pref_category_text_appearance">Textaussehen</string>
+    <string name="pref_category_help">Hilfe</string>
+    <string name="pref_unit_mode">Einheitenmodus</string>
+    <string name="pref_unit">Einheiten</string>
+    <string name="pref_unit_format">Anzeige und Format</string>
+    <string name="pref_hide_below">Anzeigeschwelle</string>
+    <string name="dmsg_hide_below">Netzwerkgeschwindigkeiten unter diesem Wert werden nicht angezeigt (0 = immer anzeigen, 1 = ausblenden, wenn Geschwindigkeit=0)</string>
+    <string name="hint_hide_below">Bytes/sek.</string>
+    <string name="sum0_hide_below">Immer anzeigen</string>
+    <string name="sum1_hide_below">Ausblenden, wenn Null</string>
+    <string name="unit_hide_below">Ausblenden, wenn unter %s B/s</string>
+    <string name="pref_show_suffix">Suffix immer anzeigen</string>
+    <string name="pref_networktype">Netzwerkarten</string>
+    <string name="pref_networkspeed">Netzwerkgeschwindigkeit</string>
+    <string name="pref_font_size">Schriftgröße</string>
+    <string name="hint_font_size">Skalierte Pixel</string>
+    <string name="unit_font_size">%s px</string> <!-- see note -->
+    <string name="pref_position">Position</string>
+    <string name="pref_suffix">Suffix</string>
     <string name="pref_display">Anzeige</string>
-    <string name="pref_update_interval">Aktualizierungs interval</string>
+    <string name="pref_update_interval">Aktualisierungsintervall</string>
+    <string name="hint_update_interval">Millisekunden</string>
+    <string name="unit_update_interval">%s ms</string> <!-- see note -->
+    <string name="pref_font_color">Schriftfarbe</string>
+    <string name="pref_font_style">Schriftart</string>
+    <string name="pref_enable_logging">Protokollierung aktivieren</string>
+    <string name="pref_report_issue">Problem melden</string>
     
+    <string name="unit_format_hidden">Versteckt</string>
+    <string name="unit_format_fmt_as">Formatiert als</string>
+    <string name="summary_none">Nichts</string>
     <string name="item_auto">Auto</string>
+    
+    <string name="dialog_color_picker">Farbe auswählen</string>
+    <string name="press_color_to_apply">Zum Festlegen auf Farbe tippen</string>
+    
+    <string-array name="unit_mode_entries">
+        <item>Binärbit</item>
+        <item>Binärbytes</item>
+        <item>Dezimalbit</item>
+        <item>Dezimalbytes</item>
+    </string-array>
+    
+    <string-array name="unit_format_entries">
+        <item>Leerzeichen voranstellen</item>
+        <item>Faktor (K,M)</item>
+        <item>Binärmode (i)</item>
+        <item>Bytes oder Bits</item>
+        <item>Alle (p,/)</item><!-- can be translated as "Every (p,/)" -->
+        <item>Sekunde (s)</item>
+    </string-array>
     
     <string-array name="networktype_entries">
         <item>Mobil</item>
@@ -19,6 +67,11 @@
         <item>Wi-Fi Direct</item>
     </string-array>
     
+    <string-array name="networkspeed_entries">
+        <item>Hochladen</item>
+        <item>Herunterladen</item>
+    </string-array>
+    
     <string-array name="position_entries">
         <item>Links</item>
         <item>Rechts</item>
@@ -26,16 +79,21 @@
     </string-array>
     
     <string-array name="suffix_entries">
-        <item>Kein</item>
-        <item>Gefühltes dreieck</item>
-        <item>Hohles dreieck</item>
-        <item>Small solid triangle</item> <!-- please translate -->
-        <item>Small hollow triangle</item> <!-- please translate -->
+        <item>Nichts</item>
+        <item>Festes Dreieck</item>
+        <item>Hohles Dreieck</item>
+        <item>Kleines festes Dreieck</item>
+        <item>Kleines hohles Dreieck</item>
     </string-array>
     
     <string-array name="display_entries">
-        <item>Zwei zeilen</item>
-        <item>Eine zeile</item>
+        <item>Zwei Zeilen</item>
+        <item>Eine Zeile</item>
+    </string-array>
+    
+    <string-array name="font_style_entries">
+        <item>Fett</item>
+        <item>Kursiv</item>
     </string-array>
     
 </resources>
