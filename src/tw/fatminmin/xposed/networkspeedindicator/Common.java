@@ -12,10 +12,6 @@ public final class Common {
 	public static final String PKG_NAME = "tw.fatminmin.xposed.networkspeedindicator";
 	public static final String ACTION_SETTINGS_CHANGED = PKG_NAME + ".changed";
 	
-	public static final String KEY_CURRENT_VERSION_CODE = "current_version_code";
-	public static final int DEF_CURRENT_VERSION_CODE = 0;
-	public static final int MAX_INCOMPATIBLE_VERSION_CODE = 13;
-	
 	public static final String KEY_HIDE_BELOW = "hide_below";
 	public static final String KEY_SHOW_SUFFIX = "show_suffix";
 	public static final String KEY_UNIT_MODE = "unit_mode";
