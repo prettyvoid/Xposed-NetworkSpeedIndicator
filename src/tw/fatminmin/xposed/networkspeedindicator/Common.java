@@ -5,6 +5,7 @@ import java.util.Set;
 
 import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
 public final class Common {
 
@@ -58,7 +59,7 @@ public final class Common {
 	public static final int DEF_DISPLAY = 0;
 	public static final int DEF_UPDATE_INTERVAL = 1000;
 	public static final boolean DEF_FONT_COLOR = false;
-	public static final int DEF_COLOR = android.graphics.Color.LTGRAY;
+	public static final int DEF_COLOR = Color.LTGRAY;
 	public static final HashSet<String> DEF_FONT_STYLE = new HashSet<String>();
 	public static final boolean DEF_ENABLE_LOG = false;
 	
@@ -71,6 +72,8 @@ public final class Common {
 	public static final String BIG_DOWN_HOLLOW_TRIANGLE = " \u25BD ";
 	public static final String SMALL_UP_HOLLOW_TRIANGLE = "\u25B5";
 	public static final String SMALL_DOWN_HOLLOW_TRIANGLE = " \u25BF ";
+	
+	public static final int ANDROID_SKY_BLUE = Color.parseColor("#33b5e5");
 
 	public static final int getPrefInt(final SharedPreferences pref, final String key, final int def_value) {
 		try {

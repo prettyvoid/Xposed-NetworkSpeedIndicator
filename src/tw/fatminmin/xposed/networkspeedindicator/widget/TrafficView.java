@@ -10,7 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,7 +28,7 @@ import de.robv.android.xposed.XSharedPreferences;
 public final class TrafficView extends TextView {
 
     public PositionCallback mPositionCallback = null;
-    public TextView clock = null;
+    public View clock = null;
     
 	private static final String TAG = TrafficView.class.getSimpleName();
 	private static final DecimalFormat formatWithDecimal    = new DecimalFormat(" ##0.0");
@@ -91,11 +90,16 @@ public final class TrafficView extends TextView {
 		}
 		else {
 			if(clock != null) {
-				setTextColor(clock.getCurrentTextColor());
+				if (clock instanceof TextView) {
+					setTextColor(((TextView) clock).getCurrentTextColor());
+				} else {
+					//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+					setTextColor(Common.ANDROID_SKY_BLUE);
+				}
 			}
 			else {
 				Log.i(TAG, "Gingerbread");
-				setTextColor(Color.parseColor("#33b5e5"));
+				setTextColor(Common.ANDROID_SKY_BLUE);
 			}
 		}
 	}

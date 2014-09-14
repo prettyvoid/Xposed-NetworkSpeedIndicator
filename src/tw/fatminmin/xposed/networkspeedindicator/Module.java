@@ -14,7 +14,6 @@ import tw.fatminmin.xposed.networkspeedindicator.widget.PositionCallbackImpl;
 import tw.fatminmin.xposed.networkspeedindicator.widget.TrafficView;
 import android.annotation.SuppressLint;
 import android.content.res.XResources;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
@@ -36,7 +35,7 @@ public final class Module implements IXposedHookLoadPackage,
 
 	private static final String TAG = Module.class.getSimpleName();
     
-	private final TextView getClock() {
+	private final View getClock() {
 		if(trafficView == null || trafficView.mPositionCallback == null) { 
 			return null;
 		}
@@ -68,7 +67,12 @@ public final class Module implements IXposedHookLoadPackage,
 							return;
 						
 						if(trafficView != null && clock != null) {
-							trafficView.setTextColor(clock.getCurrentTextColor());
+							if (clock instanceof TextView) {
+								trafficView.setTextColor(((TextView) clock).getCurrentTextColor());
+							} else {
+								//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+								trafficView.setTextColor(Common.ANDROID_SKY_BLUE);
+							}
 						}
 					} catch (Exception e) {
 						Log.e(TAG, "afterHookedMethod (setTextColor) failed: ", e);
@@ -117,7 +121,7 @@ public final class Module implements IXposedHookLoadPackage,
     }
     
     private TrafficView trafficView;
-    private TextView clock;
+    private View clock;
     private View statusIcons;
 
     private static final String PKG_NAME_SYSTEM_UI = "com.android.systemui";
@@ -153,8 +157,8 @@ public final class Module implements IXposedHookLoadPackage,
 			                try {
 								FrameLayout root = (FrameLayout) liparam.view;
 
-								clock = (TextView) root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
-								statusIcons = (View) root.findViewById(liparam.res.getIdentifier("statusIcons", "id", PKG_NAME_SYSTEM_UI));
+								clock = root.findViewById(liparam.res.getIdentifier("clock", "id", PKG_NAME_SYSTEM_UI));
+								statusIcons = root.findViewById(liparam.res.getIdentifier("statusIcons", "id", PKG_NAME_SYSTEM_UI));
 								
 								if (trafficView == null) {
 								    trafficView = new TrafficView(root.getContext());
@@ -162,14 +166,18 @@ public final class Module implements IXposedHookLoadPackage,
 								}
 								if (clock != null) {
 								    trafficView.setLayoutParams(clock.getLayoutParams());
-								    trafficView.setTextColor(clock.getCurrentTextColor());
+								    if (clock instanceof TextView) {
+								    	trafficView.setTextColor(((TextView) clock).getCurrentTextColor());
+								    } else {
+								    	//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+								    	trafficView.setTextColor(Common.ANDROID_SKY_BLUE);
+								    }
 								} else {
 									Log.i(TAG, "Clock: Gingerbread");
 								    trafficView.setLayoutParams(new LayoutParams(
 								            LayoutParams.WRAP_CONTENT,
 								            LayoutParams.MATCH_PARENT));
-								    trafficView.setTextColor(Color
-								            .parseColor("#33b5e5"));
+								    trafficView.setTextColor(Common.ANDROID_SKY_BLUE);
 								}
 								trafficView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
 
