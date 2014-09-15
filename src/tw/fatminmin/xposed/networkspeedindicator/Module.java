@@ -71,6 +71,7 @@ public final class Module implements IXposedHookLoadPackage,
 								trafficView.setTextColor(((TextView) clock).getCurrentTextColor());
 							} else {
 								//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+								Log.w(TAG, "clock is not a TextView, it is ", clock.getClass().getSimpleName());
 								trafficView.setTextColor(Common.ANDROID_SKY_BLUE);
 							}
 						}
@@ -170,6 +171,7 @@ public final class Module implements IXposedHookLoadPackage,
 								    	trafficView.setTextColor(((TextView) clock).getCurrentTextColor());
 								    } else {
 								    	//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+								    	Log.w(TAG, "clock is not a TextView, it is ", clock.getClass().getSimpleName());
 								    	trafficView.setTextColor(Common.ANDROID_SKY_BLUE);
 								    }
 								} else {

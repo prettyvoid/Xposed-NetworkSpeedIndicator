@@ -94,6 +94,7 @@ public final class TrafficView extends TextView {
 					setTextColor(((TextView) clock).getCurrentTextColor());
 				} else {
 					//probably LinearLayout in VN ROM v14.1 (need to search child elements to find correct text color)
+					Log.w(TAG, "clock is not a TextView, it is ", clock.getClass().getSimpleName());
 					setTextColor(Common.ANDROID_SKY_BLUE);
 				}
 			}
@@ -119,6 +120,7 @@ public final class TrafficView extends TextView {
 				}
 				else if (action.equals(Common.ACTION_SETTINGS_CHANGED)) {
 					Log.i(TAG, "Settings changed");
+					Log.d(TAG, intent.getExtras().keySet().toArray());
 					
 					if (intent.hasExtra(Common.KEY_FORCE_UNIT)) {
 						prefForceUnit = intent.getIntExtra(Common.KEY_FORCE_UNIT, Common.DEF_FORCE_UNIT);
@@ -199,10 +201,16 @@ public final class TrafficView extends TextView {
 					uploadSpeed = ((totalTxBytesNew - totalTxBytes) * 1000) / elapsedTime;
 					downloadSpeed = ((totalRxBytesNew - totalRxBytes) * 1000) / elapsedTime;
 				}
+
+				Log.d(TAG, "Tx: ", totalTxBytes, " -> ", totalTxBytesNew);
+				Log.d(TAG, "Rx: ", totalRxBytes, " -> ", totalRxBytesNew);
+				Log.d(TAG, "UT: ", lastUpdateTime, " -> ", lastUpdateTimeNew);
 				
 				totalTxBytes = totalTxBytesNew;
 				totalRxBytes = totalRxBytesNew;
 				lastUpdateTime = lastUpdateTimeNew;
+				
+				Log.d(TAG, "U: ", uploadSpeed, "; D: ", downloadSpeed);
 				
 				SpannableString spanString = new SpannableString(createText());
 				
@@ -265,6 +273,7 @@ public final class TrafficView extends TextView {
 				Context.CONNECTIVITY_SERVICE);
 
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+		Log.d(TAG, networkInfo);
 		
 		if (networkInfo != null) {
 			networkState = networkInfo.isAvailable();
@@ -274,6 +283,7 @@ public final class TrafficView extends TextView {
 		else {
 			networkState = false;
 		}
+		Log.d(TAG, "Network State: ", networkState);
 	}
 
 	private final void updateTraffic() {
@@ -456,6 +466,7 @@ public final class TrafficView extends TextView {
 		} else {
 			setVisibility(View.GONE);
 		}
+		Log.d(TAG, "Visibility (visible: ", View.VISIBLE, "; gone: ", View.GONE, "): ", getVisibility());
 	}
 
 	private final void loadPreferences() {
