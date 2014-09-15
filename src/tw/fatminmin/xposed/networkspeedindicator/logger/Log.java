@@ -21,7 +21,7 @@ public class Log {
 	private static final SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 	private static PrintWriter pw = null;
 	
-	public static boolean enableLogging = false;
+	public static boolean enableLogging = true;
 	
 	private static final String concatArray(final Object... msg) {
 		if (msg == null || msg.length == 0) {

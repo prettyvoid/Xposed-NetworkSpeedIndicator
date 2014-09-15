@@ -124,8 +124,8 @@
 	    android:title="@string/pref_category_help">
 		
 		<CheckBoxPreference
-		    android:defaultValue="false"
-		    android:key="enable_logging"
+		    android:defaultValue="true"
+		    android:key="enable_logging_beta"
 		    android:title="@string/pref_enable_logging" />
 		
 		<PreferenceScreen
