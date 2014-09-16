@@ -51,6 +51,7 @@ public final class TrafficView extends TextView {
 	private float prefFontSize = Common.DEF_FONT_SIZE;
 	private int prefSuffix = Common.DEF_SUFFIX;
 	private int prefDisplay = Common.DEF_DISPLAY;
+	private boolean prefSwapSpeeds = Common.DEF_SWAP_SPEEDS;
 	private int prefUpdateInterval = Common.DEF_UPDATE_INTERVAL;
 	private boolean prefFontColor = Common.DEF_FONT_COLOR;
 	private int prefColor = Common.DEF_COLOR;
@@ -156,6 +157,9 @@ public final class TrafficView extends TextView {
 					if (intent.hasExtra(Common.KEY_DISPLAY)) {
 				        prefDisplay = intent.getIntExtra(Common.KEY_DISPLAY, Common.DEF_DISPLAY);
 				    }
+					if (intent.hasExtra(Common.KEY_SWAP_SPEEDS)) {
+						prefSwapSpeeds = intent.getBooleanExtra(Common.KEY_SWAP_SPEEDS, Common.DEF_SWAP_SPEEDS);
+					}
 					if (intent.hasExtra(Common.KEY_UPDATE_INTERVAL)) {
 				        prefUpdateInterval = intent.getIntExtra(Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
 				    }
@@ -355,11 +359,16 @@ public final class TrafficView extends TextView {
 		}
 		
 		String ret = "";
-		if((showInExactPosition) || (strUploadValue.length() > 0 && strDownloadValue.length() > 0)) {
-		    ret = strUploadValue + delimeter + strDownloadValue; 
+		boolean showBothSpeeds = strUploadValue.length() > 0 && strDownloadValue.length() > 0;
+		
+		if(showBothSpeeds==false && showInExactPosition==false) {
+		    delimeter = "";
 		}
-		else {
-		    ret = strUploadValue + strDownloadValue;
+		
+		if (prefSwapSpeeds) {
+			ret = strDownloadValue + delimeter + strUploadValue;
+		} else {
+			ret = strUploadValue + delimeter + strDownloadValue;
 		}
 		return ret;
 	}
@@ -485,6 +494,7 @@ public final class TrafficView extends TextView {
 			Set<String> localPrefNetworkType = mPref.getStringSet(Common.KEY_NETWORK_TYPE, Common.DEF_NETWORK_TYPE);
 			Set<String> localPrefNetworkSpeed = mPref.getStringSet(Common.KEY_NETWORK_SPEED, Common.DEF_NETWORK_SPEED);
 			int localPrefDisplay = Common.getPrefInt(mPref, Common.KEY_DISPLAY, Common.DEF_DISPLAY);
+			boolean localPrefSwapSpeeds = mPref.getBoolean(Common.KEY_SWAP_SPEEDS, Common.DEF_SWAP_SPEEDS);
 			int localPrefUpdateInterval = Common.getPrefInt(mPref, Common.KEY_UPDATE_INTERVAL, Common.DEF_UPDATE_INTERVAL);
 			boolean localPrefFontColor = mPref.getBoolean(Common.KEY_FONT_COLOR, Common.DEF_FONT_COLOR);
 			int localPrefColor = mPref.getInt(Common.KEY_COLOR, Common.DEF_COLOR);
@@ -503,6 +513,7 @@ public final class TrafficView extends TextView {
 			prefNetworkType = localPrefNetworkType;
 			prefNetworkSpeed = localPrefNetworkSpeed;
 			prefDisplay = localPrefDisplay;
+			prefSwapSpeeds = localPrefSwapSpeeds;
 			prefUpdateInterval = localPrefUpdateInterval;
 			prefFontColor = localPrefFontColor;
 			prefColor = localPrefColor;

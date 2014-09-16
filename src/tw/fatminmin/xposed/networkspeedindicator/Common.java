@@ -24,6 +24,7 @@ public final class Common {
 	public static final String KEY_POSITION = "position";
 	public static final String KEY_SUFFIX = "suffix";
 	public static final String KEY_DISPLAY = "display";
+	public static final String KEY_SWAP_SPEEDS = "swap_speeds";
 	public static final String KEY_UPDATE_INTERVAL = "update_interval";
 	public static final String KEY_FONT_COLOR = "font_color";
 	public static final String KEY_COLOR = "color";
@@ -57,6 +58,7 @@ public final class Common {
 	public static final int DEF_POSITION = 0;
 	public static final int DEF_SUFFIX = 1;
 	public static final int DEF_DISPLAY = 0;
+	public static final boolean DEF_SWAP_SPEEDS = false;
 	public static final int DEF_UPDATE_INTERVAL = 1000;
 	public static final boolean DEF_FONT_COLOR = false;
 	public static final int DEF_COLOR = Color.LTGRAY;

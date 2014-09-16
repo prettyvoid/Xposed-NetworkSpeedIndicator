@@ -296,6 +296,9 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
 			else if (key.equals(Common.KEY_DISPLAY)) {
 			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_DISPLAY));
 			}
+			else if (key.equals(Common.KEY_SWAP_SPEEDS)) {
+				intent.putExtra(key, prefs.getBoolean(key, Common.DEF_SWAP_SPEEDS));
+			}
 			else if (key.equals(Common.KEY_UPDATE_INTERVAL)) {
 			    intent.putExtra(key, Common.getPrefInt(prefs, key, Common.DEF_UPDATE_INTERVAL));
 			}

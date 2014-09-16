@@ -49,6 +49,11 @@
 		    android:title="@string/pref_display"
 		    android:entries="@array/display_entries"
 		    android:entryValues="@array/display_values" />
+		
+		<CheckBoxPreference
+		    android:defaultValue="0"
+		    android:key="swap_speeds"
+		    android:title="@string/pref_swap_speeds" />
 	    
 	    <ListPreference
 		    android:defaultValue="1"
