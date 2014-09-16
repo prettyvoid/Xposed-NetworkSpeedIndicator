@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 import tw.fatminmin.xposed.networkspeedindicator.logger.Log;
 import android.content.Context;
 import android.content.Intent;
@@ -134,6 +136,10 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
         	MultiSelectListPreferenceCompat mulPref = (MultiSelectListPreferenceCompat) preference;
         	preference.setSummary(createMultiSelectSummary(mulPref));
         }
+        else if(preference instanceof ColorPickerPreference) {
+        	ColorPickerPreference colorPicker = (ColorPickerPreference) preference;
+        	preference.setSummary(createColorPickerSummary(colorPicker));
+        }
 	}
     
     private final String createListPrefSummary(final ListPreference listPref) {
@@ -237,6 +243,23 @@ public final class SettingsActivity extends PreferenceActivity implements OnShar
     	return summary;
     }
 	
+	private String createColorPickerSummary(final ColorPickerPreference colorPicker) {
+		
+		SharedPreferences prefs = colorPicker.getSharedPreferences();
+		String key = colorPicker.getKey();
+		
+		String summary;
+		
+		if (prefs.contains(key)) {
+			int iColor = prefs.getInt(key, 0);
+			summary = ColorPickerPreference.convertToARGB(iColor).toUpperCase(Locale.getDefault());
+			summary = formatWithUnit(summary, getString(R.string.unit_font_color));
+		} else {
+			summary = getString(R.string.summary_none);
+		}
+		return summary;
+	}
+
     @SuppressWarnings("deprecation")
 	@Override
 	public final void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
