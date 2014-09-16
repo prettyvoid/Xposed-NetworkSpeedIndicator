@@ -349,12 +349,12 @@ public final class TrafficView extends TextView {
 			strDownloadValue = "";
 		}
 		
-		String delimeter = "";
+		String delimiter = "";
 		if(prefDisplay == 0) {
-		    delimeter = "\n";
+		    delimiter = "\n";
 		}
 		else {
-		    delimeter = " ";
+		    delimiter = " ";
 		    showInExactPosition = false; //irrelevant in one-line mode
 		}
 		
@@ -362,13 +362,13 @@ public final class TrafficView extends TextView {
 		boolean showBothSpeeds = strUploadValue.length() > 0 && strDownloadValue.length() > 0;
 		
 		if(showBothSpeeds==false && showInExactPosition==false) {
-		    delimeter = "";
+		    delimiter = "";
 		}
 		
 		if (prefSwapSpeeds) {
-			ret = strDownloadValue + delimeter + strUploadValue;
+			ret = strDownloadValue + delimiter + strUploadValue;
 		} else {
-			ret = strUploadValue + delimeter + strDownloadValue;
+			ret = strUploadValue + delimiter + strDownloadValue;
 		}
 		return ret;
 	}
