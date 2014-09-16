@@ -112,5 +112,6 @@
     </string-array>
     
     <string name="url_report_issue">https://github.com/chiehmin/Xposed-NetworkSpeedIndicator/issues</string>
+    <string name="url_discuss_xda">http://forum.xda-developers.com/showthread.php?t=2636971</string>
     
 </resources>

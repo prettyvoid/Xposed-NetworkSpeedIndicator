@@ -137,6 +137,14 @@
 		        android:data="@string/url_report_issue" />
 		</PreferenceScreen>
 		
+		<PreferenceScreen
+		    android:title="@string/pref_discuss_xda"
+		    >
+		    <intent
+		        android:action="android.intent.action.VIEW"
+		        android:data="@string/url_discuss_xda" />
+		</PreferenceScreen>
+		
 	</PreferenceCategory>
 	
 
