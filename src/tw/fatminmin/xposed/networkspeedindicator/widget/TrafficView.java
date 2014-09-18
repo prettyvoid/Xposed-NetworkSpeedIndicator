@@ -42,6 +42,7 @@ public final class TrafficView extends TextView {
 	private long totalRxBytes;
 	private long lastUpdateTime;
 	private boolean justLaunched = true;
+	private boolean loggedZero = false;
 	private String networkType;
 	private boolean networkState;
 
@@ -206,15 +207,19 @@ public final class TrafficView extends TextView {
 					downloadSpeed = ((totalRxBytesNew - totalRxBytes) * 1000) / elapsedTime;
 				}
 
-				Log.d(TAG, "Tx: ", totalTxBytes, " -> ", totalTxBytesNew);
-				Log.d(TAG, "Rx: ", totalRxBytes, " -> ", totalRxBytesNew);
-				Log.d(TAG, "UT: ", lastUpdateTime, " -> ", lastUpdateTimeNew);
+				if (loggedZero==false || uploadSpeed != 0 || downloadSpeed != 0) {
+					Log.d(TAG,
+						totalTxBytes, ",", totalTxBytesNew, ";",
+						totalRxBytes, ",", totalRxBytesNew, ";",
+						lastUpdateTime, ",", lastUpdateTimeNew, ";",
+						uploadSpeed, ",", downloadSpeed
+						);
+					loggedZero = (uploadSpeed == 0 && downloadSpeed == 0);
+				}
 				
 				totalTxBytes = totalTxBytesNew;
 				totalRxBytes = totalRxBytesNew;
 				lastUpdateTime = lastUpdateTimeNew;
-				
-				Log.d(TAG, "U: ", uploadSpeed, "; D: ", downloadSpeed);
 				
 				SpannableString spanString = new SpannableString(createText());
 				
