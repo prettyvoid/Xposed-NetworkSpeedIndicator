@@ -26,13 +26,17 @@
     <string name="pref_position">Position</string>
     <string name="pref_suffix">Suffixe</string>
     <string name="pref_display">Affichage</string>
+    <string name="pref_swap_speeds">Inverser la position des stats</string>    
     <string name="pref_update_interval">Intervalle d\'actualisation</string>
     <string name="hint_update_interval">millisecondes</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
-    <string name="pref_font_color">Couleur de la police</string>    
+    <string name="pref_font_color">Couleur de la police</string>
+    <string name="unit_font_color">%s (RVBA)</string> <!-- see note -->    
     <string name="pref_font_style">Style de la police</string>
     <string name="pref_enable_logging">Activer la journalisation</string>
-    <string name="pref_report_issue">Signaler un problème</string>    
+    <string name="pref_report_issue">Signaler un problème</string> 
+    <string name="note_clear_data">Note : Essayer avant d\'\"Effacer les données\".</string> <!-- ensure " is escaped correctly as \" -->
+    <string name="pref_discuss_xda">Topic sur le forum XDA</string>    
 
     <string name="unit_format_hidden">Masqué</string>
     <string name="unit_format_fmt_as">Formaté comme</string> 
