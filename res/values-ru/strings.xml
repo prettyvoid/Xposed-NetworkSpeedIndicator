@@ -1,23 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <string name="app_name">Индикатор Скорости Сети</string>
-    <string name="sum1_hide_below">Скрыть если = нулю</string>
+    <string name="hello">Hello World, Main!</string>
+    <string name="app_name">Индикатор скорости сети</string>
+    <string name="dialog_color_picker">Выберите цвет</string>
+    <string name="press_color_to_apply">Нажмите на цвет, чтобы применить</string>
+    <string name="pref_category">Категория</string>
+    <string name="color1_title">Цвет 1</string>
+    <string name="color1_summary">Черный цвет по умолчанию, установите по ссылке</string>
+    <string name="color2_title">Цвет 2</string>
+    <string name="color2_summary">"Не постоянные цвета
+слайдер прозрачности добавлен через код"</string>
+    <string name="color3_title">Цвет 3</string>
+    <string name="color3_summary">Установите через слайдер прозрачности</string>
+    <string name="color4_title">Цвет 4</string>
+    <string name="color4_summary">Выберите HEX код в XML</string>
+    <string name="app_description">Отображает статистику трафика в строке состояния</string>
+    <string name="pref_category_ind_settings">Настройки индикатора</string>
+    <string name="pref_category_ind_appearance">Внешний вид индикатора</string>
+    <string name="pref_category_unit_settings">Настройки единиц измерения</string>
+    <string name="pref_category_text_appearance">Внешний вид текста</string>
+    <string name="pref_category_help">Справка</string>
+    <string name="pref_unit_mode">Режим единиц измерения</string>
+    <string name="pref_unit">Единицы измерения</string>
+    <string name="pref_unit_format">Индикация и формат</string>
+    <string name="pref_hide_below">Порог скорости</string>
+    <string name="dmsg_hide_below">При скорости меньше этого значения индикатор будет скрыт. Введите 0, чтобы всегда показывать скорость или 1, чтобы скрыть, когда скорость равна нулю.</string>
+    <string name="hint_hide_below">Байт в секунду</string>
+    <string name="sum0_hide_below">Всегда показывать скорость</string>
+    <string name="sum1_hide_below">Скрыть, если скорость равна нулю</string>
+    <string name="unit_hide_below">Скрыть при скорости ниже %s Б/с</string>
+    <string name="pref_show_suffix">Всегда показывать суффикс</string>
     <string name="pref_networktype">Типы сетей</string>
+    <string name="pref_networkspeed">Скорость сети</string>
     <string name="pref_font_size">Размер шрифта</string>
+    <string name="hint_font_size">в пикселях</string>
+    <string name="unit_font_size">%s px</string>
     <string name="pref_position">Позиция</string>
     <string name="pref_suffix">Суффикс</string>
     <string name="pref_display">Отображение</string>
     <string name="pref_update_interval">Интервал обновления</string>
+    <string name="hint_update_interval">миллисекунд</string>
+    <string name="unit_update_interval">%s мс</string>
+    <string name="pref_font_color">Цвет шрифта</string>
     <string name="pref_font_style">Стиль шрифта</string>
-    
-    <!-- Color Picker -->
-    <string name="dialog_color_picker">Выбор цвета</string>
-    <string name="press_color_to_apply">Нажмите на цвет, чтобы применить</string>
-    
-    <string-array name="networkspeed_entries">
-        <item>Отдачи</item>
-        <item>Приема</item>
-    </string-array>
-    
+    <string name="pref_enable_logging">Включить ведение журнала</string>
+    <string name="pref_report_issue">Сообщить о проблеме</string>
+    <string name="unit_format_hidden">Скрыть</string>
+    <string name="unit_format_fmt_as">Форматировать как</string>
+    <string name="summary_none">Обычный</string>
+    <string name="item_auto">Авто</string>
+    <string name="url_report_issue">https://github.com/chiehmin/Xposed-NetworkSpeedIndicator/issues</string>
 </resources>
