@@ -26,7 +26,9 @@ Features
 Translating
 -----------
 Thank you for helping us provide localization of the app. When contributing translations (fork, modify and send pull request) please keep the following in mind:
- * Translate `strings.xml`. Do not translate `values.xml` or `dimens.xml`.
+ * Translate the original `strings.xml` in your fork (original source code).
+ * Do not translate `strings.xml` or `arrays.xml` extracted from the APK file.
+ * Do not translate `values.xml` or `dimens.xml`.
  * Application name (`app_name`) should ideally remain in English, unless your locale specifically requires a translated name.
  * Do not translate or change the value of the "name" attribute.
  * Follow the capitalization and style of the default strings.
