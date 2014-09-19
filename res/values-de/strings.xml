@@ -80,9 +80,9 @@
     
     <string-array name="suffix_entries">
         <item>Nichts</item>
-        <item>Festes Dreieck</item>
+        <item>Gefülltes Dreieck</item>
         <item>Hohles Dreieck</item>
-        <item>Kleines festes Dreieck</item>
+        <item>Kleines gefülltes Dreieck</item>
         <item>Kleines hohles Dreieck</item>
     </string-array>
     
