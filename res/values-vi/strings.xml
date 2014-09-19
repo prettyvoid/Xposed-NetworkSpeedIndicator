@@ -62,7 +62,7 @@
     <string-array name="unit_format_entries">
         <item>Khoảng cách tiền tố</item>
         <item>Nhân tố (K,M)</item>
-        <item>Chế độnhị phân (i)</item>
+        <item>Chế độ nhị phân (i)</item>
         <item>Bytes hoặc bits</item>
         <item>Mỗi (p,/)</item><!-- can be translated as "Every (p,/)" -->
         <item>Giây (s)</item>
