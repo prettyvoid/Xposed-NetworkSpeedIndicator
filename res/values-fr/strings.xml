@@ -35,7 +35,7 @@
     <string name="pref_font_style">Style de la police</string>
     <string name="pref_enable_logging">Activer la journalisation</string>
     <string name="pref_report_issue">Signaler un problème</string> 
-    <string name="note_clear_data">Note : Essayer d\'abord \"Effacer les données\" dans \"Informations sur l\'application\".</string> <!-- ensure " is escaped correctly as \" -->
+    <string name="note_clear_data">Note : Essayer d\'abord \"Effacer les données\".</string> <!-- ensure " is escaped correctly as \" -->
     <string name="pref_discuss_xda">Topic sur le forum XDA</string>    
 
     <string name="unit_format_hidden">Masqué</string>
@@ -50,6 +50,7 @@
     
     <!-- Color Picker -->
     <string name="dialog_color_picker">Définir une couleur</string>
+    <string name="press_color_to_apply">Appuyez sur une couleur</string>    
     
     <string-array name="unit_mode_entries">
         <item>bits binaires</item>
