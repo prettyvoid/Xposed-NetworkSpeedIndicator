@@ -1,9 +1,9 @@
 Network Speed Indicator
 =======================
 
-Displays traffic statistics on the notification bar. Requires a rooted phone with Xposed Module installed.
+Displays network speeds on the status bar. Requires a rooted phone with Xposed Module installed.
 
-This is a continuous work from [Dzakus's great work](http://repo.xposed.info/module/pl.com.android.networkspeedindicator). Many thanks to the contributors and translators!
+This is a continuous work from [Dzakus' great work](http://repo.xposed.info/module/pl.com.android.networkspeedindicator). Many thanks to the contributors and translators!
 
 **Translators,** please see notes below.
 
@@ -25,7 +25,9 @@ Features
 
 Translating
 -----------
-Thank you for helping us provide localization of the app. When contributing translations (fork, modify and send pull request) please keep the following in mind:
+Thank you for helping us provide localization of the app. It is very easy to do so on the GitHub website (no need to clone locally) or by using GitHub software (no need to mess with the command line).
+
+When contributing translations (fork, modify and send pull request) please keep the following in mind:
  * Translate the original `strings.xml` in your fork (original source code).
  * Do not translate `strings.xml` or `arrays.xml` extracted from the APK file.
  * Do not translate `values.xml` or `dimens.xml`.
