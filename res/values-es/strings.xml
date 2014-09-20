@@ -2,7 +2,7 @@
 <resources>
     
     <!-- app_name follows default -->
-    <string name="app_description">Muestra las estadísticas de tráfico en la barra de estado</string>
+	<string name="app_description">Muestra las estadísticas de tráfico en la barra de estado</string>
     <string name="pref_category_ind_settings">Configuración de los indicadores</string>
     <string name="pref_category_ind_appearance">Apariencia del Indicador</string>
     <string name="pref_category_unit_settings">Ajustes de la unidad</string>
@@ -26,13 +26,17 @@
     <string name="pref_position">Posición</string>
     <string name="pref_suffix">Sufijo</string>
     <string name="pref_display">Pantalla</string>
+	<string name="pref_swap_speeds">Intercambiar posiciones de velocidad</string>
     <string name="pref_update_interval">Intervalo de actualización</string>
     <string name="hint_update_interval">milisegundos</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
     <string name="pref_font_color">Color de fuente</string>
+	<string name="unit_font_color">%s (ARGB)</string> <!-- see note -->
     <string name="pref_font_style">Estilo de fuente</string>
     <string name="pref_enable_logging">Habilite el registro</string>
     <string name="pref_report_issue">Notificar una incidencia</string>
+	<string name="note_clear_data">Nota: Pruebe \"Borrar datos\" en primer lugar.</string> <!-- ensure " is escaped correctly as \" -->
+    <string name="pref_discuss_xda">Discuta en foros XDA</string>
     
     <string name="unit_format_hidden">Ocultos</string>
     <string name="unit_format_fmt_as">Formato de</string>
