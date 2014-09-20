@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Ukazovateľ rýchlosti siete</string>
+    <string name="app_name">Ukazovateľ rýchlostí siete</string>
     <string name="app_description">Zobrazí štatistiky siete v stavovom riadku</string>
     <string name="pref_category_ind_settings">Nastavenia ukazovateľa</string>
     <string name="pref_category_ind_appearance">Vzhľad ukazovateľa</string>
@@ -12,7 +12,7 @@
     <string name="pref_unit">Jednotka</string>
     <string name="pref_unit_format">Zobrazenie a formát</string>
     <string name="pref_hide_below">Hranica zobrazenia</string>
-    <string name="dmsg_hide_below">Rýchlosti menšie ako táto hodnota nebudú zobrazené. Zadajte 0 pre trvalé zobrazenie rýchlosti alebo 1 pre skrytie rýchlosti pod nulou.</string>
+    <string name="dmsg_hide_below">Rýchlosti menšie ako táto hodnota nebudú zobrazené. Zadajte 0 pre trvalé zobrazenie rýchlostí alebo 1 pre skrytie rýchlostí pod nulou.</string>
     <string name="hint_hide_below">bajty za sekundu</string>
     <string name="sum0_hide_below">Vždy zobraziť rýchlosti</string>
     <string name="sum1_hide_below">Skryť pri nulovej rýchlosti</string>
@@ -26,13 +26,17 @@
     <string name="pref_position">Pozícia</string>
     <string name="pref_suffix">Prípona</string>
     <string name="pref_display">Zobrazenie</string>
+    <string name="pref_swap_speeds">Vymeniť pozície rýchlostí</string>
     <string name="pref_update_interval">Interval aktualizácie</string>
     <string name="hint_update_interval">millisekundy</string>
     <string name="pref_font_color">Farba písma</string>
+    <string name="unit_font_color">%s (ARGB)</string>
     <string name="unit_update_interval">%s ms</string>
     <string name="pref_font_style">Štýl písma</string>
     <string name="pref_enable_logging">Povoliť zaznamenávanie</string>
     <string name="pref_report_issue">Nahlásiť problém</string>
+    <string name="note_clear_data">Poznámka: Skúste najskôr \"Vymazať údaje aplikácie\".</string>
+    <string name="pref_discuss_xda">Diskutovať na XDA fóre</string>
     
     <string name="unit_format_hidden">Skrytá</string>
     <string name="unit_format_fmt_as">Formátovaná ako</string>
