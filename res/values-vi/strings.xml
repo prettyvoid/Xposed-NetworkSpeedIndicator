@@ -12,7 +12,7 @@
     <string name="pref_unit">Đơn vị</string>
     <string name="pref_unit_format">Hiển thị và định dạng</string>
     <string name="pref_hide_below">Ngưỡng hiển thị</string>
-    <string name="dmsg_hide_below">Tốc độ thaaso hơn giá trị này sẽ không được hiển thị. Nhập 0 để luôn hiển thị tốc độ hoặc 1 để ẩn khi tốc đôn về không.</string>
+    <string name="dmsg_hide_below">Tốc độ thấp hơn giá trị này sẽ không được hiển thị. Nhập 0 để luôn hiển thị tốc độ hoặc nhập 1 để ẩn khi tốc độ về không.</string>
     <string name="hint_hide_below">bytes mỗi giây</string>
     <string name="sum0_hide_below">Luôn hiển thị tốc độ</string>
     <string name="sum1_hide_below">Ẩn khi tốc độ về không</string>
@@ -26,7 +26,7 @@
     <string name="pref_position">Vị trí</string>
     <string name="pref_suffix">Hậu tố</string>
     <string name="pref_display">Hiển thị</string>
-    <string name="pref_swap_speeds">Vị trí trao đổi tốc độ</string>
+    <string name="pref_swap_speeds">Trao đổi vị trí tốc độ</string>
     <string name="pref_update_interval">Khoảng thời gian làm mới</string>
     <string name="hint_update_interval">mili giây</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
