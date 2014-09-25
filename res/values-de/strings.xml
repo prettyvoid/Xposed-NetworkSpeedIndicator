@@ -26,13 +26,17 @@
     <string name="pref_position">Position</string>
     <string name="pref_suffix">Suffix</string>
     <string name="pref_display">Anzeige</string>
+    <string name="pref_swap_speeds">Position von Up- und Download tauschen</string>
     <string name="pref_update_interval">Aktualisierungsintervall</string>
     <string name="hint_update_interval">Millisekunden</string>
     <string name="unit_update_interval">%s ms</string> <!-- see note -->
     <string name="pref_font_color">Schriftfarbe</string>
+    <string name="unit_font_color">%s (ARGB)</string> <!-- see note -->
     <string name="pref_font_style">Schriftart</string>
     <string name="pref_enable_logging">Protokollierung aktivieren</string>
     <string name="pref_report_issue">Problem melden</string>
+    <string name="note_clear_data">Hinweis: Zuerst mit \"Daten löschen\" versuchen.</string> <!-- ensure " is escaped correctly as \" -->
+    <string name="pref_discuss_xda">Zum Thread im XDA-Forum</string>
     
     <string name="unit_format_hidden">Versteckt</string>
     <string name="unit_format_fmt_as">Formatiert als</string>
@@ -81,9 +85,9 @@
     <string-array name="suffix_entries">
         <item>Nichts</item>
         <item>Gefülltes Dreieck</item>
-        <item>Hohles Dreieck</item>
+        <item>Leeres Dreieck</item>
         <item>Kleines gefülltes Dreieck</item>
-        <item>Kleines hohles Dreieck</item>
+        <item>Kleines leeres Dreieck</item>
     </string-array>
     
     <string-array name="display_entries">
