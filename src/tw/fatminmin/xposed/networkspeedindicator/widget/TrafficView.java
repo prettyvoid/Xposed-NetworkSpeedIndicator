@@ -195,8 +195,8 @@ public final class TrafficView extends TextView {
 			try {
 				// changing values must be fetched together and only once
 				long lastUpdateTimeNew = SystemClock.elapsedRealtime();
-				long totalTxBytesNew = getTotalBytes(Traffic.TRANSMIT);
-				long totalRxBytesNew = getTotalBytes(Traffic.RECEIVE);
+				long totalTxBytesNew = getTotalBytes(TRANSMIT);
+				long totalRxBytesNew = getTotalBytes(RECEIVE);
 				
 				long elapsedTime = lastUpdateTimeNew - lastUpdateTime;
 				
@@ -301,8 +301,8 @@ public final class TrafficView extends TextView {
 		if (justLaunched) {
 			//get the values for the first time
 			lastUpdateTime = SystemClock.elapsedRealtime();
-			totalTxBytes = getTotalBytes(Traffic.TRANSMIT);
-			totalRxBytes = getTotalBytes(Traffic.RECEIVE);
+			totalTxBytes = getTotalBytes(TRANSMIT);
+			totalRxBytes = getTotalBytes(RECEIVE);
 			
 			//don't get the values again
 			justLaunched = false;
@@ -311,12 +311,11 @@ public final class TrafficView extends TextView {
 		mTrafficHandler.sendEmptyMessage(0);
 	}
 	
-	private static enum Traffic {
-		TRANSMIT, RECEIVE
-	}
+	private static final int TRANSMIT = 0;
+	private static final int RECEIVE = 1;
 	
-	private static final long getTotalBytes(final Traffic traffic_direction) {
-		final boolean tx = Traffic.TRANSMIT.equals(traffic_direction);
+	private static final long getTotalBytes(final int traffic_direction) {
+		final boolean tx = (traffic_direction == TRANSMIT);
 		long totalBytes = -9; // not -1 because it conflicts with TrafficStats.UNSUPPORTED
 		BufferedReader br = null;
 		
