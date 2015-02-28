@@ -89,7 +89,7 @@
     </string-array>
     
     <string-array name="suffix_entries">
-        <item>@strings/summary_none</item>
+        <item>@string/summary_none</item>
         <item>Triangolo pieno</item>
         <item>Triangolo vuoto</item>
         <item>Piccolo triagolo pieno</item>
