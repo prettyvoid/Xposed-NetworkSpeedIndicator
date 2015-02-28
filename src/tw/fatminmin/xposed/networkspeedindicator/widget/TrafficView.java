@@ -1,5 +1,7 @@
 package tw.fatminmin.xposed.networkspeedindicator.widget;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.Set;
 
@@ -193,8 +195,8 @@ public final class TrafficView extends TextView {
 			try {
 				// changing values must be fetched together and only once
 				long lastUpdateTimeNew = SystemClock.elapsedRealtime();
-				long totalTxBytesNew = TrafficStats.getTotalTxBytes();
-				long totalRxBytesNew = TrafficStats.getTotalRxBytes();
+				long totalTxBytesNew = getTotalBytes(Traffic.TRANSMIT);
+				long totalRxBytesNew = getTotalBytes(Traffic.RECEIVE);
 				
 				long elapsedTime = lastUpdateTimeNew - lastUpdateTime;
 				
@@ -299,14 +301,56 @@ public final class TrafficView extends TextView {
 		if (justLaunched) {
 			//get the values for the first time
 			lastUpdateTime = SystemClock.elapsedRealtime();
-			totalTxBytes = TrafficStats.getTotalTxBytes();
-			totalRxBytes = TrafficStats.getTotalRxBytes();
+			totalTxBytes = getTotalBytes(Traffic.TRANSMIT);
+			totalRxBytes = getTotalBytes(Traffic.RECEIVE);
 			
 			//don't get the values again
 			justLaunched = false;
 		}
 		
 		mTrafficHandler.sendEmptyMessage(0);
+	}
+	
+	private static enum Traffic {
+		TRANSMIT, RECEIVE
+	}
+	
+	private static final long getTotalBytes(final Traffic traffic_direction) {
+		final boolean tx = Traffic.TRANSMIT.equals(traffic_direction);
+		long totalBytes = -9; // not -1 because it conflicts with TrafficStats.UNSUPPORTED
+		BufferedReader br = null;
+		
+		try {
+			br = new BufferedReader(new FileReader("/sys/class/net/lo/statistics/" + (tx ? "tx" : "rx") + "_bytes"));
+			
+			// reading both together to reduce delay in between as much as possible
+			totalBytes = tx ? TrafficStats.getTotalTxBytes() : TrafficStats.getTotalRxBytes();
+			String line = br.readLine();
+			
+			long loBytes = Long.parseLong(line);
+			
+			Log.d(TAG, traffic_direction, " total: ", totalBytes, ", lo: ", loBytes);
+			
+			totalBytes = totalBytes - loBytes;
+			
+		} catch (Exception e) {
+			Log.i(TAG, "Loopback exclusion failed: ", e);
+			
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (Exception e) {
+					// ignore
+				}
+			}
+		}
+		
+		if (totalBytes == -9) {
+			totalBytes = tx ? TrafficStats.getTotalTxBytes() : TrafficStats.getTotalRxBytes();
+		}
+		
+		return totalBytes;
 	}
 
 	private final String createText() {
